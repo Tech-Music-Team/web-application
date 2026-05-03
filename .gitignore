@@ -1,0 +1,14 @@
+# A linha abaixo determina que o diretório node_modules não será enviado ao repositório remoto
+node_modules
+package-lock.json
+.env
+.env.dev
+.github
+/terraform/.terraform
+/terraform/.terraform.lock.hcl
+/terraform terraform.tfstate
+/terraform terraform.tfstate.backup
+/terraform .terraformrc
+/terraform .terraformignore
+
+CLAUDE.md

@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analisar Música - Tech Music</title>
+
+    <link rel="stylesheet" href="../css/analisarMusica.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;500;600;700&display=swap"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <aside class="left-column">
+        <h2 class="logo-tipo">Tech Music</h2>
+        <hr class="divisor" />
+
+        <nav class="menu-nav">
+          <ul class="menu-group">
+            <li class="menu-header">Artistas</li>
+            <li>
+              <a href="rankingartistas.html">
+                <span class="material-symbols-outlined">person</span>
+                Lista artistas
+              </a>
+            </li>
+            <li>
+              <a href="analisarartista.html">
+                <span class="material-symbols-outlined">analytics</span>
+                Analisar artista
+              </a>
+            </li>
+            <li>
+              <a href="compararartistas.html">
+                <span class="material-symbols-outlined">compare_arrows</span>
+                Comparar artistas
+              </a>
+            </li>
+          </ul>
+
+          <ul class="menu-group">
+            <li class="menu-header">Músicas</li>
+            <li>
+              <a href="listamusicas.html">
+                <span class="material-symbols-outlined">library_music</span>
+                Lista músicas
+              </a>
+            </li>
+            <li class="active">
+              <a href="analisarMusica.html">
+                <span class="material-symbols-outlined">equalizer</span>
+                Analisar música
+              </a>
+            </li>
+            <li>
+              <a href="compararmusicas.html">
+                <span class="material-symbols-outlined">rule</span>
+                Comparar músicas
+              </a>
+            </li>
+          </ul>
+
+          <ul class="menu-group">
+            <li class="menu-header">Pessoal</li>
+            <li>
+              <a href="minhaSetList.html">
+                <span class="material-symbols-outlined">queue_music</span>
+                Minhas setlist
+              </a>
+            </li>
+            <li>
+              <a href="minhaPlaylist.html">
+                <span class="material-symbols-outlined">featured_play_list</span>
+                Minhas playlists
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="user-footer">
+          <div class="user-info">
+            <img
+              src="../assets/perfil.png"
+              alt="Foto de perfil"
+              class="profile-img"
+            />
+            <div class="user-text">
+              <p class="user-name">Jorge Luiz</p>
+              <p class="user-role">Organizador de eventos</p>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="top-header">
+          <h1>Analisar música</h1>
+        </header>
+
+        <section class="artist-body">
+
+          <div class="music-card">
+            <img src="../assets/bornagain.png" alt="Foto da música" class="music-photo" />
+
+            <div class="music-info">
+              <span class="music-label">Música</span>
+              <span class="music-title">Born Again</span>
+              <span class="music-artist">Lisa</span>
+
+              <div class="music-meta">
+                <div class="meta-item">
+                  <span class="meta-label">Álbum</span>
+                  <span class="meta-value">Alter Ego</span>
+                </div>
+                <div class="meta-item">
+                  <span class="meta-label">Gênero</span>
+                  <span class="meta-value">KPop</span>
+                </div>
+                <div class="meta-item">
+                  <span class="meta-label">Duração</span>
+                  <span class="meta-value">03:43</span>
+                </div>
+                <div class="meta-item">
+                  <span class="meta-label">Lançamento</span>
+                  <span class="meta-value">27/02/2025</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="music-stats">
+              <div class="stat-pill">
+                <span class="material-symbols-outlined">thumb_up</span>
+                <span class="pill-value">30k</span>
+                <span class="pill-label">Likes</span>
+              </div>
+              <div class="stat-pill">
+                <span class="material-symbols-outlined">visibility</span>
+                <span class="pill-value">120k</span>
+                <span class="pill-label">Views</span>
+              </div>
+              <div class="stat-pill">
+                <span class="material-symbols-outlined">chat_bubble</span>
+                <span class="pill-value">76k</span>
+                <span class="pill-label">Comentários</span>
+              </div>
+              <div class="stat-pill">
+                <span class="material-symbols-outlined">headphones</span>
+                <span class="pill-value">14.2m</span>
+                <span class="pill-label">Streams</span>
+              </div>
+            </div>
+
+            <button class="btn-playlist">
+              <span class="material-symbols-outlined">add_ad</span>
+              Adicionar a playlist
+            </button>
+          </div>
+
+          <div class="bottom-section">
+
+            <div class="perfil-card">
+              <h2 class="card-title">Perfil musical</h2>
+              <div class="radar-wrapper">
+                <canvas id="radarChart"></canvas>
+              </div>
+            </div>
+
+            <div class="mood-card">
+              <h2 class="card-title">Mood da música</h2>
+              <div class="mood-grid">
+                <div class="mood-item">
+                  <span class="mood-icon"><span class="material-symbols-outlined">sentiment_satisfied</span></span>
+                  <span class="mood-name">Feliz</span>
+                  <span class="mood-value">78%</span>
+                </div>
+                <div class="mood-item">
+                  <span class="mood-icon"><span class="material-symbols-outlined">sentiment_neutral</span></span>
+                  <span class="mood-name">Neutro</span>
+                  <span class="mood-value">50%</span>
+                </div>
+                <div class="mood-item">
+                  <span class="mood-icon"><span class="material-symbols-outlined">sentiment_sad</span></span>
+                  <span class="mood-name">Triste</span>
+                  <span class="mood-value">12%</span>
+                </div>
+                <div class="mood-item">
+                  <span class="mood-icon"><span class="material-symbols-outlined">electric_bolt</span></span>
+                  <span class="mood-name">Energético</span>
+                  <span class="mood-value">70%</span>
+                </div>
+                <div class="mood-item">
+                  <span class="mood-icon"><span class="material-symbols-outlined">relax</span></span>
+                  <span class="mood-name">Relax</span>
+                  <span class="mood-value">20%</span>
+                </div>
+              </div>
+
+              <button class="btn-comparar">
+                Comparar com outra música
+                <span class="material-symbols-outlined">chevron_right</span>
+              </button>
+            </div>
+
+          </div>
+
+        </section>
+      </main>
+    </div>
+
+    <script>
+      const ctx = document.getElementById("radarChart").getContext("2d");
+      new Chart(ctx, {
+        type: "radar",
+        data: {
+          labels: ["Energy", "Danceability", "Valence", "Loudness", "Speechiness", "Instrumentalness"],
+          datasets: [
+            {
+              data: [72, 65, 58, 80, 45, 30],
+              backgroundColor: "rgba(168, 85, 247, 0.15)",
+              borderColor: "#A855F7",
+              borderWidth: 2,
+              pointBackgroundColor: "#A855F7",
+              pointRadius: 3,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { display: false } },
+          scales: {
+            r: {
+              min: 0,
+              max: 100,
+              ticks: { display: false, stepSize: 25 },
+              pointLabels: { font: { size: 9 }, color: "#888" },
+              grid: { color: "rgba(168, 85, 247, 0.15)" },
+              angleLines: { color: "rgba(168, 85, 247, 0.15)" },
+            },
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,602 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+    background-color: #f8f9fa;
+    overflow: hidden;
+}
+
+
+/*  SIDEBAR  */
+
+.left-column {
+    width: 260px;
+    background: linear-gradient(to bottom, #1A0A2E 0%, #210B3C 100%);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 30px 20px;
+    flex-shrink: 0;
+    height: 100%;
+}
+
+.left-column ul {
+    list-style: none;
+}
+
+.left-column a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.logo-tipo {
+    font-family: 'Montserrat Alternates', sans-serif;
+}
+
+.menu-nav {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.menu-group {
+    margin-bottom: 15px;
+}
+
+.menu-group li a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 3px 0;
+    font-size: 14px;
+    font-weight: 450;
+    color: #b3b3b3;
+    transition: 0.3s ease;
+    font-family: 'Montserrat Alternates', sans-serif;
+}
+
+.menu-group li.active a {
+    color: white;
+    font-weight: bold;
+}
+
+.menu-header {
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+    margin-bottom: 3px;
+    font-family: 'Montserrat Alternates', sans-serif;
+}
+
+.user-footer {
+    margin-top: auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 20px 10px 10px 10px;
+    width: 100%;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(to right, #4A227D, #873DE3);
+    padding: 6px 12px;
+    border-radius: 50px;
+    width: fit-content;
+    max-width: 100%;
+    transition: background 0.3s ease;
+}
+
+.profile-img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #B585E8;
+    flex-shrink: 0;
+}
+
+.user-text {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.user-name {
+    font-weight: 700;
+    font-size: 12px;
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: 'Montserrat Alternates', sans-serif;
+}
+
+.user-role {
+    font-size: 10px;
+    color: #E9D5FF;
+    white-space: nowrap;
+    font-family: 'Montserrat Alternates', sans-serif;
+}
+
+
+/*  MAIN  */
+
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.top-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 40px;
+    background-color: white;
+    border-bottom: 1px solid #eee;
+}
+
+.top-header h1 {
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #1A0A2E;
+}
+
+.btn-setlist {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1.5px solid #A855F7;
+    border-radius: 25px;
+    padding: 8px 18px;
+    background-color: white;
+    color: #A855F7;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-setlist:hover {
+    background-color: #A855F7;
+    color: white;
+}
+
+.btn-setlist .material-symbols-outlined {
+    font-size: 18px;
+}
+
+
+/*  BODY  */
+
+.artist-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow-y: auto;
+    padding: 30px 40px;
+    background-color: #f8f9fa;
+}
+
+
+/*  SEÇÃO SUPERIOR  */
+
+.search-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid #e0d5f2;
+    border-radius: 50px;
+    padding: 4px 15px;
+    background-color: #fff;
+}
+
+.search-container input {
+    border: none;
+    outline: none;
+    padding: 8px;
+    width: 250px;
+    font-size: 14px;
+    color: #666;
+}
+
+.artist-top-section {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+}
+
+.artist-photo-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.artist-photo {
+    width: 150px;
+    height: 170px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.artist-name-big {
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #1A0A2E;
+}
+
+.profile-card {
+    flex: 1;
+    position: relative;
+    background-color: white;
+    border: 1.5px solid #e0d5f2;
+    border-radius: 12px;
+    padding: 16px 20px;
+}
+
+.profile-card-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1A0A2E;
+    text-align: start;
+    margin-left: 15px;
+}
+
+.profile-card-inner {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.radar-wrapper {
+    width: 230px;
+    height: 230px;
+    flex-shrink: 0;
+    position: relative;
+    left:15px;
+    overflow: visible;
+}
+
+.radar-wrapper canvas {
+    width: 100% !important;
+    height: 100% !important;   
+     
+}
+
+
+/*   GRID  */
+
+.stats-grid {
+    position: absolute;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    list-style: none;
+    width: 450px;
+    right: 60px;
+
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background-color: #f8f4ff;
+    border-radius: 8px;
+    padding: 6px 14px;
+    max-width: 200px;
+}
+
+.stat-label {
+    font-size: 10px;
+    color: #A855F7;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.stat-value {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1A0A2E;
+}
+
+.genre-badge {
+    background-color: #A855F7;
+    color: white;
+    border-radius: 20px;
+    padding: 2px 12px;
+    font-size: 13px;
+    display: inline-block;
+    width: fit-content;
+}
+
+
+/*  CONTROLES  */
+
+.ranking-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-self: center;
+}
+
+.tab-toggle {
+    display: flex;
+    border: 1.5px solid #A855F7;
+    border-radius: 25px;
+    overflow: hidden;
+}
+
+.tab-btn {
+    padding: 7px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    background-color: white;
+    color: #A855F7;
+    transition: all 0.2s ease;
+}
+
+.tab-btn.active {
+    background-color: #A855F7;
+    color: white;
+}
+
+.tab-toggle button:not(.active):hover {
+    background-color: #f8f4ff;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid #e0d5f2;
+    border-radius: 50px;
+    padding: 4px 15px;
+    background-color: #fff;
+}
+
+.search-container input {
+    border: none;
+    outline: none;
+    padding: 8px;
+    width: 200px;
+    font-size: 14px;
+    color: #666;
+}
+
+.btn-pesquisar {
+    background: none;
+    border: none;
+    color: #A855F7;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 500;
+    padding: 0 5px;
+}
+
+.btn-filtrar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: white;
+    border: 1px solid #e0d5f2;
+    border-radius: 8px;
+    padding: 4px 8px;
+    color: #A855F7;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.btn-filtrar:hover {
+    background-color: #f8f4ff;
+}
+
+.order-toggle {
+    display: flex;
+    border: 1px solid #A855F7;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.order-toggle button {
+    background-color: white;
+    border: none;
+    color: #A855F7;
+    padding: 6px 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.order-toggle button.active {
+    background-color: #A855F7;
+    color: white;
+}
+
+.order-toggle button:not(.active):hover {
+    background-color: #f8f4ff;
+}
+
+.ranking-controls .material-symbols-outlined {
+    font-size: 20px;
+}
+
+/*  CARDS  */
+.ranking-body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.card {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px;
+    padding: 12px 30px;
+    background-color: white;
+    border: 1.5px solid #e0d5f2;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.card:hover {
+    border-color: #A855F7;
+    box-shadow: 0 4px 12px rgba(168, 85, 247, 0.1);
+}
+
+.left-content-group {
+    display: flex;
+    align-items: center;
+    flex: 0 1 auto;
+    gap: 15px;
+}
+
+.ranking-number {
+    font-size: 32px;
+    font-weight: 300;
+    min-width: 50px;
+    text-align: left;
+}
+
+.card img {
+    width: 65px;
+    height: 65px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.artist-info-header {
+    display: flex;
+    flex-grow: 1;
+    margin-left: 10px;
+    flex-direction: column;
+    gap: 6px;
+    width: 150px;
+}
+
+.artist-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1A0A2E;
+}
+
+.genre {
+    font-size: 12px;
+    color: #999;
+}
+
+.card ul {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    list-style: none;
+    flex: 1;
+    justify-content: center;
+    margin-right: 20px;
+}
+
+.card li {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    background-color: transparent;
+    min-width: auto;
+    padding: 0;
+}
+
+.artist-atribute {
+    font-size: 9px;
+    color: #A855F7;
+    font-weight: 500;
+    text-transform: uppercase;
+    border-bottom: 1px solid #A855F7;
+    padding-bottom: 2px;
+}
+
+.atribute-value {
+    font-size: 10px;
+    font-weight: 600;
+    color: white;
+    background-color: #A855F7;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-top: 2px;
+}
+
+.right-content-group {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.details-button {
+    padding: 8px 18px;
+    background-color: white;
+    border: 1.5px solid #A855F7;
+    border-radius: 25px;
+    margin-left: auto;
+    color: #A855F7;
+    font-weight: 600;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.details-button:hover {
+    background-color: #A855F7;
+    color: white;
+}
+
+
+.status-setlist{
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+
+}
+
+.status-setlist .circulo{
+    background-color: yellow;
+    width: 15px;
+    
+    border-radius: 100%;
+}
+
+.status-setlist{
+    font-size: 13px;
+}

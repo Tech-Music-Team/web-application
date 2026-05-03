@@ -1,0 +1,54 @@
+services:
+  app:
+    depends_on:
+      - db
+    build: .
+    ports:
+      - "3333:3333"
+    environment:
+      DB_HOST: db
+      DB_DATABASE: tech_music
+      DB_USER: root
+      DB_PASSWORD: p0o9i8u7
+      DB_PORT: 3306
+      APP_PORT: 3333
+      APP_HOST: localhost
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: p0o9i8u7
+      MYSQL_DATABASE: tech_music
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./src/database/comandos-DDL.sql:/docker-entrypoint-initdb.d/01-ddl.sql
+      - ./src/database/comandos-DML.sql:/docker-entrypoint-initdb.d/02-dml.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-pp0o9i8u7"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  jar:
+    depends_on:
+      db:
+        condition: service_healthy
+    build: ../leitura-dados
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: tech_music
+      DB_USER: root
+      DB_PASSWORD: p0o9i8u7
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_SESSION_TOKEN: ${AWS_SESSION_TOKEN}
+      AWS_REGION: ${AWS_REGION:-us-east-1}
+
+volumes:
+  db_data:
+
+#docker-compose up --build -d para funcionar

@@ -1,0 +1,321 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+:root {
+  --roxo: #8a55d8;
+  --roxo-escuro: #5e17eb;
+  --rosa: #d421bf;
+  --cinza-input: #d9d9d9;
+  --fonte: "Open Sans", sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--fonte);
+}
+
+body {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+/* ── Lado esquerdo (form) ── */
+.login {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 5%;
+}
+
+/* ── Header / Nav ── */
+header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 0 10px;
+}
+
+header .logo-header img {
+  width: 95px;
+  height: auto;
+}
+
+nav li {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  list-style: none;
+  gap: 8px;
+}
+
+nav li a {
+  text-decoration: none;
+  font-weight: 700;
+  color: var(--roxo);
+  font-size: 1.15rem;
+  padding: 5px 14px;
+  border-radius: 20px;
+  transition: color 0.25s, background 0.25s;
+}
+
+nav li a:hover {
+  color: var(--rosa);
+  text-decoration: underline;
+}
+
+/* ── Área central do form ── */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  width: 100%;
+}
+
+.logo-principal {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.logo-principal img {
+  width: 100px;
+  height: auto;
+}
+
+h1 {
+  font-size: 3.2em;
+  color: var(--roxo);
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.conteudo-login {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.conteudo-login div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.conteudo-login div p {
+  font-weight: 700;
+  color: var(--rosa);
+  font-size: 1.05rem;
+}
+
+/* ── Inputs ── */
+.conteudo-login .input-group {
+  position: relative;
+  margin-bottom: 4px;
+}
+
+.conteudo-login .input-group:focus-within i {
+  color: var(--rosa);
+}
+
+.conteudo-login .input-group input {
+  width: 480px;
+  height: 3.4rem;
+  border-radius: 1.875rem;
+  border: 0.15rem solid var(--roxo-escuro);
+  padding-left: 3rem;
+  background-color: var(--cinza-input);
+  color: #111;
+  font-weight: 600;
+  font-size: 18px;
+  transition: border 0.25s;
+}
+
+.conteudo-login .input-group input::placeholder {
+  font-weight: 400;
+  color: #777;
+}
+
+.conteudo-login .input-group input:focus {
+  border: 0.15rem solid var(--rosa);
+  outline: none;
+}
+
+.conteudo-login .input-group i {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--roxo-escuro);
+  font-size: 1rem;
+}
+
+/* ── Botão ── */
+.conteudo-login div button {
+  width: 480px;
+  height: 56px;
+  border-radius: 1.875rem;
+  border: none;
+  background-color: var(--roxo);
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  transition: background 0.3s ease;
+  cursor: pointer;
+}
+
+.conteudo-login div button:hover {
+  background-color: var(--rosa);
+}
+
+/* ── Links rodapé do form ── */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  margin-top: 12px;
+  gap: 16px;
+}
+
+.link,
+.conteudo-login > a {
+  color: var(--roxo);
+  font-size: 0.88rem;
+  text-decoration: none;
+  transition: color 0.25s;
+}
+
+.link:hover,
+.conteudo-login > a:hover {
+  color: var(--rosa);
+  text-decoration: underline;
+}
+
+/* ── Imagem lateral ── */
+.imagem {
+  flex-shrink: 0;
+}
+
+.imagem img {
+  height: 100vh;
+  width: auto;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── Logo decorativa mobile ── */
+.logo {
+  display: none;
+}
+
+/* ════════════════════════════
+   RESPONSIVIDADE
+════════════════════════════ */
+
+/* Tablet — esconde imagem lateral */
+@media (max-width: 900px) {
+  .imagem {
+    display: none;
+  }
+
+  .login {
+    padding: 0 8%;
+  }
+
+  .conteudo-login .input-group input,
+  .conteudo-login div button {
+    width: 80vw;
+    max-width: 480px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  body {
+    overflow-y: auto;
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .login {
+    width: 100%;
+    padding: 0 6%;
+    align-items: center;
+  }
+
+  header {
+    padding: 16px 0 8px;
+  }
+
+  header .logo-header img {
+    width: 52px;
+  }
+
+  nav li a {
+    font-size: 0.78rem;
+    padding: 4px 8px;
+  }
+
+  h1 {
+    font-size: 1.9em;
+    margin-top: 10px;
+  }
+
+  .logo-principal img {
+    width: 76px;
+  }
+
+  .container {
+    align-items: flex-start;
+    padding: 10px 0 20px;
+  }
+
+  .conteudo-login {
+    width: 100%;
+    align-items: center;
+  }
+
+  .conteudo-login div {
+    width: 100%;
+  }
+
+  .conteudo-login .input-group input,
+  .conteudo-login div button {
+    width: 88vw;
+    max-width: 380px;
+    font-size: 15px;
+  }
+
+  .conteudo-login .input-group input {
+    height: 2.6rem;
+  }
+
+  .footer {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .logo {
+    display: block;
+    width: 100%;
+    background: linear-gradient(rgba(128, 0, 255, 0.001), rgba(128, 0, 255, 0.55));
+    margin-top: auto;
+  }
+
+  .logo img {
+    width: 100%;
+  }
+}

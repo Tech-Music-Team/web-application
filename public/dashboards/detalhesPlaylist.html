@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mais curtidos - Tech Music</title>
+
+    <link rel="stylesheet" href="../css/detalhesSetlist.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;500;600;700&display=swap"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <div class="container">
+
+      <!-- SIDEBAR -->
+      <aside class="left-column">
+        <h2 class="logo-tipo">Tech Music</h2>
+        <hr class="divisor" />
+
+        <nav class="menu-nav">
+          <ul class="menu-group">
+            <li class="menu-header">Artistas</li>
+            <li>
+              <a href="rankingartistas.html">
+                <span class="material-symbols-outlined">person</span>
+                Lista artistas
+              </a>
+            </li>
+            <li>
+              <a href="analisarartista.html">
+                <span class="material-symbols-outlined">analytics</span>
+                Analisar artista
+              </a>
+            </li>
+            <li>
+              <a href="compararartistas.html">
+                <span class="material-symbols-outlined">compare_arrows</span>
+                Comparar artistas
+              </a>
+            </li>
+          </ul>
+
+          <ul class="menu-group">
+            <li class="menu-header">Músicas</li>
+            <li>
+              <a href="listamusicas.html">
+                <span class="material-symbols-outlined">library_music</span>
+                Lista músicas
+              </a>
+            </li>
+            <li>
+              <a href="analisarMusica.html">
+                <span class="material-symbols-outlined">equalizer</span>
+                Analisar música
+              </a>
+            </li>
+            <li>
+              <a href="compararmusicas.html">
+                <span class="material-symbols-outlined">rule</span>
+                Comparar músicas
+              </a>
+            </li>
+          </ul>
+
+          <ul class="menu-group">
+            <li class="menu-header">Pessoal</li>
+            <li class="active">
+              <a href="minhaSetList.html">
+                <span class="material-symbols-outlined">queue_music</span>
+                Minhas setlist
+              </a>
+            </li>
+            <li>
+              <a href="minhaPlaylist.html">
+                <span class="material-symbols-outlined">featured_play_list</span>
+                Minhas playlists
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="user-footer">
+          <div class="user-info">
+            <img
+              src="../assets/perfil.png"
+              alt="Foto de perfil"
+              class="profile-img"
+            />
+            <div class="user-text">
+              <p class="user-name">Jorge Luiz</p>
+              <p class="user-role">Organizador de eventos</p>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- MAIN -->
+      <main class="main-content">
+
+        <!-- HEADER -->
+        <header class="top-header">
+          <div class="header-title-block">
+            <h1>Mais curtidos</h1>
+            <div class="event-meta">
+              <span class="material-symbols-outlined">calendar_month</span>
+              <span class="event-date">20 de setembro de 2025</span>
+              <span class="event-status">
+                <span class="status-dot"></span>
+                Realizado
+              </span>
+            </div>
+          </div>
+        </header>
+
+        <!-- BODY SPLIT -->
+        <div class="body-split">
+
+          <!-- PAINEL ESQUERDO -->
+          <div class="panel-left">
+
+            <!-- Perfil Musical -->
+            <div class="info-card">
+              <h2 class="panel-subtitle">Perfil musical</h2>
+              <div class="radar-wrapper">
+                <canvas id="radarChart"></canvas>
+              </div>
+            </div>
+
+            <!-- Distribuição de Gênero -->
+            <div class="info-card">
+              <h2 class="panel-subtitle">Distribuição de gênero</h2>
+              <div class="genre-list">
+
+                <div class="genre-row">
+                  <span class="genre-label">Pop</span>
+                  <div class="genre-bar-track">
+                    <div class="genre-bar" style="width: 100%"></div>
+                  </div>
+                  <span class="genre-qty">3</span>
+                </div>
+
+                <div class="genre-row">
+                  <span class="genre-label">Trap</span>
+                  <div class="genre-bar-track">
+                    <div class="genre-bar" style="width: 67%"></div>
+                  </div>
+                  <span class="genre-qty">2</span>
+                </div>
+
+                <div class="genre-row">
+                  <span class="genre-label">Hip-Hop</span>
+                  <div class="genre-bar-track">
+                    <div class="genre-bar" style="width: 67%"></div>
+                  </div>
+                  <span class="genre-qty">2</span>
+                </div>
+
+                <div class="genre-row">
+                  <span class="genre-label">R&amp;B</span>
+                  <div class="genre-bar-track">
+                    <div class="genre-bar" style="width: 33%"></div>
+                  </div>
+                  <span class="genre-qty">1</span>
+                </div>
+
+                <div class="genre-row">
+                  <span class="genre-label">Funk</span>
+                  <div class="genre-bar-track">
+                    <div class="genre-bar" style="width: 33%"></div>
+                  </div>
+                  <span class="genre-qty">1</span>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+          <!-- PAINEL DIREITO -->
+          <div class="panel-right">
+
+            <!-- Controles -->
+            <div class="right-controls">
+              <div class="search-container">
+                <input type="text" placeholder="Buscar música..." />
+                <button class="btn-pesquisar">
+                  <span class="material-symbols-outlined">search</span>
+                  Pesquisar
+                </button>
+              </div>
+              <button class="btn-filtrar">
+                <span class="material-symbols-outlined">filter_alt</span>
+                Filtrar
+              </button>
+              <div class="order-toggle">
+                <button class="order-up active">
+                  <span class="material-symbols-outlined">keyboard_double_arrow_up</span>
+                </button>
+                <button class="order-down">
+                  <span class="material-symbols-outlined">keyboard_double_arrow_down</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Lista de Artistas -->
+            <div class="setlist-artist-list">
+
+              <div class="artist-card">
+                <div class="left-content-group">
+                  <span class="ranking-number">1º</span>
+                  <img src="../assets/images.jfif" alt="The Weeknd" />
+                  <div class="artist-info-header">
+                    <span class="artist-name">Blinding Lights</span>
+                    <span class="genre">Gênero: R&amp;B / Pop</span>
+                  </div>
+                </div>
+                <button class="btn-remover">Remover música</button>
+                <ul>
+                  <li>
+                    <span class="artist-atribute">Popularidade</span>
+                    <span class="atribute-value">98</span>
+                  </li>
+                  <li>
+                    <span class="artist-atribute">Views</span>
+                    <span class="atribute-value">2.1B</span>
+                  </li>
+                  <li>
+                    <span class="artist-atribute">Likes</span>
+                    <span class="atribute-value">15M</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="artist-card">
+                <div class="left-content-group">
+                  <span class="ranking-number">2º</span>
+                  <img src="../assets/images (1).jfif" alt="Drake" />
+                  <div class="artist-info-header">
+                    <span class="artist-name">God's Plan</span>
+                    <span class="genre">Gênero: Rap / Pop</span>
+                  </div>
+                </div>
+                <button class="btn-remover">Remover música</button>
+                <ul>
+                  <li>
+                    <span class="artist-atribute">Popularidade</span>
+                    <span class="atribute-value">95</span>
+                  </li>
+                  <li>
+                    <span class="artist-atribute">Views</span>
+                    <span class="atribute-value">1.5B</span>
+                  </li>
+                  <li>
+                    <span class="artist-atribute">Likes</span>
+                    <span class="atribute-value">10M</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="artist-card">
+                <div class="left-content-group">
+                  <span class="ranking-number">3º</span>
+                  <img src="../assets/image 2.png" alt="Alee" />
+                  <div class="artist-info-header">
+                    <span class="artist-name">Instinto</span>
+                    <span class="genre">Gênero: Trap</span>
+                  </div>
+                </div>
+                <button class="btn-remover">Remover música</button>
+                <ul>
+                  <li>
+                    <span class="artist-atribute">Popularidade</span>
+                    <span class="atribute-value">96</span>
+                  </li>
+                  <li>
+                    <span class="artist-atribute">Views</span>
+                    <span class="atribute-value">122M</span>
+                  </li>
+                  <li>
+                    <span class="artist-atribute">Likes</span>
+                    <span class="atribute-value">96K</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="artist-card">
+                <div class="left-content-group">
+                  <span class="ranking-number">4º</span>
+                  <img src="../assets/matue4.webp" alt="Matuê" />
+                  <div class="artist-info-header">
+                    <span class="artist-name">É Sal</span>
+                    <span class="genre">Gênero: Trap BR</span>
+                  </div>
+                </div>
+                <button class="btn-remover">Remover música</button>
+                <ul>
+                  <li>
+                    <span class="artist-atribute">Popularidade</span>
+                    <span class="atribute-value">94</span>
+                  </li>
+                  <li>
+                    <span class="artist-atribute">Views</span>
+                    <span class="atribute-value">450M</span>
+                  </li>
+                  <li>
+                    <span class="artist-atribute">Likes</span>
+                    <span class="atribute-value">1.2M</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="artist-card">
+                <div class="left-content-group">
+                  <span class="ranking-number">5º</span>
+                  <img src="../assets/Travis_Scott.webp" alt="Travis Scott" />
+                  <div class="artist-info-header">
+                    <span class="artist-name">Goosebumps</span>
+                    <span class="genre">Gênero: Hip-Hop</span>
+                  </div>
+                </div>
+                <button class="btn-remover">Remover música</button>
+                <ul>
+                  <li>
+                    <span class="artist-atribute">Popularidade</span>
+                    <span class="atribute-value">92</span>
+                  </li>
+                  <li>
+                    <span class="artist-atribute">Views</span>
+                    <span class="atribute-value">900M</span>
+                  </li>
+                  <li>
+                    <span class="artist-atribute">Likes</span>
+                    <span class="atribute-value">8M</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="artist-card">
+                <div class="left-content-group">
+                  <span class="ranking-number">6º</span>
+                  <img src="../assets/ab676161000051747635220f042a75ef8b4ffde9.jfif" alt="Ludmilla" />
+                  <div class="artist-info-header">
+                    <span class="artist-name">Dia de Fluxo</span>
+                    <span class="genre">Gênero: Funk / Pop</span>
+                  </div>
+                </div>
+                <button class="btn-remover">Remover música</button>
+                <ul>
+                  <li>
+                    <span class="artist-atribute">Popularidade</span>
+                    <span class="atribute-value">89</span>
+                  </li>
+                  <li>
+                    <span class="artist-atribute">Views</span>
+                    <span class="atribute-value">300M</span>
+                  </li>
+                  <li>
+                    <span class="artist-atribute">Likes</span>
+                    <span class="atribute-value">500K</span>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </main>
+    </div>
+
+    <script>
+      const rankings = document.querySelectorAll(".ranking-number");
+      const cores = { "1º": "#D4AF37", "2º": "#A8A9AD", "3º": "#CD7F32" };
+      rankings.forEach((el) => {
+        const cor = cores[el.textContent.trim()];
+        el.style.color = cor || "#1A0A2E";
+      });
+
+      const ctx = document.getElementById("radarChart").getContext("2d");
+      new Chart(ctx, {
+        type: "radar",
+        data: {
+          labels: ["Energy", "Danceability", "Valence", "Loudness", "Speechiness", "Instrumentalness"],
+          datasets: [
+            {
+              data: [78, 65, 60, 82, 55, 25],
+              backgroundColor: "rgba(168, 85, 247, 0.15)",
+              borderColor: "#A855F7",
+              borderWidth: 2,
+              pointBackgroundColor: "#A855F7",
+              pointRadius: 3,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { display: false } },
+          scales: {
+            r: {
+              min: 0,
+              max: 100,
+              ticks: { display: false, stepSize: 25 },
+              pointLabels: { font: { size: 9 }, color: "#888" },
+              grid: { color: "rgba(168, 85, 247, 0.15)" },
+              angleLines: { color: "rgba(168, 85, 247, 0.15)" },
+            },
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

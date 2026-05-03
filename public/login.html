@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="stylesheet" href="assets/css/login.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <div class="login">
+      <header>
+        <div class="logo-header">
+          <img src="assets/image/logo_clean-removebg-preview.png" alt="Logo Tech Music" />
+        </div>
+        <nav>
+          <li>
+            <a href="./index.html">HOME</a>
+            <a href="./index.html#sobre">SOBRE NÓS</a>
+            <a href="cadastro.html">CADASTRAR</a>
+          </li>
+        </nav>
+      </header>
+
+      <div class="container">
+        <div class="conteudo-login">
+          <h1>LOGIN</h1>
+          <div class="conteudo-log">
+            <div>
+              <p>Insira o seu Email:</p>
+              <div class="input-group">
+                <i class="fa-solid fa-user"></i>
+                <input id="ipt_email" type="text" placeholder="E-mail" />
+              </div>
+            </div>
+
+            <div>
+              <p>Insira sua senha:</p>
+              <div class="input-group">
+                <i class="fa-solid fa-lock"></i>
+                <input id="ipt_senha" type="password" placeholder="Senha" />
+              </div>
+            </div>
+
+            <button onclick="entrar()">ENTRAR</button>
+          </div>
+
+          <a class="link" href="cadastro.html"
+            >Não possui uma conta? cadastre-se</a
+          >
+          <a class="link" href="./index.html">Voltar à home</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="imagem">
+      <img src="assets/image/LOGIN.png" alt="" />
+    </div>
+    <div class="logo">
+      <img src="assets/image/Logo 1.png" alt="" />
+    </div>
+  </body>
+</html>
+
+<script>
+  function entrar() {
+    var emailVar = ipt_email.value;
+    var senhaVar = ipt_senha.value;
+
+    if (emailVar == "" || senhaVar == "") {
+      alert("Preencha os campos corretamente!");
+      return false;
+    }
+
+    console.log("FORM LOGIN: ", emailVar);
+    console.log("FORM SENHA: ", senhaVar);
+
+    fetch("/usuarios/autenticar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        emailServer: emailVar,
+        senhaServer: senhaVar,
+      }),
+    })
+      .then(function (resposta) {
+        console.log("ESTOU NO THEN DO entrar()!");
+
+        if (resposta.ok) {
+          console.log(resposta);
+          resposta.json().then((json) => {
+            console.log(json);
+            console.log(JSON.stringify(json));
+            sessionStorage.EMAIL_USUARIO = json.email;
+            sessionStorage.NOME_USUARIO = json.nome;
+            sessionStorage.ID_USUARIO = json.id;
+
+            alert("Login efetuado! Pressione OK para continuar");
+
+            setTimeout(function () {
+              window.location = "dashboards/rankingartistas.html";
+            }, 3000);
+          });
+        } else {
+          console.log("Houve um erro ao tentar realizar o login!");
+          alert("Email ou Senha inválidos!");
+
+          resposta.text().then((texto) => {
+            console.error(texto);
+          });
+        }
+      })
+      .catch(function (erro) {
+        console.log(erro);
+      });
+
+    return false;
+  }
+</script>
