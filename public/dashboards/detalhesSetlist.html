@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rock in Rio 2025 - Tech Music</title>
+    <title>Mais curtidos - Tech Music</title>
 
-    <link rel="stylesheet" href="../css/detalhesLineup.css" />
+    <link rel="stylesheet" href="../css/detalhesPlaylist.css" />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
@@ -77,7 +77,7 @@
                 Minhas Lineups
               </a>
             </li>
-            <li>
+            <li >
               <a href="minhaPlaylist.html">
                 <span class="material-symbols-outlined">featured_play_list</span>
                 Minhas playlists
@@ -107,7 +107,7 @@
         <!-- HEADER -->
         <header class="top-header">
           <div class="header-title-block">
-            <h1>Rock in Rio 2025</h1>
+            <h1>Mais curtidos</h1>
             <div class="event-meta">
               <span class="material-symbols-outlined">calendar_month</span>
               <span class="event-date">20 de setembro de 2025</span>
@@ -133,49 +133,70 @@
               </div>
             </div>
 
-            <!-- Distribuição de Gênero -->
+            <!-- Média da Lineup -->
             <div class="info-card">
-              <h2 class="panel-subtitle">Distribuição de gênero</h2>
+              <div class="panel-subtitle-row">
+                <h2 class="panel-subtitle">Média da line-up</h2>
+                <div class="tooltip-wrapper">
+                  <span class="info-icon">i</span>
+                  <div class="tooltip-box tooltip-box--left">
+                    <strong>Energia:</strong> Intensidade e atividade percebida.<br><br>
+                    <strong>Dançabilidade:</strong> Quão adequada é para dançar.<br><br>
+                    <strong>Valência:</strong> Positividade musical transmitida (alegre vs. triste).<br><br>
+                    <strong>Volume:</strong> Nível médio de loudness em decibéis normalizado.<br><br>
+                    <strong>Fala:</strong> Presença de palavras faladas.<br><br>
+                    <strong>Instrumentalidade:</strong> Ausência de vocais — quanto mais alto, mais instrumental.
+                  </div>
+                </div>
+              </div>
               <div class="genre-list">
 
                 <div class="genre-row">
-                  <span class="genre-label">Pop</span>
+                  <span class="genre-label">Energia</span>
                   <div class="genre-bar-track">
-                    <div class="genre-bar" style="width: 100%"></div>
+                    <div class="genre-bar" style="width: 78%"></div>
                   </div>
-                  <span class="genre-qty">3</span>
+                  <span class="genre-qty">MÉDIA</span>
                 </div>
 
                 <div class="genre-row">
-                  <span class="genre-label">Trap</span>
+                  <span class="genre-label">Dançab.</span>
                   <div class="genre-bar-track">
-                    <div class="genre-bar" style="width: 67%"></div>
+                    <div class="genre-bar" style="width: 65%"></div>
                   </div>
-                  <span class="genre-qty">2</span>
+                  <span class="genre-qty">65%</span>
                 </div>
 
                 <div class="genre-row">
-                  <span class="genre-label">Hip-Hop</span>
+                  <span class="genre-label">Valência</span>
                   <div class="genre-bar-track">
-                    <div class="genre-bar" style="width: 67%"></div>
+                    <div class="genre-bar" style="width: 60%"></div>
                   </div>
-                  <span class="genre-qty">2</span>
+                  <span class="genre-qty">60%</span>
                 </div>
 
                 <div class="genre-row">
-                  <span class="genre-label">R&amp;B</span>
+                  <span class="genre-label">Volume</span>
                   <div class="genre-bar-track">
-                    <div class="genre-bar" style="width: 33%"></div>
+                    <div class="genre-bar" style="width: 82%"></div>
                   </div>
-                  <span class="genre-qty">1</span>
+                  <span class="genre-qty">82%</span>
                 </div>
 
                 <div class="genre-row">
-                  <span class="genre-label">Funk</span>
+                  <span class="genre-label">Fala</span>
                   <div class="genre-bar-track">
-                    <div class="genre-bar" style="width: 33%"></div>
+                    <div class="genre-bar" style="width: 55%"></div>
                   </div>
-                  <span class="genre-qty">1</span>
+                  <span class="genre-qty">55%</span>
+                </div>
+
+                <div class="genre-row">
+                  <span class="genre-label">Instrum.</span>
+                  <div class="genre-bar-track">
+                    <div class="genre-bar" style="width: 25%"></div>
+                  </div>
+                  <span class="genre-qty">25%</span>
                 </div>
 
               </div>
@@ -224,16 +245,16 @@
                 <button class="btn-remover">Remover artista</button>
                 <ul>
                   <li>
-                    <span class="artist-atribute">Popularidade</span>
-                    <span class="atribute-value">98</span>
+                    <span class="artist-atribute">Valência</span>
+                    <span class="atribute-value">98%</span>
                   </li>
                   <li>
-                    <span class="artist-atribute">Views</span>
-                    <span class="atribute-value">2.1B</span>
+                    <span class="artist-atribute">Energia</span>
+                    <span class="atribute-value">Baixa</span>
                   </li>
                   <li>
-                    <span class="artist-atribute">Likes</span>
-                    <span class="atribute-value">15M</span>
+                    <span class="artist-atribute">Dançab</span>
+                    <span class="atribute-value">10%</span>
                   </li>
                 </ul>
               </div>
@@ -250,16 +271,16 @@
                 <button class="btn-remover">Remover artista</button>
                 <ul>
                   <li>
-                    <span class="artist-atribute">Popularidade</span>
-                    <span class="atribute-value">95</span>
+                    <span class="artist-atribute">Valência</span>
+                    <span class="atribute-value">30%</span>
                   </li>
                   <li>
-                    <span class="artist-atribute">Views</span>
-                    <span class="atribute-value">1.5B</span>
+                    <span class="artist-atribute">Energia</span>
+                    <span class="atribute-value">Média</span>
                   </li>
                   <li>
-                    <span class="artist-atribute">Likes</span>
-                    <span class="atribute-value">10M</span>
+                    <span class="artist-atribute">Dançab.</span>
+                    <span class="atribute-value">10%</span>
                   </li>
                 </ul>
               </div>
@@ -276,42 +297,54 @@
                 <button class="btn-remover">Remover artista</button>
                 <ul>
                   <li>
-                    <span class="artist-atribute">Popularidade</span>
-                    <span class="atribute-value">96</span>
+                    <span class="artist-atribute">Valência</span>
+                    <span class="atribute-value">Baixa</span>
                   </li>
                   <li>
-                    <span class="artist-atribute">Views</span>
-                    <span class="atribute-value">122M</span>
+                    <span class="artist-atribute">Energia</span>
+                    <span class="atribute-value">Máxima</span>
                   </li>
                   <li>
-                    <span class="artist-atribute">Likes</span>
-                    <span class="atribute-value">96K</span>
+                    <span class="artist-atribute">Dançab.</span>
+                    <span class="atribute-value">96%</span>
                   </li>
                 </ul>
               </div>
 
-              <div class="artist-card">
+              <!-- 4º CARD — OUTLIER -->
+              <div class="artist-card outlier-card">
                 <div class="left-content-group">
                   <span class="ranking-number">4º</span>
-                  <img src="../assets/matue4.webp" alt="Matuê" />
+                  <div class="card-img-wrapper">
+                    <img src="../assets/matue4.webp" alt="Matuê" />
+                    <span class="outlier-badge">!</span>
+                  </div>
                   <div class="artist-info-header">
-                    <span class="artist-name">Matuê</span>
+                    <div class="name-row">
+                      <span class="artist-name">Matuê</span>
+                      <div class="tooltip-wrapper">
+                        <span class="info-icon">i</span>
+                        <div class="tooltip-box">
+                          Esse artista tem uma energia <strong>38% diferente</strong> do restante da line-up, podendo quebrar o fluxo do evento.
+                        </div>
+                      </div>
+                    </div>
                     <span class="genre">Gênero: Trap BR</span>
                   </div>
                 </div>
-                <button class="btn-remover">Remover artista</button>
+                <button class="btn-remover">Remover artista </button>
                 <ul>
                   <li>
-                    <span class="artist-atribute">Popularidade</span>
-                    <span class="atribute-value">94</span>
+                    <span class="artist-atribute">Valência</span>
+                    <span class="atribute-value">24%</span>
                   </li>
                   <li>
-                    <span class="artist-atribute">Views</span>
-                    <span class="atribute-value">450M</span>
+                    <span class="artist-atribute">Energia</span>
+                    <span class="atribute-value">Alta</span>
                   </li>
                   <li>
-                    <span class="artist-atribute">Likes</span>
-                    <span class="atribute-value">1.2M</span>
+                    <span class="artist-atribute">Dançab.</span>
+                    <span class="atribute-value">96%</span>
                   </li>
                 </ul>
               </div>
@@ -328,16 +361,16 @@
                 <button class="btn-remover">Remover artista</button>
                 <ul>
                   <li>
-                    <span class="artist-atribute">Popularidade</span>
-                    <span class="atribute-value">92</span>
+                    <span class="artist-atribute">Valência</span>
+                    <span class="atribute-value">12%</span>
                   </li>
                   <li>
-                    <span class="artist-atribute">Views</span>
-                    <span class="atribute-value">900M</span>
+                    <span class="artist-atribute">Energia</span>
+                    <span class="atribute-value">Média</span>
                   </li>
                   <li>
-                    <span class="artist-atribute">Likes</span>
-                    <span class="atribute-value">8M</span>
+                    <span class="artist-atribute">Dançab.</span>
+                    <span class="atribute-value">96%</span>
                   </li>
                 </ul>
               </div>
@@ -347,23 +380,23 @@
                   <span class="ranking-number">6º</span>
                   <img src="../assets/ab676161000051747635220f042a75ef8b4ffde9.jfif" alt="Ludmilla" />
                   <div class="artist-info-header">
-                    <span class="artist-name">Ludmilla</span>
+                    <span class="artist-name">Dia de Fluxo</span>
                     <span class="genre">Gênero: Funk / Pop</span>
                   </div>
                 </div>
                 <button class="btn-remover">Remover artista</button>
                 <ul>
                   <li>
-                    <span class="artist-atribute">Popularidade</span>
-                    <span class="atribute-value">89</span>
+                    <span class="artist-atribute">Valência</span>
+                    <span class="atribute-value">33%</span>
                   </li>
                   <li>
-                    <span class="artist-atribute">Views</span>
-                    <span class="atribute-value">300M</span>
+                    <span class="artist-atribute">Energia</span>
+                    <span class="atribute-value">Baixa</span>
                   </li>
                   <li>
-                    <span class="artist-atribute">Likes</span>
-                    <span class="atribute-value">500K</span>
+                    <span class="artist-atribute">Dançab.</span>
+                    <span class="atribute-value">25%</span>
                   </li>
                 </ul>
               </div>
@@ -372,6 +405,21 @@
           </div>
 
         </div>
+
+        <!-- FOOTER -->
+        <footer class="data-footer">
+          <span class="footer-label">Fontes dos dados:</span>
+          <a href="https://www.kaggle.com/datasets/salvatorerastelli/spotify-and-youtube" target="_blank" class="footer-link">
+            <span class="material-symbols-outlined">dataset</span>
+            Spotify and YouTube
+          </a>
+          <span class="footer-sep">·</span>
+          <a href="https://www.kaggle.com/datasets/wardabilal/spotify-global-music-dataset-20092025" target="_blank" class="footer-link">
+            <span class="material-symbols-outlined">dataset</span>
+            Spotify Global Music Dataset (2009–2025)
+          </a>
+        </footer>
+
       </main>
     </div>
 
