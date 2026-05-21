@@ -466,7 +466,7 @@
     background-color: white;
     border: 1.5px solid #e0d5f2;
     border-radius: 12px;
-    transition: all 0.3s ease;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
     width: 90%;
     margin: 0 auto;
 }
@@ -474,6 +474,66 @@
 .card:hover {
     border-color: #A855F7;
     box-shadow: 0 4px 12px rgba(168, 85, 247, 0.1);
+}
+
+.add-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    padding: 12px 30px;
+
+    background-color: rgba(248, 244, 255, 0.5); 
+    border: 2px dashed #d6c8ec;
+    box-shadow: none;
+
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    width: 90%;
+    margin: 0 auto;
+    transition: transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;}
+
+/* .add-circle {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background-color: #A855F7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.25s ease, background-color 0.25s ease;
+} */
+
+.add-icon {
+  width: 44px; 
+   height: 44px;
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.85);
+  background-color: #B585E8;
+  border-style: none;
+  font-size: 32px;
+  line-height: 1;
+  transition: color 0.25s ease;
+  transition: transform 0.25s ease, background-color 0.25s ease;
+  cursor: pointer;
+
+}
+.add-card:hover {
+    background-color: rgb(255, 255, 255);
+    border-color: #A855F7;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(168, 85, 247, 0.12);
+}
+
+.add-card:hover .add-icon {
+    transform: scale(1.08);
+    background-color: #A855F7;
+}
+
+.add-card:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(168, 85, 247, 0.1);
 }
 
 .left-content-group {
