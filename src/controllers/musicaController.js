@@ -63,8 +63,31 @@ function detalhes(req, res) {
     });
 }
 
+function search(req, res) {
+  var query = req.query.q;
+  var limit = parseInt(req.query.limit) || 10;
+
+  if (!query || query.trim().length < 2) {
+    return res.status(400).send("Termo de busca deve ter +2 caracteres");
+  }
+
+  if (limit > 50) limit = 50;
+
+  musicaModel.search(query.trim(), limit)
+    .then(function (resultado) {
+      console.log(`\nResultados de busca musicas: ${resultado.length}`);
+      res.status(200).json(resultado);
+    })
+    .catch(function (erro) {
+      console.log(erro);
+      console.log("\nHouve um erro na busca de musicas! Erro: ", erro.sqlMessage);
+      res.status(500).json(erro.sqlMessage);
+    });
+}
+
 module.exports = {
   listar,
   top,
   detalhes,
+  search,
 };

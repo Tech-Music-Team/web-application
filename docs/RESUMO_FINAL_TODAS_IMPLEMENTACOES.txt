@@ -63,9 +63,10 @@ GRUPO 2: DETALHES ARTISTA
 
 GRUPO 3: MÚSICAS
 ✅ GET /musicas/top?sort=track_popularity|streams|views&limit=10000&offset=0
+✅ GET /musicas/search?q=termo&limit=50
 ✅ GET /musicas/{id}/detalhes
 
-TOTAL: 8 endpoints implementados
+TOTAL: 9 endpoints implementados
 
 ================================================================================
 ARQUIVOS DO PROJETO (ATUAL)
@@ -134,13 +135,14 @@ FASES DE IMPLEMENTAÇÃO FASE 3 - STATUS
 ================================================================================
 
 FASE 3.1: ENDPOINTS BACKEND (COMPLETO)
-├─ ✅ /artistas/ranking com offset (já existente, atualizado com paginação)
-├─ ✅ /artistas/search?q=termo (NOVO)
-├─ ✅ /artistas/{id}/perfil (NOVO)
-├─ ✅ /artistas/{id}/musicas?sort&limit&offset (NOVO)
-├─ ✅ /artistas/{id}/features (NOVO)
-├─ ✅ /musicas/top com offset (NOVO)
-└─ ✅ /musicas/{id}/detalhes (NOVO)
+├─ ✅ /artistas/ranking com offset
+├─ ✅ /artistas/search?q=termo
+├─ ✅ /artistas/{id}/perfil
+├─ ✅ /artistas/{id}/musicas?sort&limit&offset
+├─ ✅ /artistas/{id}/features
+├─ ✅ /musicas/top com offset
+├─ ✅ /musicas/search?q=termo
+└─ ✅ /musicas/{id}/detalhes
 
 FASE 3.2: FRONTEND - PAGINAÇÃO (CONCLUÍDO)
 ├─ ✅ rankingartistas.js com paginação 50/página (todos os 649 artistas)
