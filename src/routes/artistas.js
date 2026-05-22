@@ -8,18 +8,34 @@ router.get("/listar", function (req, res) {
     artistaController.listar(req, res);
 });
 
-// Rota para obter imagem do artista via Spotify API
 router.get("/spotify/imagem/:id", function (req, res) {
     spotifyController.obterImagemArtista(req, res);
 });
 
-// NOVA ROTA: Ranking de artistas com sort e limit
 router.get("/ranking", function (req, res) {
     artistaController.ranking(req, res);
 });
 
+// /search ANTES das rotas com :id para evitar captura pelo param
+router.get("/search", function (req, res) {
+    artistaController.search(req, res);
+});
+
+// Rotas com :id vêm depois de todas as rotas fixas
 router.get("/:id/audio", function (req, res) {
     artistaController.audioMedia(req, res);
+});
+
+router.get("/:id/perfil", function (req, res) {
+    artistaController.perfil(req, res);
+});
+
+router.get("/:id/musicas", function (req, res) {
+    artistaController.musicas(req, res);
+});
+
+router.get("/:id/features", function (req, res) {
+    artistaController.features(req, res);
 });
 
 router.get("/:id", function (req, res) {

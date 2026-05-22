@@ -210,23 +210,31 @@ function colorRankingNumbers() {
   });
 }
 
-function filterMusics(searchTerm) {
+async function filterMusics(searchTerm) {
   var term = searchTerm.trim();
 
   if (!term) {
     filteredMusics = [...musics];
     isFiltering = false;
-  } else {
-    filteredMusics = musics.filter(function (musica) {
-      return musica.track.toLowerCase().includes(term.toLowerCase()) ||
-             musica.artist.toLowerCase().includes(term.toLowerCase());
-    });
+    currentPage = 1;
+    renderCards();
+    updateUI();
+    return;
+  }
+
+  try {
+    var response = await fetch('http://localhost:3333/musicas/search?q=' + encodeURIComponent(term) + '&limit=10000');
+    if (!response.ok) throw new Error('Erro na busca: ' + response.status);
+    filteredMusics = await response.json();
     isFiltering = true;
+  } catch (error) {
+    console.error('Erro ao buscar musicas:', error);
+    filteredMusics = [];
   }
 
   currentPage = 1;
 
-  if (filteredMusics.length === 0 && term) {
+  if (filteredMusics.length === 0) {
     document.getElementById('ranking-body').innerHTML =
       '<p style="text-align: center; padding: 40px; color: #999;">Nenhuma musica encontrada para: "' + term + '"</p>';
     document.getElementById('page-info').textContent = 'Nenhum resultado';

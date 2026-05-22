@@ -62,8 +62,33 @@ function getDetalhes(musicaId) {
     return database.executar(instrucao);
 }
 
+function search(searchTerm, limit) {
+    console.log("ACESSEI O MUSICA MODEL - search():");
+
+    var instrucao = `
+        SELECT 
+            m.id_musica as id,
+            m.track,
+            a.nome as artist,
+            a.artist_genre as genre,
+            a.id_artista as artist_id,
+            m.track_popularity as popularity,
+            m.streams,
+            m.views,
+            m.likes
+        FROM musica m
+        JOIN artista a ON m.fk_artista = a.id_artista
+        WHERE m.track LIKE '%${searchTerm}%' OR a.nome LIKE '%${searchTerm}%'
+        ORDER BY m.track_popularity DESC
+        LIMIT ${limit}
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
 module.exports = {
     listar,
     getTop,
-    getDetalhes
+    getDetalhes,
+    search
 };
