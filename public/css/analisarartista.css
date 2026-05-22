@@ -221,6 +221,9 @@
     height: 170px;
     border-radius: 10px;
     object-fit: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .artist-name-big {

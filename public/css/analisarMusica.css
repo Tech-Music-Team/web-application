@@ -110,6 +110,22 @@
     flex-shrink: 0;
 }
 
+.profile-img-placeholder {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #873DE3, #A939CF);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: white;
+}
+
+.profile-img-placeholder .material-symbols-outlined {
+    font-size: 18px;
+}
+
 .user-text {
     display: flex;
     flex-direction: column;

@@ -111,6 +111,22 @@
     flex-shrink: 0;
 }
 
+.profile-img-placeholder {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #873DE3, #A939CF);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: white;
+}
+
+.profile-img-placeholder .material-symbols-outlined {
+    font-size: 18px;
+}
+
 .user-text {
     display: flex;
     flex-direction: column;
@@ -382,4 +398,55 @@
 .details-button:hover {
     background-color: #A855F7;
     color: white;
+}
+
+#pagination-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    padding: 25px 40px;
+    border-top: 1px solid #eee;
+    background-color: white;
+}
+
+.pagination-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border: 1.5px solid #A855F7;
+    border-radius: 8px;
+    background-color: white;
+    color: #A855F7;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Montserrat Alternates', sans-serif;
+}
+
+.pagination-button:hover:not(:disabled) {
+    background-color: #A855F7;
+    color: white;
+    box-shadow: 0 2px 8px rgba(168, 85, 247, 0.2);
+}
+
+.pagination-button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.pagination-button .material-symbols-outlined {
+    font-size: 18px;
+}
+
+.page-indicator {
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-weight: 600;
+    color: #1A0A2E;
+    font-size: 14px;
+    min-width: 150px;
+    text-align: center;
 }

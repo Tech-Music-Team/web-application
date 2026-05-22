@@ -27,14 +27,14 @@ CREATE TABLE musica (
     comments BIGINT DEFAULT 0,
 
     -- FEATURES DE ÁUDIO (0 até 1)
-    danceability DECIMAL(10,5),
-    valence DECIMAL(10,5),
-    energy DECIMAL(10,5),
-    instrumentalness DECIMAL(10,5),
-    speechiness DECIMAL(10,5),
+    danceability DECIMAL(4,3),
+    valence DECIMAL(4,3),
+    energy DECIMAL(4,3),
+    instrumentalness DECIMAL(4,3),
+    speechiness DECIMAL(4,3),
 
-    -- LOUDNESS (-60 até 0 dB)
-    loudness DECIMAL(10,5),
+    -- LOUDNESS
+    loudness DECIMAL(5,3),
 
     -- Popularidade (0 até 100)
     track_popularity INT,

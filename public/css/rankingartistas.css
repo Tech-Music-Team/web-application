@@ -112,6 +112,22 @@
     flex-shrink: 0;
 }
 
+.profile-img-placeholder {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #873DE3, #A939CF);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: white;
+}
+
+.profile-img-placeholder .material-symbols-outlined {
+    font-size: 18px;
+}
+
 .user-text {
     display: flex;
     flex-direction: column;
@@ -383,5 +399,125 @@
 .details-button:hover {
     background-color: #A855F7;
     color: white;
+}
+
+/* ============ PAGINAÇÃO ============ */
+
+#pagination-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    padding: 25px 40px;
+    border-top: 1px solid #eee;
+    background-color: white;
+}
+
+.pagination-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border: 1.5px solid #A855F7;
+    border-radius: 8px;
+    background-color: white;
+    color: #A855F7;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Montserrat Alternates', sans-serif;
+}
+
+.pagination-button:hover:not(:disabled) {
+    background-color: #A855F7;
+    color: white;
+    box-shadow: 0 2px 8px rgba(168, 85, 247, 0.2);
+}
+
+.pagination-button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.pagination-button .material-symbols-outlined {
+    font-size: 18px;
+}
+
+.page-indicator {
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-weight: 600;
+    color: #1A0A2E;
+    font-size: 14px;
+    min-width: 150px;
+    text-align: center;
+}
+
+/* -------- FEATURE 1: BUSCA/FILTRO -------- */
+
+.btn-clear-search {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #666;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s ease;
+}
+
+.btn-clear-search:hover {
+    color: #333;
+}
+
+.btn-clear-search .material-symbols-outlined {
+    font-size: 18px;
+}
+
+/* -------- FEATURE 2: ORDENAÇÃO DINÂMICA -------- */
+
+.sort-label {
+    font-size: 12px;
+    color: #666;
+    font-weight: 600;
+    min-width: 130px;
+    text-align: center;
+    font-family: 'Montserrat Alternates', sans-serif;
+}
+
+.order-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f5f5f5;
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+.order-toggle button {
+    background: white;
+    border: 1px solid #ddd;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+}
+
+.order-toggle button:hover {
+    border-color: #873DE3;
+    color: #873DE3;
+}
+
+.order-toggle button.active {
+    background: #873DE3;
+    color: white;
+    border-color: #873DE3;
+    font-weight: 600;
 }
 

@@ -13,4 +13,9 @@ router.get("/spotify/imagem/:id", function (req, res) {
     spotifyController.obterImagemArtista(req, res);
 });
 
+// NOVA ROTA: Ranking de artistas com sort e limit
+router.get("/ranking", function (req, res) {
+    artistaController.ranking(req, res);
+});
+
 module.exports = router;
