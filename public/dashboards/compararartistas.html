@@ -73,10 +73,10 @@
                 <ul class="menu-group">
                     <li class="menu-header">Pessoal</li>
                     <li>
-              <a href="minhasLineups.html">
-                <span class="material-symbols-outlined">queue_music</span>
-                Minhas Lineups
-              </a>
+                        <a href="minhasLineups.html">
+                            <span class="material-symbols-outlined">queue_music</span>
+                            Minhas Lineups
+                        </a>
                     </li>
                     <li>
                         <a href="minhaPlaylist.html">
@@ -90,10 +90,10 @@
             <div class="user-footer">
                 <div class="user-info">
                     <div class="profile-img-placeholder">
-                      <span class="material-symbols-outlined">account_circle</span>
+                        <span class="material-symbols-outlined">account_circle</span>
                     </div>
                     <div class="user-text">
-                        <p class="user-name">Jorge Luiz</p>
+                        <p class="user-name" id="b_usuario">-</p>
                         <p class="user-role">Organizador de eventos</p>
                     </div>
                 </div>
@@ -105,23 +105,29 @@
                 <h1>Comparar artistas</h1>
             </header>
 
+            <!-- Seleção de artistas -->
             <div class="profile-card">
 
+                <!-- Slot 1 -->
                 <div class="full-artist-info">
-                    <div class="bloquinho clicavel" onclick="abrirSeletor('1')">
+                    <div id="slot-vazio-1" class="bloquinho clicavel slot-vazio" onclick="abrirSeletor('1')">
+                        <span class="material-symbols-outlined">person_add</span>
+                        <span>Clique para selecionar um artista</span>
+                    </div>
+                    <div id="slot-artista-1" class="bloquinho clicavel" onclick="abrirSeletor('1')" style="display:none">
                         <div class="artist-photo-block">
-                            <img id="foto-slot-1" src="../assets/michael.png" alt="artista 1" class="artist-photo" />
+                            <div id="foto-placeholder-1" class="foto-placeholder"></div>
                         </div>
                         <div class="artist-info">
-                            <span id="nome-slot-1" class="artist-name-big">Michael Jackson</span>
+                            <span id="nome-slot-1" class="artist-name-big"></span>
                             <ul class="stats-grid">
                                 <li class="stat-item">
                                     <span class="stat-label">Gênero</span>
-                                    <span id="genero-slot-1" class="stat-value">Pop</span>
+                                    <span id="genero-slot-1" class="stat-value"></span>
                                 </li>
                                 <li class="stat-item">
                                     <span class="stat-label">Popularidade</span>
-                                    <span id="pop-slot-1" class="stat-value">99</span>
+                                    <span id="pop-slot-1" class="stat-value"></span>
                                 </li>
                             </ul>
                         </div>
@@ -132,21 +138,26 @@
                     </button>
                 </div>
 
+                <!-- Slot 2 -->
                 <div class="full-artist-info">
-                    <div class="bloquinho clicavel" onclick="abrirSeletor('2')">
+                    <div id="slot-vazio-2" class="bloquinho clicavel slot-vazio" onclick="abrirSeletor('2')">
+                        <span class="material-symbols-outlined">person_add</span>
+                        <span>Clique para selecionar um artista</span>
+                    </div>
+                    <div id="slot-artista-2" class="bloquinho clicavel" onclick="abrirSeletor('2')" style="display:none">
                         <div class="artist-photo-block">
-                            <img id="foto-slot-2" src="../assets/lisa.png" alt="artista 2" class="artist-photo" />
+                            <div id="foto-placeholder-2" class="foto-placeholder"></div>
                         </div>
                         <div class="artist-info">
-                            <span id="nome-slot-2" class="artist-name-big">Lisa</span>
+                            <span id="nome-slot-2" class="artist-name-big"></span>
                             <ul class="stats-grid">
                                 <li class="stat-item">
                                     <span class="stat-label">Gênero</span>
-                                    <span id="genero-slot-2" class="stat-value">K-Pop</span>
+                                    <span id="genero-slot-2" class="stat-value"></span>
                                 </li>
                                 <li class="stat-item">
                                     <span class="stat-label">Popularidade</span>
-                                    <span id="pop-slot-2" class="stat-value">89</span>
+                                    <span id="pop-slot-2" class="stat-value"></span>
                                 </li>
                             </ul>
                         </div>
@@ -159,295 +170,304 @@
 
             </div>
 
-            <div class="ranking-controls">
-                <div class="tab-toggle">
-                    <button class="tab-btn" data-painel="audio">Áudio</button>
-                    <button class="tab-btn active" data-painel="engajamento">Engajamento</button>
-                </div>
-            </div>
+            <!-- Painéis de comparação (ocultos até ambos selecionados) -->
+            <div id="secao-paineis" style="display:none">
 
-            <!-- PAINEL ÁUDIO -->
-            <div id="painel-audio" class="painel-aba" style="display:none;">
-                <div class="cards-row">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="artist"><span class="dot"></span><span class="nome-comp-1">Michael Jackson</span></div>
-                            <div class="listener"><span class="nome-comp-2">Lisa</span><span class="dot"></span></div>
-                        </div>
-                        <div class="stat-row">
-                            <div class="left">
-                                <span class="value">63</span>
-                                <span class="badge down"><span class="arrow">↓</span>−28%</span>
-                            </div>
-                            <div class="center">
-                                <div class="label">Dançabilidade</div>
-                                <div class="delta">△ −25</div>
-                            </div>
-                            <div class="right">
-                                <span class="value">88</span>
-                                <span class="badge up"><span class="arrow">↑</span>+28%</span>
-                            </div>
-                        </div>
-                        <div class="stat-row">
-                            <div class="left">
-                                <span class="value">75</span>
-                                <span class="badge down"><span class="arrow">↓</span>−11%</span>
-                            </div>
-                            <div class="center">
-                                <div class="label">Energia</div>
-                                <div class="delta">△ −9</div>
-                            </div>
-                            <div class="right">
-                                <span class="value">84</span>
-                                <span class="badge up"><span class="arrow">↑</span>+11%</span>
-                            </div>
-                        </div>
-                        <div class="stat-row">
-                            <div class="left">
-                                <span class="value">−5.8</span>
-                                <span class="badge down"><span class="arrow">↓</span>−29%</span>
-                            </div>
-                            <div class="center">
-                                <div class="label">Volume (dB)</div>
-                                <div class="delta">△ −1.7dB</div>
-                            </div>
-                            <div class="right">
-                                <span class="value">−4.1</span>
-                                <span class="badge up"><span class="arrow">↑</span>+29%</span>
-                            </div>
-                        </div>
-                        <div class="stat-row">
-                            <div class="left">
-                                <span class="value">0.09</span>
-                                <span class="badge down"><span class="arrow">↓</span>−36%</span>
-                            </div>
-                            <div class="center">
-                                <div class="label">Fala</div>
-                                <div class="delta">△ −0.05</div>
-                            </div>
-                            <div class="right">
-                                <span class="value">0.14</span>
-                                <span class="badge up"><span class="arrow">↑</span>+36%</span>
-                            </div>
-                        </div>
-                        <div class="stat-row">
-                            <div class="left">
-                                <span class="value">0.02</span>
-                                <span class="badge up"><span class="arrow">↑</span>+50%</span>
-                            </div>
-                            <div class="center">
-                                <div class="label">Instrumental.</div>
-                                <div class="delta">△ +0.01</div>
-                            </div>
-                            <div class="right">
-                                <span class="value">0.01</span>
-                                <span class="badge down"><span class="arrow">↓</span>−50%</span>
-                            </div>
-                        </div>
-                        <div class="stat-row">
-                            <div class="left">
-                                <span class="value">0.72</span>
-                                <span class="badge up"><span class="arrow">↑</span>+5.9%</span>
-                            </div>
-                            <div class="center">
-                                <div class="label">Positividade</div>
-                                <div class="delta">△ +0.04</div>
-                            </div>
-                            <div class="right">
-                                <span class="value">0.68</span>
-                                <span class="badge down"><span class="arrow">↓</span>−5.9%</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="radar-card">
-                        <div class="radar-card-header">
-                            <span class="radar-card-title">Radar de Áudio</span>
-                            <div class="radar-legenda">
-                                <span class="legenda-item">
-                                    <span class="legenda-linha escuro"></span>
-                                    Michael Jackson
-                                </span>
-                                <span class="legenda-item">
-                                    <span class="legenda-linha claro"></span>
-                                    Lisa
-                                </span>
-                            </div>
-                        </div>
-                        <canvas id="graficoRadar"></canvas>
+                <div class="ranking-controls">
+                    <div class="tab-toggle">
+                        <button class="tab-btn" data-painel="audio">Áudio</button>
+                        <button class="tab-btn active" data-painel="engajamento">Engajamento</button>
                     </div>
                 </div>
-            </div>
 
-            <!-- PAINEL ENGAJAMENTO -->
-            <div id="painel-engajamento" class="painel-aba">
-                <div class="cards-row">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="artist"><span class="dot"></span><span class="nome-comp-1">Michael Jackson</span></div>
-                            <div class="listener"><span class="nome-comp-2">Lisa</span><span class="dot"></span></div>
-                        </div>
-                        <div class="stat-row">
-                            <div class="left">
-                                <span class="value">14.2B</span>
-                                <span class="badge up"><span class="arrow">↑</span>+9.5%</span>
+                <!-- PAINEL ÁUDIO -->
+                <div id="painel-audio" class="painel-aba" style="display:none">
+                    <div class="cards-row">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="artist"><span class="dot"></span><span class="nome-comp-1">-</span></div>
+                                <div class="listener"><span class="nome-comp-2">-</span><span class="dot"></span></div>
                             </div>
-                            <div class="center">
-                                <div class="label">Visualizações</div>
-                                <div class="delta">△ +7</div>
-                            </div>
-                            <div class="right">
-                                <span class="value">8.7B</span>
-                                <span class="badge down"><span class="arrow">↓</span>−9.5%</span>
-                            </div>
-                        </div>
-                        <div class="stat-row">
-                            <div class="left">
-                                <span class="value">1.2B</span>
-                                <span class="badge up"><span class="arrow">↑</span>+7.4%</span>
-                            </div>
-                            <div class="center">
-                                <div class="label">Streams</div>
-                                <div class="delta">△ +5</div>
-                            </div>
-                            <div class="right">
-                                <span class="value">740M</span>
-                                <span class="badge down"><span class="arrow">↓</span>−7.4%</span>
-                            </div>
-                        </div>
-                        <div class="stat-row">
-                            <div class="left">
-                                <span class="value">48M</span>
-                                <span class="badge down"><span class="arrow">↓</span>−24%</span>
-                            </div>
-                            <div class="center">
-                                <div class="label">Curtidas</div>
-                                <div class="delta">△ +19M</div>
-                            </div>
-                            <div class="right">
-                                <span class="value">29M</span>
-                                <span class="badge up"><span class="arrow">↑</span>+24%</span>
-                            </div>
-                        </div>
-                        <div class="stat-row">
-                            <div class="left">
-                                <span class="value">3.4M</span>
-                                <span class="badge up"><span class="arrow">↑</span>+50%</span>
-                            </div>
-                            <div class="center">
-                                <div class="label">Comentários</div>
-                                <div class="delta">△ +1.6M</div>
-                            </div>
-                            <div class="right">
-                                <span class="value">1.8M</span>
-                                <span class="badge down"><span class="arrow">↓</span>−50%</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="engagement-grid">
-                        <div class="eng-card">
-                            <div class="eng-card-top">
-                                <div>
-                                    <span class="eng-title">Engajamento Real</span>
-                                    <span class="eng-formula">(Curtidas+Comentários)÷Visualizações×100</span>
+                            <div class="stat-row">
+                                <div class="left">
+                                    <span id="aud-danceability-val-1" class="value">-</span>
+                                    <span id="aud-danceability-badge-1" class="badge">-</span>
+                                </div>
+                                <div class="center">
+                                    <div class="label">Dançabilidade</div>
+                                    <div id="aud-danceability-delta" class="delta">-</div>
+                                </div>
+                                <div class="right">
+                                    <span id="aud-danceability-val-2" class="value">-</span>
+                                    <span id="aud-danceability-badge-2" class="badge">-</span>
                                 </div>
                             </div>
-                            <p class="eng-desc">% que interagiu ativamente com o conteúdo — além da escuta passiva</p>
-                            <div class="eng-row">
-                                <span class="eng-dot dark"></span>
-                                <span class="eng-name">Michael Jackson</span>
-                                <span class="eng-badge up">↑</span>
-                                <span class="eng-value">4.35%</span>
-                            </div>
-                            <div class="eng-bar-track"><div class="eng-bar dark" style="width: 80%"></div></div>
-                            <div class="eng-row">
-                                <span class="eng-dot light"></span>
-                                <span class="eng-name">Lisa</span>
-                                <span class="eng-badge down">↓</span>
-                                <span class="eng-value">3.36%</span>
-                            </div>
-                            <div class="eng-bar-track"><div class="eng-bar light" style="width: 62%"></div></div>
-                            <span class="eng-delta">△ +0.99pp</span>
-                        </div>
-
-                        <div class="eng-card">
-                            <div class="eng-card-top">
-                                <div>
-                                    <span class="eng-title">Conversão</span>
-                                    <span class="eng-formula">Curtidas ÷ Streams × 100</span>
+                            <div class="stat-row">
+                                <div class="left">
+                                    <span id="aud-energy-val-1" class="value">-</span>
+                                    <span id="aud-energy-badge-1" class="badge">-</span>
+                                </div>
+                                <div class="center">
+                                    <div class="label">Energia</div>
+                                    <div id="aud-energy-delta" class="delta">-</div>
+                                </div>
+                                <div class="right">
+                                    <span id="aud-energy-val-2" class="value">-</span>
+                                    <span id="aud-energy-badge-2" class="badge">-</span>
                                 </div>
                             </div>
-                            <p class="eng-desc">de quem ouviu, quantos curtiram — fidelidade do ouvinte</p>
-                            <div class="eng-row">
-                                <span class="eng-dot dark"></span>
-                                <span class="eng-name">Michael Jackson</span>
-                                <span class="eng-badge neutral">=</span>
-                                <span class="eng-value">0.34%</span>
-                            </div>
-                            <div class="eng-bar-track"><div class="eng-bar dark" style="width: 75%"></div></div>
-                            <div class="eng-row">
-                                <span class="eng-dot light"></span>
-                                <span class="eng-name">Lisa</span>
-                                <span class="eng-badge neutral">=</span>
-                                <span class="eng-value">0.33%</span>
-                            </div>
-                            <div class="eng-bar-track"><div class="eng-bar light" style="width: 73%"></div></div>
-                            <span class="eng-delta">△ ≈igual</span>
-                        </div>
-
-                        <div class="eng-card">
-                            <div class="eng-card-top">
-                                <div>
-                                    <span class="eng-title">Retenção</span>
-                                    <span class="eng-formula">Streams ÷ Visualizações (×)</span>
+                            <div class="stat-row">
+                                <div class="left">
+                                    <span id="aud-loudness-val-1" class="value">-</span>
+                                    <span id="aud-loudness-badge-1" class="badge">-</span>
+                                </div>
+                                <div class="center">
+                                    <div class="label">Volume (dB)</div>
+                                    <div id="aud-loudness-delta" class="delta">-</div>
+                                </div>
+                                <div class="right">
+                                    <span id="aud-loudness-val-2" class="value">-</span>
+                                    <span id="aud-loudness-badge-2" class="badge">-</span>
                                 </div>
                             </div>
-                            <p class="eng-desc">quem viu o clipe voltou a ouvir — conversão clipe→streaming</p>
-                            <div class="eng-row">
-                                <span class="eng-dot dark"></span>
-                                <span class="eng-name">Michael Jackson</span>
-                                <span class="eng-badge neutral">=</span>
-                                <span class="eng-value">11.8×</span>
-                            </div>
-                            <div class="eng-bar-track"><div class="eng-bar dark" style="width: 70%"></div></div>
-                            <div class="eng-row">
-                                <span class="eng-dot light"></span>
-                                <span class="eng-name">Lisa</span>
-                                <span class="eng-badge neutral">=</span>
-                                <span class="eng-value">11.8×</span>
-                            </div>
-                            <div class="eng-bar-track"><div class="eng-bar light" style="width: 70%"></div></div>
-                            <span class="eng-delta">△ idêntico</span>
-                        </div>
-
-                        <div class="eng-card">
-                            <div class="eng-card-top">
-                                <div>
-                                    <span class="eng-title">Discussão</span>
-                                    <span class="eng-formula">Comentários ÷ Streams × 100</span>
+                            <div class="stat-row">
+                                <div class="left">
+                                    <span id="aud-speechiness-val-1" class="value">-</span>
+                                    <span id="aud-speechiness-badge-1" class="badge">-</span>
+                                </div>
+                                <div class="center">
+                                    <div class="label">Fala</div>
+                                    <div id="aud-speechiness-delta" class="delta">-</div>
+                                </div>
+                                <div class="right">
+                                    <span id="aud-speechiness-val-2" class="value">-</span>
+                                    <span id="aud-speechiness-badge-2" class="badge">-</span>
                                 </div>
                             </div>
-                            <p class="eng-desc">proporção que comentou — capacidade de gerar conversa</p>
-                            <div class="eng-row">
-                                <span class="eng-dot dark"></span>
-                                <span class="eng-name">Michael Jackson</span>
-                                <span class="eng-badge up">↑</span>
-                                <span class="eng-value">0.024%</span>
+                            <div class="stat-row">
+                                <div class="left">
+                                    <span id="aud-instrumentalness-val-1" class="value">-</span>
+                                    <span id="aud-instrumentalness-badge-1" class="badge">-</span>
+                                </div>
+                                <div class="center">
+                                    <div class="label">Instrumental.</div>
+                                    <div id="aud-instrumentalness-delta" class="delta">-</div>
+                                </div>
+                                <div class="right">
+                                    <span id="aud-instrumentalness-val-2" class="value">-</span>
+                                    <span id="aud-instrumentalness-badge-2" class="badge">-</span>
+                                </div>
                             </div>
-                            <div class="eng-bar-track"><div class="eng-bar dark" style="width: 78%"></div></div>
-                            <div class="eng-row">
-                                <span class="eng-dot light"></span>
-                                <span class="eng-name">Lisa</span>
-                                <span class="eng-badge down">↓</span>
-                                <span class="eng-value">0.021%</span>
+                            <div class="stat-row">
+                                <div class="left">
+                                    <span id="aud-valence-val-1" class="value">-</span>
+                                    <span id="aud-valence-badge-1" class="badge">-</span>
+                                </div>
+                                <div class="center">
+                                    <div class="label">Positividade</div>
+                                    <div id="aud-valence-delta" class="delta">-</div>
+                                </div>
+                                <div class="right">
+                                    <span id="aud-valence-val-2" class="value">-</span>
+                                    <span id="aud-valence-badge-2" class="badge">-</span>
+                                </div>
                             </div>
-                            <div class="eng-bar-track"><div class="eng-bar light" style="width: 68%"></div></div>
-                            <span class="eng-delta">△ +0.003pp</span>
+                        </div>
+
+                        <div class="radar-card">
+                            <div class="radar-card-header">
+                                <span class="radar-card-title">Radar de Áudio</span>
+                                <div class="radar-legenda">
+                                    <span class="legenda-item">
+                                        <span class="legenda-linha escuro"></span>
+                                        <span class="nome-comp-1">-</span>
+                                    </span>
+                                    <span class="legenda-item">
+                                        <span class="legenda-linha claro"></span>
+                                        <span class="nome-comp-2">-</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <canvas id="graficoRadar"></canvas>
                         </div>
                     </div>
                 </div>
-            </div>
+
+                <!-- PAINEL ENGAJAMENTO -->
+                <div id="painel-engajamento" class="painel-aba">
+                    <div class="cards-row">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="artist"><span class="dot"></span><span class="nome-comp-1">-</span></div>
+                                <div class="listener"><span class="nome-comp-2">-</span><span class="dot"></span></div>
+                            </div>
+                            <div class="stat-row">
+                                <div class="left">
+                                    <span id="eng-views-val-1" class="value">-</span>
+                                    <span id="eng-views-badge-1" class="badge">-</span>
+                                </div>
+                                <div class="center">
+                                    <div class="label">Visualizações</div>
+                                    <div id="eng-views-delta" class="delta">-</div>
+                                </div>
+                                <div class="right">
+                                    <span id="eng-views-val-2" class="value">-</span>
+                                    <span id="eng-views-badge-2" class="badge">-</span>
+                                </div>
+                            </div>
+                            <div class="stat-row">
+                                <div class="left">
+                                    <span id="eng-likes-val-1" class="value">-</span>
+                                    <span id="eng-likes-badge-1" class="badge">-</span>
+                                </div>
+                                <div class="center">
+                                    <div class="label">Curtidas</div>
+                                    <div id="eng-likes-delta" class="delta">-</div>
+                                </div>
+                                <div class="right">
+                                    <span id="eng-likes-val-2" class="value">-</span>
+                                    <span id="eng-likes-badge-2" class="badge">-</span>
+                                </div>
+                            </div>
+                            <div class="stat-row">
+                                <div class="left">
+                                    <span id="eng-followers-val-1" class="value">-</span>
+                                    <span id="eng-followers-badge-1" class="badge">-</span>
+                                </div>
+                                <div class="center">
+                                    <div class="label">Seguidores</div>
+                                    <div id="eng-followers-delta" class="delta">-</div>
+                                </div>
+                                <div class="right">
+                                    <span id="eng-followers-val-2" class="value">-</span>
+                                    <span id="eng-followers-badge-2" class="badge">-</span>
+                                </div>
+                            </div>
+                            <div class="stat-row">
+                                <div class="left">
+                                    <span id="eng-popularity-val-1" class="value">-</span>
+                                    <span id="eng-popularity-badge-1" class="badge">-</span>
+                                </div>
+                                <div class="center">
+                                    <div class="label">Popularidade</div>
+                                    <div id="eng-popularity-delta" class="delta">-</div>
+                                </div>
+                                <div class="right">
+                                    <span id="eng-popularity-val-2" class="value">-</span>
+                                    <span id="eng-popularity-badge-2" class="badge">-</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="engagement-grid">
+                            <!-- Card 1: Taxa de Curtidas -->
+                            <div class="eng-card" id="engcard-taxa-curtidas">
+                                <div class="eng-card-top">
+                                    <div>
+                                        <span class="eng-title">Taxa de Curtidas</span>
+                                        <span class="eng-formula">Curtidas ÷ Visualizações × 100</span>
+                                    </div>
+                                </div>
+                                <p class="eng-desc">% das visualizações que resultaram em curtidas</p>
+                                <div class="eng-row">
+                                    <span class="eng-dot dark"></span>
+                                    <span class="eng-name nome-engcard-1">-</span>
+                                    <span class="eng-badge badge-engcard-1">-</span>
+                                    <span class="eng-value val-engcard-1">-</span>
+                                </div>
+                                <div class="eng-bar-track"><div class="eng-bar dark bar-engcard-1" style="width:0%"></div></div>
+                                <div class="eng-row">
+                                    <span class="eng-dot light"></span>
+                                    <span class="eng-name nome-engcard-2">-</span>
+                                    <span class="eng-badge badge-engcard-2">-</span>
+                                    <span class="eng-value val-engcard-2">-</span>
+                                </div>
+                                <div class="eng-bar-track"><div class="eng-bar light bar-engcard-2" style="width:0%"></div></div>
+                                <span class="eng-delta delta-engcard">-</span>
+                            </div>
+
+                            <!-- Card 2: Lealdade -->
+                            <div class="eng-card" id="engcard-lealdade">
+                                <div class="eng-card-top">
+                                    <div>
+                                        <span class="eng-title">Lealdade</span>
+                                        <span class="eng-formula">Curtidas ÷ Seguidores × 100</span>
+                                    </div>
+                                </div>
+                                <p class="eng-desc">% dos seguidores que efetivamente curtiu</p>
+                                <div class="eng-row">
+                                    <span class="eng-dot dark"></span>
+                                    <span class="eng-name nome-engcard-1">-</span>
+                                    <span class="eng-badge badge-engcard-1">-</span>
+                                    <span class="eng-value val-engcard-1">-</span>
+                                </div>
+                                <div class="eng-bar-track"><div class="eng-bar dark bar-engcard-1" style="width:0%"></div></div>
+                                <div class="eng-row">
+                                    <span class="eng-dot light"></span>
+                                    <span class="eng-name nome-engcard-2">-</span>
+                                    <span class="eng-badge badge-engcard-2">-</span>
+                                    <span class="eng-value val-engcard-2">-</span>
+                                </div>
+                                <div class="eng-bar-track"><div class="eng-bar light bar-engcard-2" style="width:0%"></div></div>
+                                <span class="eng-delta delta-engcard">-</span>
+                            </div>
+
+                            <!-- Card 3: Popularidade -->
+                            <div class="eng-card" id="engcard-score">
+                                <div class="eng-card-top">
+                                    <div>
+                                        <span class="eng-title">Popularidade</span>
+                                        <span class="eng-formula">Score Spotify (0–100)</span>
+                                    </div>
+                                </div>
+                                <p class="eng-desc">pontuação de popularidade calculada pelo Spotify</p>
+                                <div class="eng-row">
+                                    <span class="eng-dot dark"></span>
+                                    <span class="eng-name nome-engcard-1">-</span>
+                                    <span class="eng-badge badge-engcard-1">-</span>
+                                    <span class="eng-value val-engcard-1">-</span>
+                                </div>
+                                <div class="eng-bar-track"><div class="eng-bar dark bar-engcard-1" style="width:0%"></div></div>
+                                <div class="eng-row">
+                                    <span class="eng-dot light"></span>
+                                    <span class="eng-name nome-engcard-2">-</span>
+                                    <span class="eng-badge badge-engcard-2">-</span>
+                                    <span class="eng-value val-engcard-2">-</span>
+                                </div>
+                                <div class="eng-bar-track"><div class="eng-bar light bar-engcard-2" style="width:0%"></div></div>
+                                <span class="eng-delta delta-engcard">-</span>
+                            </div>
+
+                            <!-- Card 4: Views por Seguidor -->
+                            <div class="eng-card" id="engcard-views-seguidor">
+                                <div class="eng-card-top">
+                                    <div>
+                                        <span class="eng-title">Views/Seguidor</span>
+                                        <span class="eng-formula">Visualizações ÷ Seguidores</span>
+                                    </div>
+                                </div>
+                                <p class="eng-desc">quantas views o artista gera por seguidor</p>
+                                <div class="eng-row">
+                                    <span class="eng-dot dark"></span>
+                                    <span class="eng-name nome-engcard-1">-</span>
+                                    <span class="eng-badge badge-engcard-1">-</span>
+                                    <span class="eng-value val-engcard-1">-</span>
+                                </div>
+                                <div class="eng-bar-track"><div class="eng-bar dark bar-engcard-1" style="width:0%"></div></div>
+                                <div class="eng-row">
+                                    <span class="eng-dot light"></span>
+                                    <span class="eng-name nome-engcard-2">-</span>
+                                    <span class="eng-badge badge-engcard-2">-</span>
+                                    <span class="eng-value val-engcard-2">-</span>
+                                </div>
+                                <div class="eng-bar-track"><div class="eng-bar light bar-engcard-2" style="width:0%"></div></div>
+                                <span class="eng-delta delta-engcard">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /secao-paineis -->
         </main>
     </div>
 
@@ -469,129 +489,7 @@
         </div>
     </div>
 
-    <script>
-        var artistas = [
-            { nome: 'Michael Jackson', genero: 'Pop',     popularidade: 99, imagem: '../assets/michael.png' },
-            { nome: 'Lisa',            genero: 'K-Pop',   popularidade: 89, imagem: '../assets/lisa.png'    },
-            { nome: 'Taylor Swift',    genero: 'Pop',     popularidade: 95, imagem: null },
-            { nome: 'The Weeknd',      genero: 'R&B',     popularidade: 92, imagem: null },
-            { nome: 'Drake',           genero: 'Rap/R&B', popularidade: 94, imagem: null },
-            { nome: 'Beyoncé',         genero: 'R&B',     popularidade: 93, imagem: null },
-            { nome: 'Ariana Grande',   genero: 'Pop',     popularidade: 91, imagem: null },
-            { nome: 'Eminem',          genero: 'Rap',     popularidade: 88, imagem: null },
-        ];
-
-        var slotAtivo = null;
-        var coresPosicao = ['#D4AF37', '#A8A9AD', '#CD7F32'];
-
-        function filtrarLista() {
-            var termo = document.getElementById('input-busca').value.toLowerCase();
-            document.querySelectorAll('#lista-selecao .item-selecao').forEach(function(item) {
-                var nome = item.querySelector('.item-nome').textContent.toLowerCase();
-                item.style.display = nome.includes(termo) ? 'flex' : 'none';
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('input-busca').addEventListener('input', filtrarLista);
-        });
-
-        function abrirSeletor(slot) {
-            slotAtivo = slot;
-            document.getElementById('input-busca').value = '';
-            var lista = document.getElementById('lista-selecao');
-            lista.innerHTML = '';
-            artistas.forEach(function(a, i) {
-                var item = document.createElement('div');
-                item.className = 'item-selecao';
-                var cor = coresPosicao[i] || '#A855F7';
-                item.innerHTML =
-                    '<span class="item-pos" style="color:' + cor + '">' + (i + 1) + 'º</span>' +
-                    '<span class="item-nome">' + a.nome + '</span>' +
-                    '<span class="item-genero-badge">' + a.genero + '</span>' +
-                    '<span class="item-popularidade">' + a.popularidade + '</span>';
-                item.addEventListener('click', function() { selecionarArtista(a); });
-                lista.appendChild(item);
-            });
-            document.getElementById('modal-fundo').style.display = 'flex';
-        }
-
-        function selecionarArtista(artista) {
-            document.getElementById('nome-slot-' + slotAtivo).textContent = artista.nome;
-            document.getElementById('genero-slot-' + slotAtivo).textContent = artista.genero;
-            document.getElementById('pop-slot-' + slotAtivo).textContent = artista.popularidade;
-            if (artista.imagem) {
-                document.getElementById('foto-slot-' + slotAtivo).src = artista.imagem;
-            }
-            document.querySelectorAll('.nome-comp-' + slotAtivo).forEach(function(el) {
-                el.textContent = artista.nome;
-            });
-            fecharModal();
-        }
-
-        function fecharModal() {
-            document.getElementById('modal-fundo').style.display = 'none';
-        }
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') fecharModal();
-        });
-
-        // Troca de abas
-        var graficoIniciado = false;
-        document.querySelectorAll('.tab-btn').forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
-                this.classList.add('active');
-                document.querySelectorAll('.painel-aba').forEach(function(p) { p.style.display = 'none'; });
-                document.getElementById('painel-' + this.dataset.painel).style.display = 'block';
-                if (this.dataset.painel === 'audio') iniciarGrafico();
-            });
-        });
-
-        function iniciarGrafico() {
-            if (graficoIniciado) return;
-            graficoIniciado = true;
-            var ctx = document.getElementById('graficoRadar').getContext('2d');
-            new Chart(ctx, {
-                type: 'radar',
-                data: {
-                    labels: ['Energia', 'Dançab.', 'Volume', 'Fala', 'Instrum.', 'Positiv.'],
-                    datasets: [
-                        {
-                            label: 'Michael Jackson',
-                            data: [75, 63, -5.8, 9, 2, 72],
-                            borderColor: '#1A0A2E',
-                            backgroundColor: 'rgba(59, 31, 168, 0.15)',
-                            borderWidth: 2,
-                            pointRadius: 2
-                        },
-                        {
-                            label: 'Lisa',
-                            data: [84, 88, -4.1, 14, 1, 68],
-                            borderColor: '#A855F7',
-                            backgroundColor: 'rgba(168, 85, 247, 0.15)',
-                            borderWidth: 2,
-                            pointRadius: 2
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        r: {
-                            min: -10,
-                            max: 100,
-                            ticks: { display: false },
-                            pointLabels: { font: { size: 11 }, color: '#888' },
-                            grid: { color: 'rgba(168, 85, 247, 0.25)' },
-                            angleLines: { color: 'rgba(168, 85, 247, 0.15)' }
-                        }
-                    }
-                }
-            });
-        }
-    </script>
+    <script src="../js/sessao.js"></script>
+    <script src="../js/compararartistas.js"></script>
 </body>
 </html>

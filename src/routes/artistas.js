@@ -18,4 +18,12 @@ router.get("/ranking", function (req, res) {
     artistaController.ranking(req, res);
 });
 
+router.get("/:id/audio", function (req, res) {
+    artistaController.audioMedia(req, res);
+});
+
+router.get("/:id", function (req, res) {
+    artistaController.detalhar(req, res);
+});
+
 module.exports = router;

@@ -9,7 +9,7 @@ var mySqlConfig = {
   port: process.env.DB_PORT,
 };
 
-function executar(instrucao) {
+function executar(instrucao, valores) {
   if (
     process.env.AMBIENTE_PROCESSO !== "producao" &&
     process.env.AMBIENTE_PROCESSO !== "desenvolvimento"
@@ -23,14 +23,19 @@ function executar(instrucao) {
   return new Promise(function (resolve, reject) {
     var conexao = mysql.createConnection(mySqlConfig);
     conexao.connect();
-    conexao.query(instrucao, function (erro, resultados) {
+    var callback = function (erro, resultados) {
       conexao.end();
       if (erro) {
         reject(erro);
       }
       console.log(resultados);
       resolve(resultados);
-    });
+    };
+    if (valores) {
+      conexao.query(instrucao, valores, callback);
+    } else {
+      conexao.query(instrucao, callback);
+    }
     conexao.on("error", function (erro) {
       return ("ERRO NO MySQL SERVER: ", erro.sqlMessage);
     });

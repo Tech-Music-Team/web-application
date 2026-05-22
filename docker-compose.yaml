@@ -25,12 +25,12 @@ services:
       - db_data:/var/lib/mysql
       - ./src/database/comandos-DDL.sql:/docker-entrypoint-initdb.d/01-ddl.sql
       - ./src/database/comandos-DML.sql:/docker-entrypoint-initdb.d/02-dml.sql
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-pp0o9i8u7"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 30s
+    # healthcheck:
+    #   test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-pp0o9i8u7"]
+    #   interval: 10s
+    #   timeout: 5s
+    #   retries: 5
+    #   start_period: 30s
 
   jar:
     depends_on:

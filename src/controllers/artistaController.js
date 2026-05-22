@@ -46,7 +46,44 @@ function ranking(req, res) {
     });
 }
 
+function detalhar(req, res) {
+  var id = parseInt(req.params.id);
+  if (isNaN(id)) {
+    return res.status(400).json('ID inválido');
+  }
+
+  artistaModel.getById(id)
+    .then(function (resultado) {
+      if (resultado.length === 0) {
+        return res.status(404).json('Artista não encontrado');
+      }
+      res.status(200).json(resultado[0]);
+    })
+    .catch(function (erro) {
+      console.log(erro);
+      res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function audioMedia(req, res) {
+  var id = parseInt(req.params.id);
+  if (isNaN(id)) {
+    return res.status(400).json('ID inválido');
+  }
+
+  artistaModel.getAudioMedia(id)
+    .then(function (resultado) {
+      res.status(200).json(resultado[0]);
+    })
+    .catch(function (erro) {
+      console.log(erro);
+      res.status(500).json(erro.sqlMessage);
+    });
+}
+
 module.exports = {
   listar,
   ranking,
+  detalhar,
+  audioMedia,
 };
