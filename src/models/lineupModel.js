@@ -95,6 +95,23 @@ function atualizarStatusPorData() {
     return database.executar(instrucao);
 }
 
+function getAggregatedFeatures(lineupId) {
+    var instrucao = `
+        SELECT
+            COALESCE(ROUND(AVG(m.energy), 3), 0) as energy,
+            COALESCE(ROUND(AVG(m.danceability), 3), 0) as danceability,
+            COALESCE(ROUND(AVG(m.valence), 3), 0) as valence,
+            COALESCE(ROUND(AVG(m.loudness), 2), 0) as loudness,
+            COALESCE(ROUND(AVG(m.speechiness), 3), 0) as speechiness,
+            COALESCE(ROUND(AVG(m.instrumentalness), 3), 0) as instrumentalness
+        FROM artista_lineup al
+        LEFT JOIN musica m ON m.fk_artista = al.fk_artista
+        WHERE al.fk_lineup = ${lineupId}
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
 module.exports = {
     listar,
     listarPorId,
@@ -103,5 +120,6 @@ module.exports = {
     atualizarStatusPorData,
     adicionarArtista,
     removerArtista,
-    deletar
+    deletar,
+    getAggregatedFeatures
 };

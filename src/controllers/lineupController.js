@@ -29,7 +29,9 @@ function detalhes(req, res) {
         return res.status(400).send("ID invalido");
     }
 
-    lineupModel.listarPorId(id)
+    var lineupId = id;
+
+    lineupModel.listarPorId(lineupId)
         .then(function (resultado) {
             if (!resultado || resultado.length === 0) {
                 return res.status(404).send("Lineup nao encontrada");
@@ -48,7 +50,15 @@ function detalhes(req, res) {
                     };
                 }) : []
             };
-            res.status(200).json(lineup);
+            return lineupModel.getAggregatedFeatures(lineupId)
+                .then(function (featuresResult) {
+                    if (featuresResult && featuresResult.length > 0) {
+                        lineup.features = featuresResult[0];
+                    } else {
+                        lineup.features = null;
+                    }
+                    res.status(200).json(lineup);
+                });
         })
         .catch(function (erro) {
             console.log(erro);

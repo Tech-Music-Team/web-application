@@ -29,9 +29,18 @@ async function carregarLineup() {
         lineupData = await response.json();
         artistas = lineupData.artistas || [];
         artistasFiltrados = artistas.slice();
+
+        await Promise.all(artistas.map(function (a) {
+            return fetch('http://localhost:3333/artistas/' + a.id + '/features')
+                .then(function (r) { return r.json(); })
+                .then(function (f) { a.audioFeatures = f; })
+                .catch(function () { a.audioFeatures = null; });
+        }));
+
         renderizarCabecalho();
         renderizarArtistas();
         renderizarGraficoRadar();
+        renderizarMediaLineup();
     } catch (e) {
         console.error('Erro ao carregar lineup:', e);
         document.getElementById('lineup-nome').textContent = 'Erro ao carregar';
@@ -242,12 +251,19 @@ function renderizarGraficoRadar() {
     var ctx = document.getElementById('radarChart');
     if (!ctx) return;
 
-    var labels = ['Popularidade', 'Energia', 'Dançabilidade', 'Valência', 'Volume', 'Instrumentalidade'];
+    var labels = ['Energia', 'Dançabilidade', 'Valência', 'Volume', 'Fala', 'Instrumentalidade'];
     var dados = [50, 50, 50, 50, 50, 50];
 
-    if (artistas.length > 0) {
-        var mediaPop = artistas.reduce(function (s, a) { return s + (a.popularity || 0); }, 0) / artistas.length;
-        dados[0] = Math.round(mediaPop);
+    var f = lineupData.features;
+    if (f) {
+        dados = [
+            Math.round((f.energy || 0) * 100),
+            Math.round((f.danceability || 0) * 100),
+            Math.round((f.valence || 0) * 100),
+            Math.min(100, Math.max(0, Math.round((f.loudness || -60) + 60))),
+            Math.round((f.speechiness || 0) * 100),
+            Math.round((f.instrumentalness || 0) * 100),
+        ];
     }
 
     if (radarChart) radarChart.destroy();
@@ -279,4 +295,46 @@ function renderizarGraficoRadar() {
             },
         },
     });
+}
+
+function renderizarMediaLineup() {
+    var container = document.getElementById('media-lineup');
+    if (!container) return;
+
+    var f = lineupData.features;
+    if (!f || artistas.length === 0) {
+        container.innerHTML = '<p style="color:#999;font-size:13px;">Adicione artistas para ver a m\u00E9dia.</p>';
+        return;
+    }
+
+    var energy = parseFloat(f.energy) || 0;
+    var dance = parseFloat(f.danceability) || 0;
+    var valence = parseFloat(f.valence) || 0;
+    var loudnessNorm = Math.min(1, Math.max(0, ((parseFloat(f.loudness) || -60) + 60) / 100));
+    var speech = parseFloat(f.speechiness) || 0;
+    var instrumental = parseFloat(f.instrumentalness) || 0;
+
+    var barras = [
+        { label: 'Energia', value: energy },
+        { label: 'Dan\u00E7ab.', value: dance },
+        { label: 'Val\u00EAncia', value: valence },
+        { label: 'Volume', value: loudnessNorm },
+        { label: 'Fala', value: speech },
+        { label: 'Instrum.', value: instrumental }
+    ];
+
+    var html = '';
+    barras.forEach(function (barra) {
+        var pct = Math.round(barra.value * 100);
+        html +=
+            '<div class="genre-row">' +
+                '<span class="genre-label">' + barra.label + '</span>' +
+                '<div class="genre-bar-track">' +
+                    '<div class="genre-bar" style="width: ' + pct + '%"></div>' +
+                '</div>' +
+                '<span class="genre-qty">' + pct + '%</span>' +
+            '</div>';
+    });
+
+    container.innerHTML = html;
 }

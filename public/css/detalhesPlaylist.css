@@ -2,11 +2,15 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 .material-symbols-outlined {
-  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 400,
+    "GRAD" 0,
+    "opsz" 24;
 }
 
 /* ===================== CONTAINER ===================== */
@@ -21,116 +25,116 @@
 /* ===================== SIDEBAR ===================== */
 
 .left-column {
-    width: 260px;
-    background: linear-gradient(to bottom, #1A0A2E 0%, #210B3C 100%);
-    color: white;
-    display: flex;
-    flex-direction: column;
-    padding: 30px 20px;
-    flex-shrink: 0;
-    height: 100%;
+  width: 260px;
+  background: linear-gradient(to bottom, #1a0a2e 0%, #210b3c 100%);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 30px 20px;
+  flex-shrink: 0;
+  height: 100%;
 }
 
 .left-column ul {
-    list-style: none;
+  list-style: none;
 }
 
 .left-column a {
-    text-decoration: none;
-    color: inherit;
+  text-decoration: none;
+  color: inherit;
 }
 
 .logo-tipo {
-    font-family: 'Montserrat Alternates', sans-serif;
+  font-family: "Montserrat Alternates", sans-serif;
 }
 
 .menu-nav {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    margin-top: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 20px;
 }
 
 .menu-group {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .menu-group li a {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 3px 0;
-    font-size: 14px;
-    font-weight: 450;
-    color: #b3b3b3;
-    transition: 0.3s ease;
-    font-family: 'Montserrat Alternates', sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 3px 0;
+  font-size: 14px;
+  font-weight: 450;
+  color: #b3b3b3;
+  transition: 0.3s ease;
+  font-family: "Montserrat Alternates", sans-serif;
 }
 
 .menu-group li.active a {
-    color: white;
-    font-weight: bold;
+  color: white;
+  font-weight: bold;
 }
 
 .menu-header {
-    font-size: 12px;
-    font-weight: bold;
-    text-transform: uppercase;
-    color: white;
-    margin-bottom: 3px;
-    font-family: 'Montserrat Alternates', sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: white;
+  margin-bottom: 3px;
+  font-family: "Montserrat Alternates", sans-serif;
 }
 
 .user-footer {
-    margin-top: auto;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 20px 10px 10px 10px;
-    width: 100%;
+  margin-top: auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 20px 10px 10px 10px;
+  width: 100%;
 }
 
 .user-info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: linear-gradient(to right, #4A227D, #873DE3);
-    padding: 6px 12px;
-    border-radius: 50px;
-    width: fit-content;
-    max-width: 100%;
-    transition: background 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(to right, #4a227d, #873de3);
+  padding: 6px 12px;
+  border-radius: 50px;
+  width: fit-content;
+  max-width: 100%;
+  transition: background 0.3s ease;
 }
 
 .profile-img {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    object-fit: cover;
-    background-color: #B585E8;
-    flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: #b585e8;
+  flex-shrink: 0;
 }
 
 .user-text {
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .user-name {
-    font-weight: 700;
-    font-size: 12px;
-    color: white;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-family: 'Montserrat Alternates', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: "Montserrat Alternates", sans-serif;
 }
 
 .user-role {
-    font-size: 10px;
-    color: #E9D5FF;
-    white-space: nowrap;
-    font-family: 'Montserrat Alternates', sans-serif;
+  font-size: 10px;
+  color: #e9d5ff;
+  white-space: nowrap;
+  font-family: "Montserrat Alternates", sans-serif;
 }
 
 /* ===================== MAIN ===================== */
@@ -159,10 +163,10 @@
 }
 
 .top-header h1 {
-  font-family: 'Montserrat Alternates', sans-serif;
+  font-family: "Montserrat Alternates", sans-serif;
   font-size: 24px;
   font-weight: 700;
-  color: #1A0A2E;
+  color: #1a0a2e;
 }
 
 .event-meta {
@@ -173,7 +177,7 @@
 
 .event-meta .material-symbols-outlined {
   font-size: 15px;
-  color: #A855F7;
+  color: #a855f7;
 }
 
 .event-date {
@@ -220,9 +224,16 @@
   border-right: 1px solid #e0d5f2;
 }
 
-.panel-left::-webkit-scrollbar { width: 4px; }
-.panel-left::-webkit-scrollbar-track { background: transparent; }
-.panel-left::-webkit-scrollbar-thumb { background: #e0d5f2; border-radius: 4px; }
+.panel-left::-webkit-scrollbar {
+  width: 4px;
+}
+.panel-left::-webkit-scrollbar-track {
+  background: transparent;
+}
+.panel-left::-webkit-scrollbar-thumb {
+  background: #e0d5f2;
+  border-radius: 4px;
+}
 
 .info-card {
   background-color: white;
@@ -232,10 +243,10 @@
 }
 
 .panel-subtitle {
-  font-family: 'Montserrat Alternates', sans-serif;
+  font-family: "Montserrat Alternates", sans-serif;
   font-size: 14px;
   font-weight: 700;
-  color: #1A0A2E;
+  color: #1a0a2e;
   margin-bottom: 14px;
 }
 
@@ -270,7 +281,7 @@
 .genre-label {
   font-size: 12px;
   font-weight: 600;
-  color: #1A0A2E;
+  color: #1a0a2e;
   width: 58px;
   flex-shrink: 0;
 }
@@ -285,14 +296,14 @@
 
 .genre-bar {
   height: 100%;
-  background: linear-gradient(to right, #A939CF, #D421BF);
+  background: linear-gradient(to right, #a939cf, #d421bf);
   border-radius: 4px;
 }
 
 .genre-qty {
   font-size: 12px;
   font-weight: 700;
-  color: #A855F7;
+  color: #a855f7;
   width: 32px;
   text-align: right;
   flex-shrink: 0;
@@ -341,7 +352,7 @@
 .btn-pesquisar {
   background: none;
   border: none;
-  color: #A855F7;
+  color: #a855f7;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -359,18 +370,20 @@
   border: 1px solid #e0d5f2;
   border-radius: 8px;
   padding: 6px 10px;
-  color: #A855F7;
+  color: #a855f7;
   font-weight: 500;
   font-size: 13px;
   cursor: pointer;
   transition: 0.2s ease;
 }
 
-.btn-filtrar:hover { background-color: #f8f4ff; }
+.btn-filtrar:hover {
+  background-color: #f8f4ff;
+}
 
 .order-toggle {
   display: flex;
-  border: 1px solid #A855F7;
+  border: 1px solid #a855f7;
   border-radius: 8px;
   overflow: hidden;
 }
@@ -378,7 +391,7 @@
 .order-toggle button {
   background-color: white;
   border: none;
-  color: #A855F7;
+  color: #a855f7;
   padding: 6px 10px;
   cursor: pointer;
   display: flex;
@@ -387,13 +400,17 @@
 }
 
 .order-toggle button.active {
-  background-color: #A855F7;
+  background-color: #a855f7;
   color: white;
 }
 
-.order-toggle button:not(.active):hover { background-color: #f8f4ff; }
+.order-toggle button:not(.active):hover {
+  background-color: #f8f4ff;
+}
 
-.right-controls .material-symbols-outlined { font-size: 18px; }
+.right-controls .material-symbols-outlined {
+  font-size: 18px;
+}
 
 /* --- Lista de artistas --- */
 
@@ -406,9 +423,16 @@
   gap: 10px;
 }
 
-.setlist-artist-list::-webkit-scrollbar { width: 4px; }
-.setlist-artist-list::-webkit-scrollbar-track { background: transparent; }
-.setlist-artist-list::-webkit-scrollbar-thumb { background: #e0d5f2; border-radius: 4px; }
+.setlist-artist-list::-webkit-scrollbar {
+  width: 4px;
+}
+.setlist-artist-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+.setlist-artist-list::-webkit-scrollbar-thumb {
+  background: #e0d5f2;
+  border-radius: 4px;
+}
 
 /* --- Card reduzido --- */
 
@@ -424,7 +448,7 @@
 }
 
 .artist-card:hover {
-  border-color: #A855F7;
+  border-color: #a855f7;
   box-shadow: 0 4px 12px rgba(168, 85, 247, 0.1);
 }
 
@@ -460,7 +484,7 @@
 .artist-name {
   font-size: 15px;
   font-weight: 700;
-  color: #1A0A2E;
+  color: #1a0a2e;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -508,10 +532,10 @@
 
 .artist-atribute {
   font-size: 9px;
-  color: #A855F7;
+  color: #a855f7;
   font-weight: 500;
   text-transform: uppercase;
-  border-bottom: 1px solid #A855F7;
+  border-bottom: 1px solid #a855f7;
   padding-bottom: 2px;
 }
 
@@ -519,7 +543,7 @@
   font-size: 10px;
   font-weight: 600;
   color: white;
-  background-color: #A855F7;
+  background-color: #a855f7;
   padding: 2px 8px;
   border-radius: 20px;
   margin-top: 2px;
@@ -602,8 +626,8 @@
   width: 15px;
   height: 15px;
   border-radius: 50%;
-  border: 1.5px solid #A855F7;
-  color: #A855F7;
+  border: 1.5px solid #a855f7;
+  color: #a855f7;
   font-size: 9px;
   font-weight: 700;
   font-style: italic;
@@ -621,22 +645,22 @@
 .tooltip-box {
   display: none;
   position: absolute;
-  bottom: calc(100% + 8px);
+  top: calc(100% + 6px);
   left: 50%;
   transform: translateX(-50%);
-  background-color: #1A0A2E;
+  background-color: #1a0a2e;
   color: #e5e7eb;
   font-size: 11px;
   line-height: 1.5;
   padding: 10px 12px;
   border-radius: 8px;
-  width: 220px;
-  z-index: 100;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+  width: 150px;
+  z-index: 999;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
 }
 
 .tooltip-box--left {
-  left: center;
+  left: auto;
   right: 0;
   transform: none;
 }
@@ -672,15 +696,19 @@
   align-items: center;
   gap: 4px;
   font-size: 11px;
-  color: #A855F7;
+  color: #a855f7;
   text-decoration: none;
   font-weight: 500;
   transition: opacity 0.2s;
 }
 
-.footer-link:hover { opacity: 0.7; }
+.footer-link:hover {
+  opacity: 0.7;
+}
 
-.footer-link .material-symbols-outlined { font-size: 14px; }
+.footer-link .material-symbols-outlined {
+  font-size: 14px;
+}
 
 .footer-sep {
   color: #ccc;
@@ -717,10 +745,10 @@
 }
 
 .modal-titulo {
-  font-family: 'Montserrat Alternates', sans-serif;
+  font-family: "Montserrat Alternates", sans-serif;
   font-size: 18px;
   font-weight: 700;
-  color: #1A0A2E;
+  color: #1a0a2e;
 }
 
 .modal-fechar {
@@ -733,7 +761,7 @@
 }
 
 .modal-fechar:hover {
-  color: #A855F7;
+  color: #a855f7;
 }
 
 .modal-corpo {
@@ -758,7 +786,7 @@
 }
 
 .modal-input:focus {
-  border-color: #A855F7;
+  border-color: #a855f7;
 }
 
 .modal-acoes {
@@ -782,14 +810,14 @@
 
 .btn-cancelar:hover {
   background: #f8f4ff;
-  border-color: #A855F7;
+  border-color: #a855f7;
 }
 
 .btn-confirmar {
   padding: 8px 20px;
   border: none;
   border-radius: 25px;
-  background: linear-gradient(135deg, #A855F7, #7C3AED);
+  background: linear-gradient(135deg, #a855f7, #7c3aed);
   color: white;
   font-weight: 600;
   font-size: 13px;
@@ -818,36 +846,36 @@
 }
 
 .btn-voltar:hover {
-  border-color: #A855F7;
-  color: #A855F7;
+  border-color: #a855f7;
+  color: #a855f7;
   background: #f8f4ff;
 }
 
 .btn-voltar .material-symbols-outlined {
-    font-size: 18px;
+  font-size: 18px;
 }
 
 .playlist-meta {
-    font-size: 12px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .status-pendente {
-    color: #f59e0b;
-    font-weight: 600;
-    font-size: 12px;
-    display: inline-flex;
-    align-items: center;
-    gap: 2px;
+  color: #f59e0b;
+  font-weight: 600;
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
 }
 
 .status-realizado {
-    color: #10b981;
-    font-weight: 600;
-    font-size: 12px;
-    display: inline-flex;
-    align-items: center;
-    gap: 2px;
+  color: #10b981;
+  font-weight: 600;
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
 }
