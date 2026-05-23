@@ -88,6 +88,9 @@ function renderCards() {
           </li>
         </ul>
         <div class="right-content-group">
+          <button class="btn-add-setlist" data-musica-id="${musica.id}" data-musica-name="${musica.track}" title="Adicionar a playlist">
+            <span class="material-symbols-outlined">playlist_add</span>
+          </button>
           <button class="details-button" data-musica-id="${musica.id}">Detalhes da musica</button>
         </div>
       </div>
@@ -167,6 +170,16 @@ function attachEventListeners() {
   }
 
   document.getElementById('ranking-body').addEventListener('click', function (e) {
+    var btnSetlist = e.target.closest('.btn-add-setlist');
+    if (btnSetlist) {
+      var musicaId = btnSetlist.getAttribute('data-musica-id');
+      var musicaName = btnSetlist.getAttribute('data-musica-name');
+      if (musicaId) {
+        adicionarASetlist(parseInt(musicaId), musicaName);
+      }
+      return;
+    }
+
     if (e.target.classList.contains('details-button')) {
       var musicaId = e.target.getAttribute('data-musica-id');
       if (musicaId) {

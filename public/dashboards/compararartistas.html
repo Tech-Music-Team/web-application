@@ -117,6 +117,9 @@
                     <div id="slot-artista-1" class="bloquinho clicavel" onclick="abrirSeletor('1')" style="display:none">
                         <div class="artist-photo-block">
                             <div id="foto-placeholder-1" class="foto-placeholder"></div>
+                            <button class="btn-remove-artist" id="btn-remover-1" data-slot="1" style="display:none" title="Remover artista">
+                                <span class="material-symbols-outlined">close</span>
+                            </button>
                         </div>
                         <div class="artist-info">
                             <span id="nome-slot-1" class="artist-name-big"></span>
@@ -129,10 +132,14 @@
                                     <span class="stat-label">Popularidade</span>
                                     <span id="pop-slot-1" class="stat-value"></span>
                                 </li>
+                                <li class="stat-item">
+                                    <span class="stat-label">Seguidores</span>
+                                    <span id="followers-slot-1" class="stat-value">-</span>
+                                </li>
                             </ul>
                         </div>
                     </div>
-                    <button class="btn-setlist">
+                    <button class="btn-setlist" data-slot="1">
                         <span class="material-symbols-outlined">playlist_add</span>
                         Adicionar a Lineup
                     </button>
@@ -147,6 +154,9 @@
                     <div id="slot-artista-2" class="bloquinho clicavel" onclick="abrirSeletor('2')" style="display:none">
                         <div class="artist-photo-block">
                             <div id="foto-placeholder-2" class="foto-placeholder"></div>
+                            <button class="btn-remove-artist" id="btn-remover-2" data-slot="2" style="display:none" title="Remover artista">
+                                <span class="material-symbols-outlined">close</span>
+                            </button>
                         </div>
                         <div class="artist-info">
                             <span id="nome-slot-2" class="artist-name-big"></span>
@@ -159,10 +169,14 @@
                                     <span class="stat-label">Popularidade</span>
                                     <span id="pop-slot-2" class="stat-value"></span>
                                 </li>
+                                <li class="stat-item">
+                                    <span class="stat-label">Seguidores</span>
+                                    <span id="followers-slot-2" class="stat-value">-</span>
+                                </li>
                             </ul>
                         </div>
                     </div>
-                    <button class="btn-setlist">
+                    <button class="btn-setlist" data-slot="2">
                         <span class="material-symbols-outlined">playlist_add</span>
                         Adicionar a Lineup
                     </button>
@@ -490,6 +504,7 @@
     </div>
 
     <script src="../js/sessao.js"></script>
+    <script src="../js/adicionarLineup.js"></script>
     <script src="../js/compararartistas.js"></script>
 </body>
 </html>

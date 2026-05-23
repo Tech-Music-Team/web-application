@@ -293,7 +293,7 @@
   font-size: 12px;
   font-weight: 700;
   color: #A855F7;
-  width: 16px;
+  width: 32px;
   text-align: right;
   flex-shrink: 0;
 }
@@ -397,7 +397,7 @@
 
 /* --- Lista de artistas --- */
 
-.setlist-artist-list {
+.lineup-artist-list {
   flex: 1;
   overflow-y: auto;
   padding: 16px 20px;
@@ -406,9 +406,9 @@
   gap: 10px;
 }
 
-.setlist-artist-list::-webkit-scrollbar { width: 4px; }
-.setlist-artist-list::-webkit-scrollbar-track { background: transparent; }
-.setlist-artist-list::-webkit-scrollbar-thumb { background: #e0d5f2; border-radius: 4px; }
+.lineup-artist-list::-webkit-scrollbar { width: 4px; }
+.lineup-artist-list::-webkit-scrollbar-track { background: transparent; }
+.lineup-artist-list::-webkit-scrollbar-thumb { background: #e0d5f2; border-radius: 4px; }
 
 /* --- Card reduzido --- */
 
@@ -523,4 +523,307 @@
   padding: 2px 8px;
   border-radius: 20px;
   margin-top: 2px;
+}
+
+/* ===================== OUTLIER CARD ===================== */
+
+.outlier-card {
+  background-color: #f5f5f5;
+  border-color: #d1d5db;
+  opacity: 0.85;
+  filter: grayscale(40%);
+}
+
+.outlier-card .artist-name,
+.outlier-card .ranking-number {
+  color: #6b7280;
+}
+
+.outlier-card .atribute-value {
+  background-color: #9ca3af;
+}
+
+.outlier-card .artist-atribute {
+  color: #9ca3af;
+  border-bottom-color: #9ca3af;
+}
+
+.outlier-card:hover {
+  border-color: #ef4444;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.1);
+}
+
+.card-img-wrapper {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.outlier-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 18px;
+  height: 18px;
+  background-color: #ef4444;
+  color: white;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid white;
+  line-height: 1;
+}
+
+/* ===================== TOOLTIP / INFO ICON ===================== */
+
+.name-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.panel-subtitle-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.panel-subtitle-row .panel-subtitle {
+  margin-bottom: 0;
+}
+
+.info-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 1.5px solid #A855F7;
+  color: #A855F7;
+  font-size: 9px;
+  font-weight: 700;
+  font-style: italic;
+  cursor: default;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.tooltip-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.tooltip-box {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #1A0A2E;
+  color: #e5e7eb;
+  font-size: 11px;
+  line-height: 1.5;
+  padding: 10px 12px;
+  border-radius: 8px;
+  width: 220px;
+  z-index: 100;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+}
+
+.tooltip-box--left {
+  left: center;
+  right: 0;
+  transform: none;
+}
+
+.tooltip-wrapper:hover .tooltip-box {
+  display: block;
+  z-index: 999;
+}
+
+/* ===================== FOOTER ===================== */
+
+.data-footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 24px;
+  background-color: white;
+  border-top: 1px solid #e0d5f2;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.footer-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.footer-link {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: #A855F7;
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.2s;
+}
+
+.footer-link:hover { opacity: 0.7; }
+
+.footer-link .material-symbols-outlined { font-size: 14px; }
+
+.footer-sep {
+  color: #ccc;
+  font-size: 14px;
+}
+
+/* ===================== MODAL ===================== */
+
+.modal-fundo {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 10, 46, 0.6);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-caixa {
+  background: white;
+  border-radius: 16px;
+  padding: 24px 28px;
+  width: 420px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 32px rgba(168, 85, 247, 0.25);
+  border: 1.5px solid #e0d5f2;
+}
+
+.modal-cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.modal-titulo {
+  font-family: 'Montserrat Alternates', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1A0A2E;
+}
+
+.modal-fechar {
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: #aaa;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.modal-fechar:hover {
+  color: #A855F7;
+}
+
+.modal-corpo {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+}
+
+.modal-input {
+  border: 1.5px solid #e0d5f2;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.modal-input:focus {
+  border-color: #A855F7;
+}
+
+.modal-acoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.btn-cancelar {
+  padding: 8px 20px;
+  border: 1.5px solid #e0d5f2;
+  border-radius: 25px;
+  background: white;
+  color: #666;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-cancelar:hover {
+  background: #f8f4ff;
+  border-color: #A855F7;
+}
+
+.btn-confirmar {
+  padding: 8px 20px;
+  border: none;
+  border-radius: 25px;
+  background: linear-gradient(135deg, #A855F7, #7C3AED);
+  color: white;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-confirmar:hover {
+  opacity: 0.9;
+}
+
+.btn-voltar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 1.5px solid #e0d5f2;
+  border-radius: 25px;
+  padding: 8px 16px;
+  color: #666;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-left: auto;
+}
+
+.btn-voltar:hover {
+  border-color: #A855F7;
+  color: #A855F7;
+  background: #f8f4ff;
+}
+
+.btn-voltar .material-symbols-outlined {
+  font-size: 16px;
 }

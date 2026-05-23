@@ -686,3 +686,168 @@
   color: #ccc;
   font-size: 14px;
 }
+
+/* MODAL */
+.modal-fundo {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 10, 46, 0.6);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-caixa {
+  background: white;
+  border-radius: 16px;
+  padding: 24px 28px;
+  width: 440px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 32px rgba(168, 85, 247, 0.25);
+  border: 1.5px solid #e0d5f2;
+}
+
+.modal-cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.modal-titulo {
+  font-family: 'Montserrat Alternates', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1A0A2E;
+}
+
+.modal-fechar {
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: #aaa;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.modal-fechar:hover {
+  color: #A855F7;
+}
+
+.modal-corpo {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+}
+
+.modal-input {
+  border: 1.5px solid #e0d5f2;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.modal-input:focus {
+  border-color: #A855F7;
+}
+
+.modal-acoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.btn-cancelar {
+  padding: 8px 20px;
+  border: 1.5px solid #e0d5f2;
+  border-radius: 25px;
+  background: white;
+  color: #666;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-cancelar:hover {
+  background: #f8f4ff;
+  border-color: #A855F7;
+}
+
+.btn-confirmar {
+  padding: 8px 20px;
+  border: none;
+  border-radius: 25px;
+  background: linear-gradient(135deg, #A855F7, #7C3AED);
+  color: white;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-confirmar:hover {
+  opacity: 0.9;
+}
+
+.btn-voltar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 1.5px solid #e0d5f2;
+  border-radius: 25px;
+  padding: 8px 16px;
+  color: #666;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-left: auto;
+}
+
+.btn-voltar:hover {
+  border-color: #A855F7;
+  color: #A855F7;
+  background: #f8f4ff;
+}
+
+.btn-voltar .material-symbols-outlined {
+    font-size: 18px;
+}
+
+.playlist-meta {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.status-pendente {
+    color: #f59e0b;
+    font-weight: 600;
+    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.status-realizado {
+    color: #10b981;
+    font-weight: 600;
+    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+}

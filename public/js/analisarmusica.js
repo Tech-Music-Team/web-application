@@ -23,11 +23,31 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderRadarChart(musicData);
     renderMoodValues(musicData);
 
+    setupCompararButton();
+
   } catch (error) {
     console.error('Erro durante inicializacao:', error);
     showError('Erro ao carregar dados da musica');
   }
 });
+
+function setupCompararButton() {
+  var btn = document.querySelector('.btn-comparar');
+  if (btn) {
+    btn.addEventListener('click', function () {
+      window.location.href = 'compararmusicas.html?id=' + currentMusicId;
+    });
+  }
+
+  var btnPlaylist = document.querySelector('.btn-playlist');
+  if (btnPlaylist) {
+    btnPlaylist.addEventListener('click', function () {
+      if (currentMusicId) {
+        adicionarASetlist(currentMusicId, musicData ? musicData.track : null);
+      }
+    });
+  }
+}
 
 function getMusicIdFromURL() {
   var params = new URLSearchParams(window.location.search);

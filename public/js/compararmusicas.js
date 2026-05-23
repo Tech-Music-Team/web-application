@@ -1,9 +1,8 @@
 var estado = { 1: null, 2: null };
-var audioEstado = { 1: null, 2: null };
 var slotAtivo = null;
-var listaArtistas = [];
+var listaMusicas = [];
 var radarChart = null;
-var artistaIdsSelecionados = { 1: null, 2: null };
+var musicaIdsSelecionados = { 1: null, 2: null };
 
 document.addEventListener('DOMContentLoaded', function () {
     validarSessao();
@@ -18,43 +17,42 @@ function carregarDaURL() {
 
     if (id1) {
         slotAtivo = '1';
-        selecionarArtistaPorId('1', parseInt(id1));
+        selecionarMusicaPorId('1', parseInt(id1));
     }
     if (id2) {
         setTimeout(function () {
             slotAtivo = '2';
-            selecionarArtistaPorId('2', parseInt(id2));
+            selecionarMusicaPorId('2', parseInt(id2));
         }, 200);
+    } else if (id1) {
+        setTimeout(function () {
+            abrirSeletor('2');
+        }, 400);
     }
 }
 
-async function selecionarArtistaPorId(slot, artistaId) {
+async function selecionarMusicaPorId(slot, musicaId) {
     try {
-        var resDetalhe = fetch('http://localhost:3333/artistas/' + artistaId);
-        var resAudio = fetch('http://localhost:3333/artistas/' + artistaId + '/audio');
+        var response = await fetch('http://localhost:3333/musicas/' + musicaId + '/detalhes');
 
-        var responses = await Promise.all([resDetalhe, resAudio]);
-
-        if (!responses[0].ok) {
-            showErrorSlot(slot, 'Artista nao encontrado');
+        if (!response.ok) {
+            showErrorSlot(slot, 'Musica nao encontrada');
             return;
         }
 
-        var artista = await responses[0].json();
-        var audio = await responses[1].json();
+        var musica = await response.json();
 
-        estado[slot] = artista;
-        audioEstado[slot] = audio;
-        artistaIdsSelecionados[slot] = artistaId;
+        estado[slot] = musica;
+        musicaIdsSelecionados[slot] = musicaId;
 
-        renderSlotArtista(slot, artista);
+        renderSlotMusica(slot, musica);
 
         if (estado[1] && estado[2]) {
             atualizarPaineis();
         }
     } catch (e) {
-        console.error('Erro ao carregar artista da URL:', e);
-        showErrorSlot(slot, 'Erro ao carregar artista');
+        console.error('Erro ao carregar musica da URL:', e);
+        showErrorSlot(slot, 'Erro ao carregar musica');
     }
 }
 
@@ -65,12 +63,12 @@ function showErrorSlot(slot, mensagem) {
     vazio.innerHTML = '<span class="material-symbols-outlined">error</span><span>' + mensagem + '</span>';
 }
 
-function getPlaceholderColor(artistId) {
+function getPlaceholderColor(musicId) {
     var cores = [
         '#A855F7', '#D421BF', '#EC4899', '#06B6D4',
         '#3B82F6', '#8B5CF6', '#10B981', '#F59E0B'
     ];
-    return cores[artistId % cores.length];
+    return cores[musicId % cores.length];
 }
 
 function showError(mensagem) {
@@ -110,7 +108,7 @@ function attachEventListeners() {
     document.querySelectorAll('.btn-setlist').forEach(function (btn) {
         btn.addEventListener('click', function () {
             var slot = this.getAttribute('data-slot');
-            adicionarLineup(slot);
+            adicionarPlaylist(slot);
         });
     });
 
@@ -118,18 +116,18 @@ function attachEventListeners() {
         btn.addEventListener('click', function (e) {
             e.stopPropagation();
             var slot = this.getAttribute('data-slot');
-            removerArtista(slot);
+            removerMusica(slot);
         });
     });
 }
 
-function adicionarLineup(slot) {
-    var artista = estado[slot];
-    if (!artista) {
-        showError('Selecione um artista primeiro.');
+function adicionarPlaylist(slot) {
+    var musica = estado[slot];
+    if (!musica) {
+        showError('Selecione uma musica primeiro.');
         return;
     }
-    adicionarALineup(artista.id, artista.nome);
+    adicionarASetlist(musica.id, musica.track);
 }
 
 // ─── MODAL ────────────────────────────────────────────────────────────────────
@@ -138,21 +136,21 @@ async function abrirSeletor(slot) {
     slotAtivo = slot;
     document.getElementById('input-busca').value = '';
 
-    if (listaArtistas.length === 0) {
+    if (listaMusicas.length === 0) {
         try {
-            var response = await fetch('http://localhost:3333/artistas/ranking?limit=1000');
+            var response = await fetch('http://localhost:3333/musicas/top?limit=10000');
             if (!response.ok) throw new Error('Erro ' + response.status);
-            listaArtistas = await response.json();
+            listaMusicas = await response.json();
         } catch (e) {
-            console.error('Erro ao carregar artistas:', e);
+            console.error('Erro ao carregar musicas:', e);
             document.getElementById('lista-selecao').innerHTML =
-                '<p style="text-align:center;padding:20px;color:#999;">Erro ao carregar lista de artistas.</p>';
+                '<p style="text-align:center;padding:20px;color:#999;">Erro ao carregar lista de musicas.</p>';
             document.getElementById('modal-fundo').style.display = 'flex';
             return;
         }
     }
 
-    renderModalLista(listaArtistas);
+    renderModalLista(listaMusicas);
     document.getElementById('modal-fundo').style.display = 'flex';
 }
 
@@ -161,27 +159,28 @@ function renderModalLista(lista) {
     container.innerHTML = '';
     var coresPosicao = ['#D4AF37', '#A8A9AD', '#CD7F32'];
 
-    lista.forEach(function (artista, i) {
+    lista.forEach(function (musica, i) {
         var item = document.createElement('div');
         item.className = 'item-selecao';
         var cor = coresPosicao[i] || '#A855F7';
-        var primeiroGenero = artista.genre ? artista.genre.split(',')[0].trim() : 'Desconhecido';
+        var artistaNome = musica.artist || 'Desconhecido';
 
         item.innerHTML =
             '<span class="item-pos" style="color:' + cor + '">' + (i + 1) + 'º</span>' +
-            '<span class="item-nome">' + artista.nome + '</span>' +
-            '<span class="item-genero-badge">' + primeiroGenero + '</span>' +
-            '<span class="item-popularidade">' + artista.popularity + '</span>';
+            '<span class="item-nome">' + musica.track + '</span>' +
+            '<span class="item-genero-badge">' + artistaNome + '</span>' +
+            '<span class="item-popularidade">' + musica.popularity + '</span>';
 
-        item.addEventListener('click', function () { selecionarArtista(artista); });
+        item.addEventListener('click', function () { selecionarMusica(musica); });
         container.appendChild(item);
     });
 }
 
 function filtrarLista() {
     var termo = document.getElementById('input-busca').value.toLowerCase();
-    var filtrado = listaArtistas.filter(function (a) {
-        return a.nome.toLowerCase().includes(termo);
+    var filtrado = listaMusicas.filter(function (m) {
+        return m.track.toLowerCase().includes(termo) ||
+               (m.artist && m.artist.toLowerCase().includes(termo));
     });
     renderModalLista(filtrado);
 }
@@ -190,31 +189,26 @@ function fecharModal() {
     document.getElementById('modal-fundo').style.display = 'none';
 }
 
-// ─── SELEÇÃO DE ARTISTA ───────────────────────────────────────────────────────
+// ─── SELEÇÃO DE MÚSICA ───────────────────────────────────────────────────────
 
-async function selecionarArtista(artistaBasico) {
+async function selecionarMusica(musicaBasica) {
     fecharModal();
     var slot = slotAtivo;
 
     try {
-        var resDetalhe = fetch('http://localhost:3333/artistas/' + artistaBasico.id);
-        var resAudio = fetch('http://localhost:3333/artistas/' + artistaBasico.id + '/audio');
+        var response = await fetch('http://localhost:3333/musicas/' + musicaBasica.id + '/detalhes');
 
-        var responses = await Promise.all([resDetalhe, resAudio]);
-
-        if (!responses[0].ok) {
-            showError('Erro ao carregar dados do artista. Tente novamente.');
+        if (!response.ok) {
+            showError('Erro ao carregar dados da musica. Tente novamente.');
             return;
         }
 
-        var artista = await responses[0].json();
-        var audio = await responses[1].json();
+        var musica = await response.json();
 
-        estado[slot] = artista;
-        audioEstado[slot] = audio;
-        artistaIdsSelecionados[slot] = artistaBasico.id;
+        estado[slot] = musica;
+        musicaIdsSelecionados[slot] = musicaBasica.id;
 
-        renderSlotArtista(slot, artista);
+        renderSlotMusica(slot, musica);
 
         if (estado[1] && estado[2]) {
             atualizarPaineis();
@@ -222,14 +216,14 @@ async function selecionarArtista(artistaBasico) {
 
         atualizarURL();
     } catch (e) {
-        console.error('Erro ao carregar dados do artista:', e);
-        showError('Erro ao carregar dados do artista. Verifique sua conexao.');
+        console.error('Erro ao carregar dados da musica:', e);
+        showError('Erro ao carregar dados da musica. Verifique sua conexao.');
     }
 }
 
 function atualizarURL() {
-    var id1 = artistaIdsSelecionados[1];
-    var id2 = artistaIdsSelecionados[2];
+    var id1 = musicaIdsSelecionados[1];
+    var id2 = musicaIdsSelecionados[2];
     var params = [];
 
     if (id1) params.push('id=' + id1);
@@ -242,10 +236,9 @@ function atualizarURL() {
     window.history.replaceState({}, '', novaURL);
 }
 
-function removerArtista(slot) {
+function removerMusica(slot) {
     estado[slot] = null;
-    audioEstado[slot] = null;
-    artistaIdsSelecionados[slot] = null;
+    musicaIdsSelecionados[slot] = null;
 
     document.getElementById('slot-vazio-' + slot).style.display = 'flex';
     document.getElementById('slot-artista-' + slot).style.display = 'none';
@@ -259,11 +252,11 @@ function removerArtista(slot) {
     atualizarURL();
 }
 
-function renderSlotArtista(slot, artista) {
+function renderSlotMusica(slot, musica) {
     document.getElementById('slot-vazio-' + slot).style.display = 'none';
     document.getElementById('slot-artista-' + slot).style.display = 'flex';
 
-    var corPlaceholder = getPlaceholderColor(artista.id);
+    var corPlaceholder = getPlaceholderColor(musica.id);
     var fotoPlaceholder = document.getElementById('foto-placeholder-' + slot);
     if (fotoPlaceholder) {
         fotoPlaceholder.style.backgroundColor = corPlaceholder;
@@ -272,14 +265,13 @@ function renderSlotArtista(slot, artista) {
         fotoPlaceholder.style.borderRadius = '8px';
     }
 
-    var primeiroGenero = artista.genre ? artista.genre.split(',')[0].trim() : 'Desconhecido';
-    document.getElementById('nome-slot-' + slot).textContent = artista.nome;
-    document.getElementById('genero-slot-' + slot).textContent = primeiroGenero;
-    document.getElementById('pop-slot-' + slot).textContent = artista.popularity;
+    document.getElementById('nome-slot-' + slot).textContent = musica.track;
+    document.getElementById('autor-slot-' + slot).textContent = musica.artist;
+    document.getElementById('pop-slot-' + slot).textContent = musica.popularity;
 
-    var followersEl = document.getElementById('followers-slot-' + slot);
-    if (followersEl) {
-        followersEl.textContent = formatarNumero(artista.followers);
+    var streamsEl = document.getElementById('streams-slot-' + slot);
+    if (streamsEl) {
+        streamsEl.textContent = formatarNumero(musica.streams);
     }
 
     var removeBtn = document.getElementById('btn-remover-' + slot);
@@ -293,19 +285,19 @@ function renderSlotArtista(slot, artista) {
 function atualizarPaineis() {
     document.getElementById('secao-paineis').style.display = 'block';
 
-    document.querySelectorAll('.nome-comp-1').forEach(function (el) { el.textContent = estado[1].nome; });
-    document.querySelectorAll('.nome-comp-2').forEach(function (el) { el.textContent = estado[2].nome; });
+    document.querySelectorAll('.nome-comp-1').forEach(function (el) { el.textContent = estado[1].track; });
+    document.querySelectorAll('.nome-comp-2').forEach(function (el) { el.textContent = estado[2].track; });
 
     renderEngajamento(estado[1], estado[2]);
-    renderAudio(audioEstado[1], audioEstado[2]);
+    renderAudio(estado[1], estado[2]);
 }
 
-function renderEngajamento(a1, a2) {
+function renderEngajamento(m1, m2) {
     var metricas = [
-        { id: 'views',      v1: Number(a1.views),      v2: Number(a2.views),      fmt: formatarNumero },
-        { id: 'likes',      v1: Number(a1.likes),      v2: Number(a2.likes),      fmt: formatarNumero },
-        { id: 'followers',  v1: Number(a1.followers),  v2: Number(a2.followers),  fmt: formatarNumero },
-        { id: 'popularity', v1: Number(a1.popularity), v2: Number(a2.popularity), fmt: function (v) { return v; } }
+        { id: 'views',      v1: Number(m1.views),      v2: Number(m2.views),      fmt: formatarNumero },
+        { id: 'streams',    v1: Number(m1.streams),    v2: Number(m2.streams),    fmt: formatarNumero },
+        { id: 'likes',      v1: Number(m1.likes),      v2: Number(m2.likes),      fmt: formatarNumero },
+        { id: 'comments',   v1: Number(m1.comments),   v2: Number(m2.comments),   fmt: formatarNumero }
     ];
 
     metricas.forEach(function (m) {
@@ -316,36 +308,45 @@ function renderEngajamento(a1, a2) {
 
         var b1 = document.getElementById('eng-' + m.id + '-badge-1');
         var b2 = document.getElementById('eng-' + m.id + '-badge-2');
-        b1.className = 'badge ' + (badge.melhor === 1 ? 'up' : 'down');
-        b1.innerHTML = '<span class="arrow">' + (badge.melhor === 1 ? '↑' : '↓') + '</span>' + badge.pct1;
-        b2.className = 'badge ' + (badge.melhor === 2 ? 'up' : 'down');
-        b2.innerHTML = '<span class="arrow">' + (badge.melhor === 2 ? '↑' : '↓') + '</span>' + badge.pct2;
+        if (b1) {
+            b1.className = 'badge ' + (badge.melhor === 1 ? 'up' : 'down');
+            b1.innerHTML = '<span class="arrow">' + (badge.melhor === 1 ? '↑' : '↓') + '</span>' + badge.pct1;
+        }
+        if (b2) {
+            b2.className = 'badge ' + (badge.melhor === 2 ? 'up' : 'down');
+            b2.innerHTML = '<span class="arrow">' + (badge.melhor === 2 ? '↑' : '↓') + '</span>' + badge.pct2;
+        }
 
-        document.getElementById('eng-' + m.id + '-delta').textContent = '△ ' + badge.delta;
+        var deltaEl = document.getElementById('eng-' + m.id + '-delta');
+        if (deltaEl) {
+            deltaEl.textContent = '△ ' + badge.delta;
+        }
     });
 
-    atualizarEngCards(a1, a2);
+    atualizarEngCards(m1, m2);
 }
 
-function atualizarEngCards(a1, a2) {
-    var views1 = Number(a1.views), views2 = Number(a2.views);
-    var likes1 = Number(a1.likes), likes2 = Number(a2.likes);
-    var followers1 = Number(a1.followers), followers2 = Number(a2.followers);
-    var pop1 = Number(a1.popularity), pop2 = Number(a2.popularity);
+function atualizarEngCards(m1, m2) {
+    var views1 = Number(m1.views), views2 = Number(m2.views);
+    var streams1 = Number(m1.streams), streams2 = Number(m2.streams);
+    var likes1 = Number(m1.likes), likes2 = Number(m2.likes);
+    var comments1 = Number(m1.comments), comments2 = Number(m2.comments);
 
-    var tc1 = views1 > 0 ? (likes1 / views1 * 100).toFixed(2) : '0.00';
-    var tc2 = views2 > 0 ? (likes2 / views2 * 100).toFixed(2) : '0.00';
-    atualizarEngCard('taxa-curtidas', a1.nome, a2.nome, tc1 + '%', tc2 + '%', parseFloat(tc1), parseFloat(tc2));
+    var engReal1 = views1 > 0 ? ((likes1 + comments1) / views1 * 100).toFixed(2) : '0.00';
+    var engReal2 = views2 > 0 ? ((likes2 + comments2) / views2 * 100).toFixed(2) : '0.00';
+    atualizarEngCard('engajamento-real', m1.track, m2.track, engReal1 + '%', engReal2 + '%', parseFloat(engReal1), parseFloat(engReal2));
 
-    var leal1 = followers1 > 0 ? (likes1 / followers1 * 100).toFixed(2) : '0.00';
-    var leal2 = followers2 > 0 ? (likes2 / followers2 * 100).toFixed(2) : '0.00';
-    atualizarEngCard('lealdade', a1.nome, a2.nome, leal1 + '%', leal2 + '%', parseFloat(leal1), parseFloat(leal2));
+    var conversao1 = streams1 > 0 ? (likes1 / streams1 * 100).toFixed(2) : '0.00';
+    var conversao2 = streams2 > 0 ? (likes2 / streams2 * 100).toFixed(2) : '0.00';
+    atualizarEngCard('conversao', m1.track, m2.track, conversao1 + '%', conversao2 + '%', parseFloat(conversao1), parseFloat(conversao2));
 
-    atualizarEngCard('score', a1.nome, a2.nome, pop1, pop2, pop1, pop2);
+    var retencao1 = views1 > 0 ? (streams1 / views1).toFixed(2) : '0';
+    var retencao2 = views2 > 0 ? (streams2 / views2).toFixed(2) : '0';
+    atualizarEngCard('retencao', m1.track, m2.track, retencao1 + 'x', retencao2 + 'x', parseFloat(retencao1), parseFloat(retencao2));
 
-    var vps1 = followers1 > 0 ? (views1 / followers1).toFixed(1) : '0';
-    var vps2 = followers2 > 0 ? (views2 / followers2).toFixed(1) : '0';
-    atualizarEngCard('views-seguidor', a1.nome, a2.nome, vps1 + 'x', vps2 + 'x', parseFloat(vps1), parseFloat(vps2));
+    var discussao1 = streams1 > 0 ? (comments1 / streams1 * 100).toFixed(3) : '0.000';
+    var discussao2 = streams2 > 0 ? (comments2 / streams2 * 100).toFixed(3) : '0.000';
+    atualizarEngCard('discussao', m1.track, m2.track, discussao1 + '%', discussao2 + '%', parseFloat(discussao1), parseFloat(discussao2));
 }
 
 function atualizarEngCard(cardId, nome1, nome2, val1, val2, numVal1, numVal2) {
@@ -378,16 +379,16 @@ function atualizarEngCard(cardId, nome1, nome2, val1, val2, numVal1, numVal2) {
     el.querySelector('.delta-engcard').textContent = '△ ' + (deltaNum >= 0 ? '+' : '') + deltaNum.toFixed(2);
 }
 
-function renderAudio(aud1, aud2) {
-    if (!aud1 || !aud2) return;
+function renderAudio(m1, m2) {
+    if (!m1 || !m2) return;
 
     var metricas = [
-        { id: 'danceability',    v1: aud1.danceability,    v2: aud2.danceability,    fmt: function (v) { return Math.round(parseFloat(v) * 100); } },
-        { id: 'energy',         v1: aud1.energy,         v2: aud2.energy,         fmt: function (v) { return Math.round(parseFloat(v) * 100); } },
-        { id: 'loudness',       v1: aud1.loudness,       v2: aud2.loudness,       fmt: function (v) { return parseFloat(v).toFixed(1); } },
-        { id: 'speechiness',    v1: aud1.speechiness,    v2: aud2.speechiness,    fmt: function (v) { return parseFloat(v).toFixed(2); } },
-        { id: 'instrumentalness', v1: aud1.instrumentalness, v2: aud2.instrumentalness, fmt: function (v) { return parseFloat(v).toFixed(2); } },
-        { id: 'valence',        v1: aud1.valence,        v2: aud2.valence,        fmt: function (v) { return parseFloat(v).toFixed(2); } }
+        { id: 'danceability',    v1: m1.danceability,    v2: m2.danceability,    fmt: function (v) { return Math.round(parseFloat(v) * 100); } },
+        { id: 'energy',         v1: m1.energy,         v2: m2.energy,         fmt: function (v) { return Math.round(parseFloat(v) * 100); } },
+        { id: 'loudness',       v1: m1.loudness,       v2: m2.loudness,       fmt: function (v) { return parseFloat(v).toFixed(1); } },
+        { id: 'speechiness',    v1: m1.speechiness,    v2: m2.speechiness,    fmt: function (v) { return parseFloat(v).toFixed(2); } },
+        { id: 'instrumentalness', v1: m1.instrumentalness, v2: m2.instrumentalness, fmt: function (v) { return parseFloat(v).toFixed(2); } },
+        { id: 'valence',        v1: m1.valence,        v2: m2.valence,        fmt: function (v) { return parseFloat(v).toFixed(2); } }
     ];
 
     metricas.forEach(function (m) {
@@ -399,37 +400,44 @@ function renderAudio(aud1, aud2) {
 
         var b1 = document.getElementById('aud-' + m.id + '-badge-1');
         var b2 = document.getElementById('aud-' + m.id + '-badge-2');
-        b1.className = 'badge ' + (badge.melhor === 1 ? 'up' : 'down');
-        b1.innerHTML = '<span class="arrow">' + (badge.melhor === 1 ? '↑' : '↓') + '</span>' + badge.pct1;
-        b2.className = 'badge ' + (badge.melhor === 2 ? 'up' : 'down');
-        b2.innerHTML = '<span class="arrow">' + (badge.melhor === 2 ? '↑' : '↓') + '</span>' + badge.pct2;
+        if (b1) {
+            b1.className = 'badge ' + (badge.melhor === 1 ? 'up' : 'down');
+            b1.innerHTML = '<span class="arrow">' + (badge.melhor === 1 ? '↑' : '↓') + '</span>' + badge.pct1;
+        }
+        if (b2) {
+            b2.className = 'badge ' + (badge.melhor === 2 ? 'up' : 'down');
+            b2.innerHTML = '<span class="arrow">' + (badge.melhor === 2 ? '↑' : '↓') + '</span>' + badge.pct2;
+        }
 
-        document.getElementById('aud-' + m.id + '-delta').textContent = '△ ' + badge.delta;
+        var deltaEl = document.getElementById('aud-' + m.id + '-delta');
+        if (deltaEl) {
+            deltaEl.textContent = '△ ' + badge.delta;
+        }
     });
 
-    atualizarRadar(aud1, aud2);
+    atualizarRadar(m1, m2);
 }
 
-function atualizarRadar(aud1, aud2) {
+function atualizarRadar(m1, m2) {
     function normLoudness(l) {
         return Math.max(0, Math.min(100, ((parseFloat(l) + 60) / 60) * 100));
     }
 
     var dados1 = [
-        parseFloat(aud1.energy) * 100,
-        parseFloat(aud1.danceability) * 100,
-        normLoudness(aud1.loudness),
-        parseFloat(aud1.speechiness) * 100,
-        parseFloat(aud1.instrumentalness) * 100,
-        parseFloat(aud1.valence) * 100
+        parseFloat(m1.energy) * 100,
+        parseFloat(m1.danceability) * 100,
+        normLoudness(m1.loudness),
+        parseFloat(m1.speechiness) * 100,
+        parseFloat(m1.instrumentalness) * 100,
+        parseFloat(m1.valence) * 100
     ];
     var dados2 = [
-        parseFloat(aud2.energy) * 100,
-        parseFloat(aud2.danceability) * 100,
-        normLoudness(aud2.loudness),
-        parseFloat(aud2.speechiness) * 100,
-        parseFloat(aud2.instrumentalness) * 100,
-        parseFloat(aud2.valence) * 100
+        parseFloat(m2.energy) * 100,
+        parseFloat(m2.danceability) * 100,
+        normLoudness(m2.loudness),
+        parseFloat(m2.speechiness) * 100,
+        parseFloat(m2.instrumentalness) * 100,
+        parseFloat(m2.valence) * 100
     ];
 
     if (radarChart) {
@@ -444,7 +452,7 @@ function atualizarRadar(aud1, aud2) {
             labels: ['Energia', 'Dançab.', 'Volume', 'Fala', 'Instrum.', 'Positiv.'],
             datasets: [
                 {
-                    label: estado[1].nome,
+                    label: estado[1].track,
                     data: dados1,
                     borderColor: '#1A0A2E',
                     backgroundColor: 'rgba(59, 31, 168, 0.15)',
@@ -452,7 +460,7 @@ function atualizarRadar(aud1, aud2) {
                     pointRadius: 2
                 },
                 {
-                    label: estado[2].nome,
+                    label: estado[2].track,
                     data: dados2,
                     borderColor: '#A855F7',
                     backgroundColor: 'rgba(168, 85, 247, 0.15)',

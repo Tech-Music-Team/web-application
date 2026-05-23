@@ -81,65 +81,68 @@ CREATE TABLE log (
         ON DELETE SET NULL
 );
 
--- TABELA PLAYLIST (FRACA)
-CREATE TABLE playlist (
-    id_playlist INT AUTO_INCREMENT,
+-- TABELA SETLIST (lista de musicas do usuario)
+CREATE TABLE setlist (
+    id_setlist INT AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
+    data_evento DATE NOT NULL,
+    situacao VARCHAR(20) DEFAULT 'pendente',
     fk_usuario INT NOT NULL,
 
-    CONSTRAINT fk_playlist_usuario
+    CONSTRAINT fk_setlist_usuario
         FOREIGN KEY (fk_usuario)
         REFERENCES usuario(id_usuario)
         ON DELETE CASCADE,
         
-	CONSTRAINT pkComposta_playlist 
-		PRIMARY KEY (id_playlist, fk_usuario)
+	CONSTRAINT pkComposta_setlist 
+		PRIMARY KEY (id_setlist, fk_usuario)
 );
 
--- TABELA PLAYLIST (FRACA)
-CREATE TABLE setlist (
-    id_setlist INT AUTO_INCREMENT,
+-- TABELA LINEUP (lista de artistas do usuario)
+CREATE TABLE lineup (
+    id_lineup INT AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
+    data_evento DATE NOT NULL,
+    status VARCHAR(20) DEFAULT 'pendente',
     fk_usuario INT NOT NULL,
     
-    CONSTRAINT fk_setlist_usuario
+    CONSTRAINT fk_lineup_usuario
 		FOREIGN KEY (fk_usuario)
         REFERENCES usuario (id_usuario)
         ON DELETE CASCADE,
         
-    CONSTRAINT pkComposta_setlist 
-		PRIMARY KEY (id_setlist , fk_usuario)
+    CONSTRAINT pkComposta_lineup 
+		PRIMARY KEY (id_lineup , fk_usuario)
 );
 
--- TABELA ASSOCIATIVA
-CREATE TABLE artista_setlist(
-	fk_artista INT NOT NULL,
+-- TABELA ASSOCIATIVA: musica → setlist
+CREATE TABLE musica_setlist (
+	fk_musica INT NOT NULL,
     fk_setlist INT NOT NULL,
     
-    CONSTRAINT pkComposta_as PRIMARY KEY (fk_artista, fk_setlist),
+    CONSTRAINT pkComposta_ms PRIMARY KEY (fk_musica, fk_setlist),
     
-     CONSTRAINT fk_as_artista
-        FOREIGN KEY (fk_artista)
-        REFERENCES artista(id_artista),
+     CONSTRAINT fk_ms_musica
+        FOREIGN KEY (fk_musica)
+        REFERENCES musica(id_musica),
 
-    CONSTRAINT fk_as_setlist
+    CONSTRAINT fk_ms_setlist
         FOREIGN KEY (fk_setlist)
         REFERENCES setlist(id_setlist)
 );
 
--- TABELA ASSOCIATIVA
-CREATE TABLE musica_playlist (
-    fk_musica INT NOT NULL,
-    fk_playlist INT NOT NULL,
+-- TABELA ASSOCIATIVA: artista → lineup
+CREATE TABLE artista_lineup (
+    fk_artista INT NOT NULL,
+    fk_lineup INT NOT NULL,
 
-    CONSTRAINT pkComposta_mp PRIMARY KEY (fk_musica, fk_playlist),
+    CONSTRAINT pkComposta_al PRIMARY KEY (fk_artista, fk_lineup),
 
-    CONSTRAINT fk_mp_musica
-        FOREIGN KEY (fk_musica)
-        REFERENCES musica(id_musica),
+    CONSTRAINT fk_al_artista
+        FOREIGN KEY (fk_artista)
+        REFERENCES artista(id_artista),
 
-    CONSTRAINT fk_mp_playlist
-        FOREIGN KEY (fk_playlist)
-        REFERENCES playlist(id_playlist)
+    CONSTRAINT fk_al_lineup
+        FOREIGN KEY (fk_lineup)
+        REFERENCES lineup(id_lineup)
 );
-

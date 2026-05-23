@@ -88,6 +88,9 @@ function renderCards() {
           </li>
         </ul>
         <div class="right-content-group">
+          <button class="btn-add-lineup" data-artist-id="${artista.id}" data-artist-name="${artista.nome}" title="Adicionar a lineup">
+            <span class="material-symbols-outlined">playlist_add</span>
+          </button>
           <button class="details-button" data-artist-id="${artista.id}">Detalhes do artista</button>
         </div>
       </div>
@@ -169,6 +172,16 @@ function attachEventListeners() {
   }
 
   document.getElementById('ranking-body').addEventListener('click', function (e) {
+    var btnLineup = e.target.closest('.btn-add-lineup');
+    if (btnLineup) {
+      var artistId = btnLineup.getAttribute('data-artist-id');
+      var artistName = btnLineup.getAttribute('data-artist-name');
+      if (artistId) {
+        adicionarALineup(parseInt(artistId), artistName);
+      }
+      return;
+    }
+
     if (e.target.classList.contains('details-button')) {
       var artistId = e.target.getAttribute('data-artist-id');
       if (artistId) {

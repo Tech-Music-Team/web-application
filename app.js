@@ -19,6 +19,8 @@ var indexRouter = require("./src/routes/index");
 var usuarioRouter = require("./src/routes/usuarios");
 var artistasRouter = require("./src/routes/artistas");
 var musicasRouter = require("./src/routes/musicas");
+var lineupsRouter = require("./src/routes/lineups");
+var setlistsRouter = require("./src/routes/setlists");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -30,6 +32,8 @@ app.use("/", indexRouter);
 app.use("/usuarios", usuarioRouter);
 app.use("/artistas", artistasRouter);
 app.use("/musicas", musicasRouter);
+app.use("/lineups", lineupsRouter);
+app.use("/setlists", setlistsRouter);
 
 app.listen(PORTA_APP, function () {
   console.log(`

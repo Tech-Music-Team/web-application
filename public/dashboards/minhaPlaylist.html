@@ -70,9 +70,9 @@
           <ul class="menu-group">
             <li class="menu-header">Pessoal</li>
             <li>
-              <a href="minhaSetList.html">
+              <a href="minhasLineups.html">
                 <span class="material-symbols-outlined">queue_music</span>
-                Minhas setlist
+                Minhas Lineups
               </a>
             </li>
             <li class="active">
@@ -84,17 +84,17 @@
           </ul>
         </nav>
 
-            <div class="user-footer">
-                <div class="user-info">
-                    <div class="profile-img-placeholder">
-                      <span class="material-symbols-outlined">account_circle</span>
-                    </div>
-                    <div class="user-text">
-                        <p class="user-name">Jorge Luiz</p>
-                        <p class="user-role">Organizador de eventos</p>
-                    </div>
-                </div>
+        <div class="user-footer">
+          <div class="user-info">
+            <div class="profile-img-placeholder">
+              <span class="material-symbols-outlined">account_circle</span>
             </div>
+            <div class="user-text">
+              <p class="user-name" id="b_usuario">Jorge Luiz</p>
+              <p class="user-role">Organizador de eventos</p>
+            </div>
+          </div>
+        </div>
       </aside>
 
       <main class="main-content">
@@ -105,16 +105,16 @@
 
           <div class="ranking-controls">
             <div class="search-container">
-              <input type="text" placeholder="Buscar playlist..." />
+              <input id="input-busca" type="text" placeholder="Buscar playlist..." />
               <button class="btn-pesquisar">
                 <span class="material-symbols-outlined">search</span>
                 Pesquisar
               </button>
             </div>
 
-            <button class="btn-filtrar">
-              <span class="material-symbols-outlined">filter_alt</span>
-              Filtrar
+            <button class="btn-criar-playlist" onclick="abrirModalCriar()">
+              <span class="material-symbols-outlined">add</span>
+              Criar playlist
             </button>
 
             <div class="order-toggle">
@@ -127,72 +127,51 @@
             </div>
           </div>
 
-          <div class="ranking-body">
+          <div id="ranking-body" class="ranking-body"></div>
 
-            <div class="card">
-              <div class="left-content-group">
-                <span class="ranking-number">1º</span>
-                <img src="../assets/trem.webp" alt="img-album" />
-                <div class="artist-info-header">
-                  <span class="artist-name">Andar de Trem</span>
-                  <span class="genre">20/9/2026</span>
-                </div>
-              </div>
-              <ul>
-                <li>
-                  <span class="artist-atribute">Popularidade Média</span>
-                  <span class="atribute-value">24</span>
-                </li>
-                <li>
-                  <span class="artist-atribute">Músicas</span>
-                  <span class="atribute-value">7</span>
-                </li>
-              </ul>
-              <div class="right-content-group">
-                <button class="details-button" onclick="window.location.href='detalhesPlaylist.html'">Detalhes da playlist</button>
-              </div>
-            </div>
-
-            <div class="card">
-              <div class="left-content-group">
-                <span class="ranking-number">2º</span>
-                <img src="../assets/like.png" alt="img-album" />
-                <div class="artist-info-header">
-                  <span class="artist-name">Mais curtidos</span>
-                  <span class="genre">11/09/2026</span>
-                </div>
-              </div>
-              <ul>
-                <li>
-                  <span class="artist-atribute">Popularidade Média</span>
-                  <span class="atribute-value">14</span>
-                </li>
-                <li>
-                  <span class="artist-atribute">Músicas</span>
-                  <span class="atribute-value">4</span>
-                </li>
-              </ul>
-              <div class="right-content-group">
-                <button class="details-button" onclick="window.location.href='detalhesPlaylist.html'">Detalhes da playlist</button>
-              </div>
-            </div>
-
-          </div>
         </section>
       </main>
     </div>
 
-    <script>
-      const rankings = document.querySelectorAll(".ranking-number");
-      const cores = {
-        "1º": "#D4AF37",
-        "2º": "#A8A9AD",
-        "3º": "#CD7F32",
-      };
-      rankings.forEach((el) => {
-        const cor = cores[el.textContent.trim()];
-        el.style.color = cor || "#000000";
-      });
-    </script>
+    <div id="modal-editar-playlist" class="modal-fundo" onclick="if(event.target===this)fecharModalEditar()">
+      <div class="modal-caixa">
+        <div class="modal-cabecalho">
+          <h3 class="modal-titulo">Editar playlist</h3>
+          <button class="modal-fechar" onclick="fecharModalEditar()">✕</button>
+        </div>
+        <div class="modal-corpo">
+          <label class="modal-label">Nome da playlist</label>
+          <input id="edit-nome-playlist" class="modal-input" type="text" placeholder="Ex: Minhas favoritas" />
+          <label class="modal-label" style="margin-top:12px;">Data do evento</label>
+          <input id="edit-data-playlist" class="modal-input" type="date" />
+          <div class="modal-acoes">
+            <button class="btn-cancelar" onclick="fecharModalEditar()">Cancelar</button>
+            <button class="btn-confirmar" onclick="editarPlaylist()">Salvar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="modal-criar-playlist" class="modal-fundo" onclick="if(event.target===this)fecharModalCriar()">
+      <div class="modal-caixa">
+        <div class="modal-cabecalho">
+          <h3 class="modal-titulo">Criar nova playlist</h3>
+          <button class="modal-fechar" onclick="fecharModalCriar()">✕</button>
+        </div>
+        <div class="modal-corpo">
+          <label class="modal-label">Nome da playlist</label>
+          <input id="input-nome-playlist" class="modal-input" type="text" placeholder="Ex: Minhas favoritas" />
+          <label class="modal-label" style="margin-top:12px;">Data do evento</label>
+          <input id="input-data-playlist" class="modal-input" type="date" />
+          <div class="modal-acoes">
+            <button class="btn-cancelar" onclick="fecharModalCriar()">Cancelar</button>
+            <button class="btn-confirmar" onclick="criarPlaylist()">Criar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../js/sessao.js"></script>
+    <script src="../js/minhaPlaylist.js"></script>
   </body>
 </html>

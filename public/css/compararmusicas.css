@@ -814,3 +814,81 @@
     font-size: 20px;
 }
 
+/* REMOVE BUTTON */
+.btn-remove-artist {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1.5px solid #e05252;
+    background: white;
+    color: #e05252;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    transition: all 0.2s ease;
+}
+
+.btn-remove-artist:hover {
+    background: #e05252;
+    color: white;
+}
+
+.btn-remove-artist .material-symbols-outlined {
+    font-size: 16px;
+}
+
+.artist-photo-block {
+    position: relative;
+}
+
+/* PLACEHOLDER COLOR SQUARE */
+.foto-placeholder {
+    width: 150px;
+    height: 170px;
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+/* SLOT VAZIO */
+.slot-vazio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 40px 24px;
+    border: 1.5px dashed #c0b0d8;
+    border-radius: 12px;
+    background: #faf8ff;
+    color: #A855F7;
+    font-weight: 500;
+    font-size: 14px;
+    min-width: 180px;
+    min-height: 140px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.slot-vazio:hover {
+    background: #f4eeff;
+    border-color: #A855F7;
+}
+
+.slot-vazio .material-symbols-outlined {
+    font-size: 40px;
+    color: #c0b0d8;
+}
+
+.full-artist-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+

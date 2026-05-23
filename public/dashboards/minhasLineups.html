@@ -84,17 +84,17 @@
           </ul>
         </nav>
 
-            <div class="user-footer">
-                <div class="user-info">
-                    <div class="profile-img-placeholder">
-                      <span class="material-symbols-outlined">account_circle</span>
-                    </div>
-                    <div class="user-text">
-                        <p class="user-name">Jorge Luiz</p>
-                        <p class="user-role">Organizador de eventos</p>
-                    </div>
-                </div>
+        <div class="user-footer">
+          <div class="user-info">
+            <div class="profile-img-placeholder">
+              <span class="material-symbols-outlined">account_circle</span>
             </div>
+            <div class="user-text">
+              <p class="user-name" id="b_usuario">Jorge Luiz</p>
+              <p class="user-role">Organizador de eventos</p>
+            </div>
+          </div>
+        </div>
       </aside>
 
       <main class="main-content">
@@ -105,16 +105,16 @@
 
           <div class="ranking-controls">
             <div class="search-container">
-              <input type="text" placeholder="Buscar setlist..." />
+              <input id="input-busca" type="text" placeholder="Buscar lineup..." />
               <button class="btn-pesquisar">
                 <span class="material-symbols-outlined">search</span>
                 Pesquisar
               </button>
             </div>
 
-            <button class="btn-filtrar">
-              <span class="material-symbols-outlined">filter_alt</span>
-              Filtrar
+            <button class="btn-criar-lineup" onclick="abrirModalCriar()">
+              <span class="material-symbols-outlined">add</span>
+              Criar lineup
             </button>
 
             <div class="order-toggle">
@@ -127,80 +127,51 @@
             </div>
           </div>
 
-          <div class="ranking-body">
+          <div id="ranking-body" class="ranking-body"></div>
 
-            <div class="card">
-              <div class="left-content-group">
-                <span class="ranking-number">1º</span>
-                <img src="../assets/rock-in-rio.webp" alt="img-album" />
-                <div class="artist-info-header">
-                  <span class="artist-name">Rock in Rio 2026</span>
-                  <span class="genre">20/9/2026</span>
-                </div>
-              </div>
-              <ul>
-                <li>
-                  <span class="artist-atribute">Popularidade Média</span>
-                  <span class="atribute-value">89</span>
-                </li>
-                <li>
-                  <span class="artist-atribute">Artistas</span>
-                  <span class="atribute-value">7</span>
-                </li>
-              </ul>
-              <div class="status-setlist realizado">
-                <div class="circulo"></div>
-                <span>Realizado</span>
-              </div>
-              <div class="right-content-group">
-                <button class="details-button" onclick="window.location.href='detalhesSetlist.html'">Detalhes da Line-up</button>
-              </div>
-            </div>
-
-            <div class="card">
-              <div class="left-content-group">
-                <span class="ranking-number">2º</span>
-                <img src="../assets/igreja.jpg" alt="img-album" />
-                <div class="artist-info-header">
-                  <span class="artist-name">Igreja</span>
-                  <span class="genre">11/09/2026</span>
-                </div>
-              </div>
-              <ul>
-                <li>
-                  <span class="artist-atribute">Popularidade Média</span>
-                  <span class="atribute-value">14</span>
-                </li>
-                <li>
-                  <span class="artist-atribute">Artistas</span>
-                  <span class="atribute-value">4</span>
-                </li>
-              </ul>
-              <div class="status-setlist pendente">
-                <div class="circulo"></div>
-                <span>Pendente</span>
-              </div>
-              <div class="right-content-group">
-                <button class="details-button" onclick="window.location.href='detalhesSetlist.html'">Detalhes da Line-up</button>
-              </div>
-            </div>
-
-          </div>
         </section>
       </main>
     </div>
 
-    <script>
-      const rankings = document.querySelectorAll(".ranking-number");
-      const cores = {
-        "1º": "#D4AF37",
-        "2º": "#A8A9AD",
-        "3º": "#CD7F32",
-      };
-      rankings.forEach((el) => {
-        const cor = cores[el.textContent.trim()];
-        el.style.color = cor || "#000000";
-      });
-    </script>
+    <div id="modal-editar-lineup" class="modal-fundo" onclick="if(event.target===this)fecharModalEditar()">
+      <div class="modal-caixa">
+        <div class="modal-cabecalho">
+          <h3 class="modal-titulo">Editar lineup</h3>
+          <button class="modal-fechar" onclick="fecharModalEditar()">✕</button>
+        </div>
+        <div class="modal-corpo">
+          <label class="modal-label">Nome da lineup</label>
+          <input id="edit-nome-lineup" class="modal-input" type="text" placeholder="Ex: Rock in Rio 2026" />
+          <label class="modal-label">Data do evento</label>
+          <input id="edit-data-lineup" class="modal-input" type="date" />
+          <div class="modal-acoes">
+            <button class="btn-cancelar" onclick="fecharModalEditar()">Cancelar</button>
+            <button class="btn-confirmar" onclick="editarLineup()">Salvar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="modal-criar-lineup" class="modal-fundo" onclick="if(event.target===this)fecharModalCriar()">
+      <div class="modal-caixa">
+        <div class="modal-cabecalho">
+          <h3 class="modal-titulo">Criar nova lineup</h3>
+          <button class="modal-fechar" onclick="fecharModalCriar()">✕</button>
+        </div>
+        <div class="modal-corpo">
+          <label class="modal-label">Nome da lineup</label>
+          <input id="input-nome-lineup" class="modal-input" type="text" placeholder="Ex: Rock in Rio 2026" />
+          <label class="modal-label">Data do evento</label>
+          <input id="input-data-lineup" class="modal-input" type="date" />
+          <div class="modal-acoes">
+            <button class="btn-cancelar" onclick="fecharModalCriar()">Cancelar</button>
+            <button class="btn-confirmar" onclick="criarLineup()">Criar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../js/sessao.js"></script>
+    <script src="../js/minhasLineups.js"></script>
   </body>
 </html>

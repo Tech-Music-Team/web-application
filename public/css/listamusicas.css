@@ -381,12 +381,34 @@
     justify-content: flex-end;
 }
 
+.btn-add-setlist {
+    background: none;
+    border: 1.5px solid #e0d5f2;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #A855F7;
+    transition: all 0.2s ease;
+    margin-left: auto;
+    margin-right: 8px;
+    flex-shrink: 0;
+}
+
+.btn-add-setlist:hover {
+    background-color: #A855F7;
+    border-color: #A855F7;
+    color: white;
+}
+
 .details-button {
     padding: 8px 18px;
     background-color: white;
     border: 1.5px solid #A855F7;
     border-radius: 25px;
-    margin-left: auto;
     color: #A855F7;
     font-weight: 600;
     font-size: 12px;

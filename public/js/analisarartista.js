@@ -278,7 +278,9 @@ function attachEventListeners() {
   const btnSetlist = document.querySelector('.btn-setlist');
   if (btnSetlist) {
     btnSetlist.addEventListener('click', function () {
-      alert('Funcionalidade de adicionar a lineup sera implementada em breve');
+      if (currentArtistId) {
+        adicionarALineup(currentArtistId, artistData ? artistData.nome : null);
+      }
     });
   }
 

@@ -379,7 +379,32 @@
 .right-content-group {
     flex: 0 0 auto;
     display: flex;
+    align-items: center;
     justify-content: flex-end;
+    gap: 8px;
+}
+
+.btn-add-lineup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: 1.5px solid #e0d5f2;
+    border-radius: 50%;
+    background: white;
+    color: #A855F7;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-add-lineup:hover {
+    border-color: #A855F7;
+    background: #f8f4ff;
+}
+
+.btn-add-lineup .material-symbols-outlined {
+    font-size: 18px;
 }
 
 .details-button {
