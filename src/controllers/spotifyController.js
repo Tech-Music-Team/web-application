@@ -88,6 +88,62 @@ async function obterImagemArtista(req, res) {
   }
 }
 
+/**
+ * Busca a imagem de um artista pelo nome (pesquisa no Spotify)
+ * @param {Object} req - Objeto de requisição Express
+ * @param {Object} res - Objeto de resposta Express
+ */
+async function buscarImagemPorNome(req, res) {
+  try {
+    const { nome } = req.query;
+
+    if (!nome) {
+      return res.status(400).json({
+        erro: "Nome do artista não fornecido",
+        mensagem: "Forneça o parâmetro 'nome' na query string",
+      });
+    }
+
+    console.log(`\nBuscando artista por nome: "${nome}"`);
+
+    const artista = await spotifyAuth.searchArtista(nome);
+
+    if (!artista.images || artista.images.length === 0) {
+      return res.status(404).json({
+        erro: "Imagem não encontrada",
+        mensagem: `O artista "${nome}" não possui imagens no Spotify`,
+      });
+    }
+
+    const imagemMaior = artista.images[0];
+
+    return res.status(200).json({
+      artistaId: artista.id,
+      nomeArtista: artista.name,
+      imagem: {
+        url: imagemMaior.url,
+        altura: imagemMaior.height,
+        largura: imagemMaior.width,
+      },
+    });
+  } catch (erro) {
+    console.error("Erro ao buscar imagem por nome:", erro.message);
+
+    if (erro.status === 404) {
+      return res.status(404).json({
+        erro: "Artista não encontrado",
+        mensagem: erro.message,
+      });
+    }
+
+    return res.status(500).json({
+      erro: "Erro interno do servidor",
+      mensagem: erro.message,
+    });
+  }
+}
+
 module.exports = {
   obterImagemArtista,
+  buscarImagemPorNome,
 };
