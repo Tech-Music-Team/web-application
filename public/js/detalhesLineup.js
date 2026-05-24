@@ -85,11 +85,12 @@ function renderizarArtistas() {
         var cor = CORES_POSICAO[index] || '#A855F7';
         var popularidade = artista.popularity || '--';
 
+        var nomeEscaped = artista.nome.replace(/"/g, '&quot;');
         html +=
             '<div class="artist-card">' +
                 '<div class="left-content-group">' +
                     '<span class="ranking-number" style="color:' + cor + '">' + posicao + '</span>' +
-                    '<div style="width:52px;height:52px;background:' + cor + ';border-radius:8px;flex-shrink:0;"></div>' +
+                    '<div class="spotify-artist-img" data-artist-name="' + nomeEscaped + '" style="width:52px;height:52px;background:' + cor + ';border-radius:8px;flex-shrink:0;"></div>' +
                     '<div class="artist-info-header">' +
                         '<span class="artist-name">' + artista.nome + '</span>' +
                         '<span class="genre">' + (artista.genre || 'Gênero: --') + '</span>' +
@@ -107,6 +108,15 @@ function renderizarArtistas() {
 
     container.innerHTML = html;
     colorirPosicoes();
+    carregarImagensArtistas();
+}
+
+function carregarImagensArtistas() {
+    var elementos = document.querySelectorAll('.spotify-artist-img');
+    elementos.forEach(function (el) {
+        var nome = el.getAttribute('data-artist-name');
+        if (nome) carregarImagemSpotify(nome, el);
+    });
 }
 
 function colorirPosicoes() {

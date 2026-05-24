@@ -75,11 +75,13 @@ function renderizarMusicas() {
         var genre = musica.genre || 'Desconhecido';
         var genero = genre.split(',')[0].trim();
 
+        var nomeArtista = musica.artista_nome || '';
+        var nomeArtistaEscaped = nomeArtista.replace(/"/g, '&quot;');
         html +=
             '<div class="artist-card">' +
                 '<div class="left-content-group">' +
                     '<span class="ranking-number" style="color:' + cor + '">' + posicao + '</span>' +
-                    '<div style="width:52px;height:52px;background:' + cor + ';border-radius:8px;flex-shrink:0;"></div>' +
+                    '<div class="spotify-artist-img" data-artist-name="' + nomeArtistaEscaped + '" style="width:52px;height:52px;background:' + cor + ';border-radius:8px;flex-shrink:0;"></div>' +
                     '<div class="artist-info-header">' +
                         '<span class="artist-name">' + (musica.track || 'Desconhecida') + '</span>' +
                         '<span class="genre">' + (musica.artista_nome || 'Artista desconhecido') + ' · ' + genero + '</span>' +
@@ -101,6 +103,15 @@ function renderizarMusicas() {
 
     container.innerHTML = html;
     colorirPosicoes();
+    carregarImagensArtistas();
+}
+
+function carregarImagensArtistas() {
+    var elementos = document.querySelectorAll('.spotify-artist-img');
+    elementos.forEach(function (el) {
+        var nome = el.getAttribute('data-artist-name');
+        if (nome) carregarImagemSpotify(nome, el);
+    });
 }
 
 function formatNumber(value) {

@@ -100,8 +100,35 @@ async function obterArtista(spotifyId) {
   return artista;
 }
 
+/**
+ * Busca um artista no Spotify pelo nome
+ * @param {string} nome - Nome do artista
+ * @returns {Promise<Object>} Dados do primeiro resultado
+ * @throws {Error} Se não encontrar ou der erro
+ */
+async function searchArtista(nome) {
+  if (!nome) {
+    throw new Error("Nome do artista não fornecido");
+  }
+
+  const token = await obterToken();
+  const dados = await fazerRequisicao(
+    `/search?q=${encodeURIComponent(nome)}&type=artist&limit=1`,
+    token
+  );
+
+  if (!dados.artists || dados.artists.items.length === 0) {
+    const erro = new Error(`Artista "${nome}" não encontrado no Spotify`);
+    erro.status = 404;
+    throw erro;
+  }
+
+  return dados.artists.items[0];
+}
+
 module.exports = {
   obterToken,
   fazerRequisicao,
   obterArtista,
+  searchArtista,
 };

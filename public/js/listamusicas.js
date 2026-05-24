@@ -59,11 +59,12 @@ function renderCards() {
     var color = getPlaceholderColor(musica.id);
     var artistGenre = musica.artist + ' • ' + getFirstGenre(musica.genre);
 
+    var nomeArtista = musica.artist || '';
     html += `
       <div class="card">
         <div class="left-content-group">
           <span class="ranking-number">${position}o</span>
-          <div style="width: 65px; height: 65px;
+          <div class="spotify-artist-img" data-artist-name="${nomeArtista.replace(/"/g, '&quot;')}" style="width: 65px; height: 65px;
                       background-color: ${color};
                       border-radius: 8px;
                       flex-shrink: 0;">
@@ -99,6 +100,15 @@ function renderCards() {
 
   document.getElementById('ranking-body').innerHTML = html;
   colorRankingNumbers();
+  carregarImagensArtistas();
+}
+
+function carregarImagensArtistas() {
+  var elementos = document.querySelectorAll('.spotify-artist-img');
+  elementos.forEach(function (el) {
+    var nome = el.getAttribute('data-artist-name');
+    if (nome) carregarImagemSpotify(nome, el);
+  });
 }
 
 function updateUI() {

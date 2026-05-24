@@ -12,6 +12,10 @@ router.get("/spotify/imagem/:id", function (req, res) {
     spotifyController.obterImagemArtista(req, res);
 });
 
+router.get("/spotify/buscar-imagem", function (req, res) {
+    spotifyController.buscarImagemPorNome(req, res);
+});
+
 router.get("/ranking", function (req, res) {
     artistaController.ranking(req, res);
 });

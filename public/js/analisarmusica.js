@@ -81,6 +81,9 @@ function renderMusicCard(musica) {
     photoElement.style.height = '130px';
     photoElement.style.borderRadius = '10px';
     photoElement.style.flexShrink = '0';
+    photoElement.classList.add('spotify-artist-img');
+    photoElement.setAttribute('data-artist-name', musica.artist || '');
+    if (musica.artist) carregarImagemSpotify(musica.artist, photoElement);
   }
 
   var titleElement = document.getElementById('music-title');

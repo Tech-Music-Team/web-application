@@ -263,6 +263,9 @@ function renderSlotMusica(slot, musica) {
         fotoPlaceholder.style.width = '70px';
         fotoPlaceholder.style.height = '70px';
         fotoPlaceholder.style.borderRadius = '8px';
+        fotoPlaceholder.classList.add('spotify-artist-img');
+        fotoPlaceholder.setAttribute('data-artist-name', musica.artist || '');
+        carregarImagemSpotify(musica.artist || '', fotoPlaceholder);
     }
 
     document.getElementById('nome-slot-' + slot).textContent = musica.track;

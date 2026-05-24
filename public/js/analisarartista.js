@@ -92,6 +92,7 @@ function renderArtistProfile(artista) {
     photoPlaceholder.style.width = '150px';
     photoPlaceholder.style.height = '150px';
     photoPlaceholder.style.borderRadius = '8px';
+    carregarImagemSpotify(artista.nome, photoPlaceholder);
   }
 
   const nameElement = document.getElementById('artist-name-big');
@@ -221,11 +222,12 @@ function renderMusicCards(musicas) {
     const position = index + 1;
     const placeholderColor = getPlaceholderColor(musica.id);
 
+    var nomeArtista = artistData ? artistData.nome : '';
     html += `
       <div class="card">
         <div class="left-content-group">
           <span class="ranking-number">${position}o</span>
-          <div style="width: 65px; height: 65px;
+          <div class="spotify-artist-img" data-artist-name="${nomeArtista.replace(/"/g, '&quot;')}" style="width: 65px; height: 65px;
                       background-color: ${placeholderColor};
                       border-radius: 8px;
                       flex-shrink: 0;">
@@ -258,6 +260,15 @@ function renderMusicCards(musicas) {
 
   container.innerHTML = html;
   colorRankingNumbers();
+  carregarImagensArtistas();
+}
+
+function carregarImagensArtistas() {
+  var elementos = document.querySelectorAll('.spotify-artist-img');
+  elementos.forEach(function (el) {
+    var nome = el.getAttribute('data-artist-name');
+    if (nome) carregarImagemSpotify(nome, el);
+  });
 }
 
 function colorRankingNumbers() {

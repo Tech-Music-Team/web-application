@@ -270,6 +270,9 @@ function renderSlotArtista(slot, artista) {
         fotoPlaceholder.style.width = '70px';
         fotoPlaceholder.style.height = '70px';
         fotoPlaceholder.style.borderRadius = '8px';
+        fotoPlaceholder.classList.add('spotify-artist-img');
+        fotoPlaceholder.setAttribute('data-artist-name', artista.nome);
+        carregarImagemSpotify(artista.nome, fotoPlaceholder);
     }
 
     var primeiroGenero = artista.genre ? artista.genre.split(',')[0].trim() : 'Desconhecido';
