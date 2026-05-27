@@ -53,9 +53,9 @@ CREATE TABLE roles (
 -- TABELA USUARIO
 CREATE TABLE usuario (
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
-    email VARCHAR(100) NOT NULL UNIQUE,
     nome VARCHAR(100) NOT NULL,
     senha VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
     fk_role INT NOT NULL,
 
     CONSTRAINT fk_role_usuario
@@ -66,19 +66,12 @@ CREATE TABLE usuario (
 -- TABELA LOG
 CREATE TABLE log (
     id_log INT AUTO_INCREMENT PRIMARY KEY,
-    fk_usuario INT,
-
     data_hora DATETIME NOT NULL,
     nivel VARCHAR(50),
     aplicacao VARCHAR(100),
     modulo VARCHAR(100),
     classe VARCHAR(100),
-    mensagem VARCHAR(500),
-
-    CONSTRAINT fk_log_usuario
-        FOREIGN KEY (fk_usuario)
-        REFERENCES usuario(id_usuario)
-        ON DELETE SET NULL
+    mensagem VARCHAR(500)
 );
 
 -- TABELA SETLIST (lista de musicas do usuario)
@@ -87,8 +80,10 @@ CREATE TABLE setlist (
     nome VARCHAR(100) NOT NULL,
     data_evento DATE NOT NULL,
     situacao VARCHAR(20) DEFAULT 'pendente',
+	notificacao BOOLEAN DEFAULT TRUE,
+    email_secundario VARCHAR(100) DEFAULT NULL,
     fk_usuario INT NOT NULL,
-
+    
     CONSTRAINT fk_setlist_usuario
         FOREIGN KEY (fk_usuario)
         REFERENCES usuario(id_usuario)
@@ -103,6 +98,8 @@ CREATE TABLE lineup (
     id_lineup INT AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
     data_evento DATE NOT NULL,
+	notificacao BOOLEAN DEFAULT TRUE,
+    email_secundario VARCHAR(100) DEFAULT NULL,
     status VARCHAR(20) DEFAULT 'pendente',
     fk_usuario INT NOT NULL,
     
@@ -145,4 +142,25 @@ CREATE TABLE artista_lineup (
     CONSTRAINT fk_al_lineup
         FOREIGN KEY (fk_lineup)
         REFERENCES lineup(id_lineup)
+);
+
+-- JavaMail (Notificação)
+CREATE TABLE javamail (
+    id_java INT AUTO_INCREMENT PRIMARY KEY,
+    data_hora_envio DATETIME DEFAULT NOW(),
+    fk_usuario INT NOT NULL,
+    fk_setlist INT,
+    fk_lineup INT,
+	
+    CONSTRAINT fk_usuario_javamail
+        FOREIGN KEY (fk_usuario)
+        REFERENCES usuario(id_usuario),
+        
+	CONSTRAINT fk_setlist_javamail
+		FOREIGN KEY(fk_setlist)
+		REFERENCES setlist(id_setlist),
+        
+	CONSTRAINT fk_lineup_javamail
+		FOREIGN KEY(fk_lineup)
+		REFERENCES lineup(id_lineup)
 );

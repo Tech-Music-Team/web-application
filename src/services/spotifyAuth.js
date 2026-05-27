@@ -6,12 +6,14 @@
 const SPOTIFY_AUTH_URL = "https://accounts.spotify.com/api/token";
 const SPOTIFY_API_BASE_URL = "https://api.spotify.com/v1";
 
-/**
- * Obtém um token de acesso do Spotify
- * @returns {Promise<string>} Token de acesso
- * @throws {Error} Se falhar na autenticação
- */
+var _token = null;
+var _tokenExpiry = 0;
+
 async function obterToken() {
+  if (_token && Date.now() < _tokenExpiry) {
+    return _token;
+  }
+
   const clientId = process.env.SPOTIFY_CLIENT_ID;
   const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
 
@@ -42,7 +44,9 @@ async function obterToken() {
     }
 
     const dados = await resposta.json();
-    return dados.access_token;
+    _token = dados.access_token;
+    _tokenExpiry = Date.now() + (dados.expires_in - 300) * 1000;
+    return _token;
   } catch (erro) {
     console.error("Erro na autenticação Spotify:", erro.message);
     throw erro;

@@ -2,18 +2,11 @@ var lineups = [];
 var lineupsFiltrados = [];
 var lineupEditandoId = null;
 
-var CORES_POSICAO = ['#D4AF37', '#A8A9AD', '#CD7F32'];
-
 document.addEventListener('DOMContentLoaded', function () {
     validarSessao();
     fetchLineups();
     attachEventListeners();
 });
-
-function getUsuarioId() {
-    var id = sessionStorage.ID_USUARIO;
-    return id ? parseInt(id) : 0;
-}
 
 async function fetchLineups() {
     var usuarioId = getUsuarioId();
@@ -91,17 +84,6 @@ function renderCards() {
     colorirPosicoes();
 }
 
-function colorirPosicoes() {
-    var rankings = document.querySelectorAll('.ranking-number');
-    rankings.forEach(function (el) {
-        var texto = el.textContent.trim();
-        var cor = CORES_POSICAO[parseInt(texto) - 1] || getPlaceholderColor(parseInt(texto));
-        if (!CORES_POSICAO[parseInt(texto) - 1]) {
-            el.style.color = '#1A0A2E';
-        }
-    });
-}
-
 function filtrar() {
     var termo = document.getElementById('input-busca').value.toLowerCase();
     lineupsFiltrados = lineups.filter(function (l) {
@@ -114,6 +96,13 @@ function abrirModalCriar() {
     document.getElementById('modal-criar-lineup').style.display = 'flex';
     document.getElementById('input-nome-lineup').value = '';
     document.getElementById('input-data-lineup').value = '';
+    document.getElementById('input-data-lineup').min = dataHojeISO();
+    document.getElementById('input-notificacao-lineup').checked = true;
+    document.getElementById('input-email-secundario-lineup').value = '';
+    document.getElementById('input-email-grupo-lineup').style.display = 'flex';
+    var msg = document.getElementById('msg-criar-lineup');
+    msg.textContent = '';
+    msg.className = 'msg-feedback';
     document.getElementById('input-nome-lineup').focus();
 }
 
@@ -124,27 +113,32 @@ function fecharModalCriar() {
 async function criarLineup() {
     var nome = document.getElementById('input-nome-lineup').value.trim();
     var dataEvento = document.getElementById('input-data-lineup').value;
+    var msg = document.getElementById('msg-criar-lineup');
 
-    if (!nome) {
-        alert('Informe um nome para a lineup.');
-        return;
+    function mostrarErro(texto) {
+        msg.textContent = texto;
+        msg.className = 'msg-feedback erro';
     }
-    if (!dataEvento) {
-        alert('Selecione a data do evento.');
-        return;
-    }
+
+    msg.textContent = '';
+    msg.className = 'msg-feedback';
+
+    if (!nome) { mostrarErro('Informe um nome para a lineup.'); return; }
+    if (!dataEvento) { mostrarErro('Selecione a data do evento.'); return; }
 
     var usuarioId = getUsuarioId();
-    if (!usuarioId) {
-        alert('Usuário não autenticado.');
-        return;
-    }
+    if (!usuarioId) { mostrarErro('Usuário não autenticado.'); return; }
 
+    var notificacao = document.getElementById('input-notificacao-lineup').checked ? 1 : 0;
+    var emailSecundario = notificacao ? (document.getElementById('input-email-secundario-lineup').value.trim() || null) : null;
+
+    var btn = document.querySelector('#modal-criar-lineup .btn-confirmar');
+    btn.disabled = true;
     try {
         var response = await fetch('http://localhost:3333/lineups', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ nome: nome, usuario: usuarioId, dataEvento: dataEvento })
+            body: JSON.stringify({ nome: nome, usuario: usuarioId, dataEvento: dataEvento, notificacao: notificacao, emailSecundario: emailSecundario })
         });
 
         if (!response.ok) throw new Error('Erro ' + response.status);
@@ -153,7 +147,9 @@ async function criarLineup() {
         await fetchLineups();
     } catch (e) {
         console.error('Erro ao criar lineup:', e);
-        alert('Erro ao criar lineup. Tente novamente.');
+        mostrarErro('Erro ao criar lineup. Tente novamente.');
+    } finally {
+        btn.disabled = false;
     }
 }
 
@@ -163,7 +159,14 @@ function abrirModalEditar(id) {
     if (!lineup) return;
 
     document.getElementById('edit-nome-lineup').value = lineup.nome;
-    document.getElementById('edit-data-lineup').value = converterData(lineup.data_evento);
+    document.getElementById('edit-data-lineup').value = dataBRparaISO(lineup.data_evento);
+    document.getElementById('edit-data-lineup').min = dataHojeISO();
+    document.getElementById('edit-notificacao-lineup').checked = !!lineup.notificacao;
+    document.getElementById('edit-email-secundario-lineup').value = lineup.email_secundario || '';
+    document.getElementById('edit-email-grupo-lineup').style.display = lineup.notificacao ? 'flex' : 'none';
+    var msg = document.getElementById('msg-editar-lineup');
+    msg.textContent = '';
+    msg.className = 'msg-feedback';
     document.getElementById('modal-editar-lineup').style.display = 'flex';
     document.getElementById('edit-nome-lineup').focus();
 }
@@ -173,28 +176,34 @@ function fecharModalEditar() {
     lineupEditandoId = null;
 }
 
-function converterData(dataBr) {
-    var partes = dataBr.split('/');
-    if (partes.length === 3) {
-        return partes[2] + '-' + partes[1] + '-' + partes[0];
-    }
-    return '';
-}
-
 async function editarLineup() {
     if (!lineupEditandoId) return;
 
     var nome = document.getElementById('edit-nome-lineup').value.trim();
     var dataEvento = document.getElementById('edit-data-lineup').value;
+    var msg = document.getElementById('msg-editar-lineup');
 
-    if (!nome) { alert('Informe um nome para a lineup.'); return; }
-    if (!dataEvento) { alert('Selecione a data do evento.'); return; }
+    function mostrarErro(texto) {
+        msg.textContent = texto;
+        msg.className = 'msg-feedback erro';
+    }
 
+    msg.textContent = '';
+    msg.className = 'msg-feedback';
+
+    if (!nome) { mostrarErro('Informe um nome para a lineup.'); return; }
+    if (!dataEvento) { mostrarErro('Selecione a data do evento.'); return; }
+
+    var notificacao = document.getElementById('edit-notificacao-lineup').checked ? 1 : 0;
+    var emailSecundario = notificacao ? (document.getElementById('edit-email-secundario-lineup').value.trim() || null) : null;
+
+    var btn = document.querySelector('#modal-editar-lineup .btn-confirmar');
+    btn.disabled = true;
     try {
         var response = await fetch('http://localhost:3333/lineups/' + lineupEditandoId, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ nome: nome, dataEvento: dataEvento })
+            body: JSON.stringify({ nome: nome, dataEvento: dataEvento, notificacao: notificacao, emailSecundario: emailSecundario })
         });
 
         if (!response.ok) throw new Error('Erro ' + response.status);
@@ -203,7 +212,9 @@ async function editarLineup() {
         await fetchLineups();
     } catch (e) {
         console.error('Erro ao editar lineup:', e);
-        alert('Erro ao editar lineup. Tente novamente.');
+        mostrarErro('Erro ao editar lineup. Tente novamente.');
+    } finally {
+        btn.disabled = false;
     }
 }
 
@@ -225,6 +236,13 @@ async function deletarLineup(id) {
 }
 
 function attachEventListeners() {
+    document.getElementById('input-notificacao-lineup').addEventListener('change', function () {
+        document.getElementById('input-email-grupo-lineup').style.display = this.checked ? 'flex' : 'none';
+    });
+    document.getElementById('edit-notificacao-lineup').addEventListener('change', function () {
+        document.getElementById('edit-email-grupo-lineup').style.display = this.checked ? 'flex' : 'none';
+    });
+
     var searchInput = document.getElementById('input-busca');
     if (searchInput) {
         searchInput.addEventListener('input', filtrar);
@@ -271,10 +289,3 @@ function attachEventListeners() {
     });
 }
 
-function getPlaceholderColor(id) {
-    var cores = [
-        '#A855F7', '#D421BF', '#EC4899', '#06B6D4',
-        '#3B82F6', '#8B5CF6', '#10B981', '#F59E0B'
-    ];
-    return cores[id % cores.length];
-}

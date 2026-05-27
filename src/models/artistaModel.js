@@ -1,18 +1,17 @@
 var database = require("../database/config");
 
-function listar() {
-    console.log("ACESSEI O ARTISTA MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listar():");
+var CAMPOS_ARTISTA_VALIDOS = ['artist_popularity', 'views', 'likes', 'nome'];
+var CAMPOS_MUSICA_VALIDOS = ['track_popularity', 'streams', 'views', 'likes'];
 
+function listar() {
     var instrucaoSql = `
         SELECT * FROM artista;
     `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
 
 function getRanking(sortField, limit, offset, order) {
-    console.log("ACESSEI O ARTISTA MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function getRanking():");
-
+    var campo = CAMPOS_ARTISTA_VALIDOS.includes(sortField) ? sortField : 'artist_popularity';
     var orderClause = order === 'asc' ? 'ASC' : 'DESC';
 
     var instrucaoSql = `
@@ -24,11 +23,10 @@ function getRanking(sortField, limit, offset, order) {
             views,
             likes
         FROM artista
-        ORDER BY ${sortField} ${orderClause}
-        LIMIT ${limit} OFFSET ${offset}
+        ORDER BY ${campo} ${orderClause}
+        LIMIT ? OFFSET ?
     `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+    return database.executar(instrucaoSql, [parseInt(limit), parseInt(offset)]);
 }
 
 function getById(id) {
@@ -37,7 +35,6 @@ function getById(id) {
                artist_popularity as popularity, views, likes, artist_followers as followers
         FROM artista WHERE id_artista = ?;
     `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql, [id]);
 }
 
@@ -53,13 +50,10 @@ function getAudioMedia(id) {
             COUNT(*) as track_count
         FROM musica WHERE fk_artista = ?;
     `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql, [id]);
 }
 
 function search(searchTerm, limit) {
-    console.log("ACESSEI O ARTISTA MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function search():");
-
     var instrucaoSql = `
         SELECT
             id_artista as id,
@@ -67,17 +61,14 @@ function search(searchTerm, limit) {
             artist_genre as genre,
             artist_popularity as popularity
         FROM artista
-        WHERE nome LIKE '%${searchTerm}%'
+        WHERE nome LIKE ?
         ORDER BY artist_popularity DESC
-        LIMIT ${limit}
+        LIMIT ?
     `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+    return database.executar(instrucaoSql, ['%' + searchTerm + '%', parseInt(limit)]);
 }
 
 function getPerfil(artistaId) {
-    console.log("ACESSEI O ARTISTA MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function getPerfil():");
-
     var instrucaoSql = `
         SELECT
             id_artista as id,
@@ -87,16 +78,15 @@ function getPerfil(artistaId) {
             likes,
             artist_followers as followers,
             artist_genre as genre,
-            (SELECT COUNT(*) FROM musica WHERE fk_artista = ${artistaId}) as totalMusicas
+            (SELECT COUNT(*) FROM musica WHERE fk_artista = ?) as totalMusicas
         FROM artista
-        WHERE id_artista = ${artistaId}
+        WHERE id_artista = ?
     `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+    return database.executar(instrucaoSql, [artistaId, artistaId]);
 }
 
 function getMusicas(artistaId, sortField, limit, offset) {
-    console.log("ACESSEI O ARTISTA MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function getMusicas():");
+    var campo = CAMPOS_MUSICA_VALIDOS.includes(sortField) ? sortField : 'track_popularity';
 
     var instrucaoSql = `
         SELECT
@@ -107,17 +97,14 @@ function getMusicas(artistaId, sortField, limit, offset) {
             views,
             likes
         FROM musica
-        WHERE fk_artista = ${artistaId}
-        ORDER BY ${sortField} DESC
-        LIMIT ${limit} OFFSET ${offset}
+        WHERE fk_artista = ?
+        ORDER BY ${campo} DESC
+        LIMIT ? OFFSET ?
     `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+    return database.executar(instrucaoSql, [artistaId, parseInt(limit), parseInt(offset)]);
 }
 
 function getAudioFeatures(artistaId) {
-    console.log("ACESSEI O ARTISTA MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function getAudioFeatures():");
-
     var instrucaoSql = `
         SELECT
             ROUND(AVG(energy), 3) as energy,
@@ -127,10 +114,9 @@ function getAudioFeatures(artistaId) {
             ROUND(AVG(speechiness), 3) as speechiness,
             ROUND(AVG(instrumentalness), 3) as instrumentalness
         FROM musica
-        WHERE fk_artista = ${artistaId}
+        WHERE fk_artista = ?
     `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+    return database.executar(instrucaoSql, [artistaId]);
 }
 
 module.exports = {

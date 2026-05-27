@@ -2,12 +2,6 @@
 node_modules
 package-lock.json
 .github
-/terraform/.terraform
-/terraform/.terraform.lock.hcl
-/terraform terraform.tfstate
-/terraform terraform.tfstate.backup
-/terraform .terraformrc
-/terraform .terraformignore
-
-CLAUDE.md
+.env
 /docs
+/DOCUMENTOS_DE_APOIO

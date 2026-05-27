@@ -5,6 +5,8 @@
 
 const spotifyAuth = require("../services/spotifyAuth");
 
+var cacheImagens = {};
+
 /**
  * Obtém a imagem de um artista do Spotify
  * Retorna apenas a imagem de maior tamanho
@@ -104,7 +106,11 @@ async function buscarImagemPorNome(req, res) {
       });
     }
 
-    console.log(`\nBuscando artista por nome: "${nome}"`);
+    if (cacheImagens[nome]) {
+      return res.status(200).json({
+        imagem: { url: cacheImagens[nome] }
+      });
+    }
 
     const artista = await spotifyAuth.searchArtista(nome);
 
@@ -116,6 +122,8 @@ async function buscarImagemPorNome(req, res) {
     }
 
     const imagemMaior = artista.images[0];
+
+    cacheImagens[nome] = imagemMaior.url;
 
     return res.status(200).json({
       artistaId: artista.id,

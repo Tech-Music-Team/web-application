@@ -1,8 +1,3 @@
-function getUsuarioId() {
-    var id = sessionStorage.ID_USUARIO;
-    return id ? parseInt(id) : 0;
-}
-
 function adicionarASetlist(musicaId, musicaNome) {
     var usuarioId = getUsuarioId();
     if (!usuarioId) {

@@ -107,12 +107,12 @@ function renderArtistProfile(artista) {
 
   const statLikes = document.getElementById('stat-likes');
   if (statLikes) {
-    statLikes.textContent = formatNumber(artista.likes);
+    statLikes.textContent = formatarNumero(artista.likes);
   }
 
   const statViews = document.getElementById('stat-views');
   if (statViews) {
-    statViews.textContent = formatNumber(artista.views);
+    statViews.textContent = formatarNumero(artista.views);
   }
 
   const statGenre = document.getElementById('stat-genre');
@@ -123,7 +123,7 @@ function renderArtistProfile(artista) {
 
   const statFollowers = document.getElementById('stat-followers');
   if (statFollowers) {
-    statFollowers.textContent = formatNumber(artista.followers);
+    statFollowers.textContent = formatarNumero(artista.followers);
   }
 }
 
@@ -182,21 +182,6 @@ function renderRadarChart(audioFeatures) {
   });
 }
 
-function formatNumber(value) {
-  if (value >= 1e9) return (value / 1e9).toFixed(1) + 'B';
-  if (value >= 1e6) return (value / 1e6).toFixed(1) + 'M';
-  if (value >= 1e3) return (value / 1e3).toFixed(1) + 'K';
-  return value.toString();
-}
-
-function getPlaceholderColor(artistId) {
-  const cores = [
-    '#A855F7', '#D421BF', '#EC4899', '#06B6D4',
-    '#3B82F6', '#8B5CF6', '#10B981', '#F59E0B'
-  ];
-  return cores[artistId % cores.length];
-}
-
 function showError(message) {
   const container = document.querySelector('.artist-body');
   if (container) {
@@ -240,15 +225,15 @@ function renderMusicCards(musicas) {
         <ul>
           <li>
             <span class="artist-atribute">Streams</span>
-            <span class="atribute-value">${formatNumber(musica.streams)}</span>
+            <span class="atribute-value">${formatarNumero(musica.streams)}</span>
           </li>
           <li>
             <span class="artist-atribute">Views</span>
-            <span class="atribute-value">${formatNumber(musica.views)}</span>
+            <span class="atribute-value">${formatarNumero(musica.views)}</span>
           </li>
           <li>
             <span class="artist-atribute">Likes</span>
-            <span class="atribute-value">${formatNumber(musica.likes)}</span>
+            <span class="atribute-value">${formatarNumero(musica.likes)}</span>
           </li>
         </ul>
         <div class="right-content-group">
@@ -268,20 +253,6 @@ function carregarImagensArtistas() {
   elementos.forEach(function (el) {
     var nome = el.getAttribute('data-artist-name');
     if (nome) carregarImagemSpotify(nome, el);
-  });
-}
-
-function colorRankingNumbers() {
-  const rankings = document.querySelectorAll('.ranking-number');
-  const cores = {
-    '1o': '#D4AF37',
-    '2o': '#A8A9AD',
-    '3o': '#CD7F32',
-  };
-
-  rankings.forEach(function (el) {
-    const cor = cores[el.textContent.trim()];
-    el.style.color = cor || '#000000';
   });
 }
 

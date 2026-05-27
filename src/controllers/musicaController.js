@@ -1,25 +1,17 @@
 var musicaModel = require("../models/musicaModel");
 
-function listar(req, res) {
-  musicaModel
-    .listar()
-    .then(function (resultado) {
-      console.log(`\nResultados encontrados: ${resultado.length}`);
-      console.log(`Resultados: ${JSON.stringify(resultado)}`);
-
-      res.status(200).json(resultado);
-    })
-    .catch(function (erro) {
-      console.log(erro);
-      console.log(
-        "\nHouve um erro ao listar as músicas! Erro: ",
-        erro.sqlMessage,
-      );
-      res.status(500).json(erro.sqlMessage);
-    });
+async function listar(req, res) {
+  try {
+    var resultado = await musicaModel.listar();
+    res.status(200).json(resultado);
+  } catch (erro) {
+    console.log(erro);
+    console.log("\nHouve um erro ao listar as músicas! Erro: ", erro.sqlMessage);
+    res.status(500).json(erro.sqlMessage);
+  }
 }
 
-function top(req, res) {
+async function top(req, res) {
   var sortField = req.query.sort || 'track_popularity';
   var limit = parseInt(req.query.limit) || 10000;
   var offset = parseInt(req.query.offset) || 0;
@@ -29,41 +21,37 @@ function top(req, res) {
     return res.status(400).send("Sort invalido. Use: track_popularity, streams ou views");
   }
 
-  musicaModel.getTop(sortField, limit, offset)
-    .then(function (resultado) {
-      console.log(`\nTop musicas retornado: ${resultado.length} resultados`);
-      res.status(200).json(resultado);
-    })
-    .catch(function (erro) {
-      console.log(erro);
-      console.log("\nHouve um erro ao buscar top musicas! Erro: ", erro.sqlMessage);
-      res.status(500).json(erro.sqlMessage);
-    });
+  try {
+    var resultado = await musicaModel.getTop(sortField, limit, offset);
+    res.status(200).json(resultado);
+  } catch (erro) {
+    console.log(erro);
+    console.log("\nHouve um erro ao buscar top musicas! Erro: ", erro.sqlMessage);
+    res.status(500).json(erro.sqlMessage);
+  }
 }
 
-function detalhes(req, res) {
+async function detalhes(req, res) {
   var id = parseInt(req.params.id);
 
   if (isNaN(id) || id < 1) {
     return res.status(400).send("ID invalido");
   }
 
-  musicaModel.getDetalhes(id)
-    .then(function (resultado) {
-      if (!resultado || resultado.length === 0) {
-        return res.status(404).send("Musica nao encontrada");
-      }
-      console.log(`\nDetalhes da musica ${id} encontrados`);
-      res.status(200).json(resultado[0]);
-    })
-    .catch(function (erro) {
-      console.log(erro);
-      console.log("\nHouve um erro ao buscar detalhes! Erro: ", erro.sqlMessage);
-      res.status(500).json(erro.sqlMessage);
-    });
+  try {
+    var resultado = await musicaModel.getDetalhes(id);
+    if (!resultado || resultado.length === 0) {
+      return res.status(404).send("Musica nao encontrada");
+    }
+    res.status(200).json(resultado[0]);
+  } catch (erro) {
+    console.log(erro);
+    console.log("\nHouve um erro ao buscar detalhes! Erro: ", erro.sqlMessage);
+    res.status(500).json(erro.sqlMessage);
+  }
 }
 
-function search(req, res) {
+async function search(req, res) {
   var query = req.query.q;
   var limit = parseInt(req.query.limit) || 10;
 
@@ -73,16 +61,14 @@ function search(req, res) {
 
   if (limit > 50) limit = 50;
 
-  musicaModel.search(query.trim(), limit)
-    .then(function (resultado) {
-      console.log(`\nResultados de busca musicas: ${resultado.length}`);
-      res.status(200).json(resultado);
-    })
-    .catch(function (erro) {
-      console.log(erro);
-      console.log("\nHouve um erro na busca de musicas! Erro: ", erro.sqlMessage);
-      res.status(500).json(erro.sqlMessage);
-    });
+  try {
+    var resultado = await musicaModel.search(query.trim(), limit);
+    res.status(200).json(resultado);
+  } catch (erro) {
+    console.log(erro);
+    console.log("\nHouve um erro na busca de musicas! Erro: ", erro.sqlMessage);
+    res.status(500).json(erro.sqlMessage);
+  }
 }
 
 module.exports = {

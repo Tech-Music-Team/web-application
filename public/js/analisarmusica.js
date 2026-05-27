@@ -104,22 +104,22 @@ function renderMusicCard(musica) {
 
   var statLikes = document.getElementById('stat-likes');
   if (statLikes) {
-    statLikes.textContent = formatNumber(musica.likes);
+    statLikes.textContent = formatarNumero(musica.likes);
   }
 
   var statViews = document.getElementById('stat-views');
   if (statViews) {
-    statViews.textContent = formatNumber(musica.views);
+    statViews.textContent = formatarNumero(musica.views);
   }
 
   var statComments = document.getElementById('stat-comments');
   if (statComments) {
-    statComments.textContent = formatNumber(musica.comments);
+    statComments.textContent = formatarNumero(musica.comments);
   }
 
   var statStreams = document.getElementById('stat-streams');
   if (statStreams) {
-    statStreams.textContent = formatNumber(musica.streams);
+    statStreams.textContent = formatarNumero(musica.streams);
   }
 }
 
@@ -208,21 +208,6 @@ function renderMoodValues(musica) {
 
   var moodRelax = document.getElementById('mood-relax');
   if (moodRelax) moodRelax.textContent = moods.relax + '%';
-}
-
-function formatNumber(value) {
-  if (value >= 1e9) return (value / 1e9).toFixed(1) + 'B';
-  if (value >= 1e6) return (value / 1e6).toFixed(1) + 'M';
-  if (value >= 1e3) return (value / 1e3).toFixed(1) + 'K';
-  return value.toString();
-}
-
-function getPlaceholderColor(musicId) {
-  var cores = [
-    '#A855F7', '#D421BF', '#EC4899', '#06B6D4',
-    '#3B82F6', '#8B5CF6', '#10B981', '#F59E0B'
-  ];
-  return cores[musicId % cores.length];
 }
 
 function showError(message) {

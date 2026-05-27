@@ -6,8 +6,6 @@ var radarChart = null;
 var todasMusicas = [];
 var todasMusicasFiltradas = [];
 
-var CORES_POSICAO = ['#D4AF37', '#A8A9AD', '#CD7F32'];
-
 document.addEventListener('DOMContentLoaded', function () {
     validarSessao();
     playlistId = obterIdDaURL();
@@ -17,12 +15,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     carregarPlaylist();
 });
-
-function obterIdDaURL() {
-    var params = new URLSearchParams(window.location.search);
-    var id = params.get('id');
-    return id ? parseInt(id) : null;
-}
 
 async function carregarPlaylist() {
     try {
@@ -95,7 +87,7 @@ function renderizarMusicas() {
                     '</li>' +
                     '<li>' +
                         '<span class="artist-atribute">Streams</span>' +
-                        '<span class="atribute-value">' + formatNumber(musica.streams) + '</span>' +
+                        '<span class="atribute-value">' + formatarNumero(musica.streams) + '</span>' +
                     '</li>' +
                 '</ul>' +
             '</div>';
@@ -111,26 +103,6 @@ function carregarImagensArtistas() {
     elementos.forEach(function (el) {
         var nome = el.getAttribute('data-artist-name');
         if (nome) carregarImagemSpotify(nome, el);
-    });
-}
-
-function formatNumber(value) {
-    if (value == null) return '--';
-    if (value >= 1e9) return (value / 1e9).toFixed(1) + 'B';
-    if (value >= 1e6) return (value / 1e6).toFixed(1) + 'M';
-    if (value >= 1e3) return (value / 1e3).toFixed(1) + 'K';
-    return value.toString();
-}
-
-function colorirPosicoes() {
-    var rankings = document.querySelectorAll('.ranking-number');
-    rankings.forEach(function (el, idx) {
-        var cor = CORES_POSICAO[idx] || '#A855F7';
-        if (idx >= 3) {
-            el.style.color = '#1A0A2E';
-        } else {
-            el.style.color = cor;
-        }
     });
 }
 

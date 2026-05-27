@@ -1,25 +1,17 @@
 var artistaModel = require("../models/artistaModel");
 
-function listar(req, res) {
-  artistaModel
-    .listar()
-    .then(function (resultado) {
-      console.log(`\nResultados encontrados: ${resultado.length}`);
-      console.log(`Resultados: ${JSON.stringify(resultado)}`);
-
-      res.status(200).json(resultado);
-    })
-    .catch(function (erro) {
-      console.log(erro);
-      console.log(
-        "\nHouve um erro ao listar os artistas! Erro: ",
-        erro.sqlMessage,
-      );
-      res.status(500).json(erro.sqlMessage);
-    });
+async function listar(req, res) {
+  try {
+    var resultado = await artistaModel.listar();
+    res.status(200).json(resultado);
+  } catch (erro) {
+    console.log(erro);
+    console.log("\nHouve um erro ao listar os artistas! Erro: ", erro.sqlMessage);
+    res.status(500).json(erro.sqlMessage);
+  }
 }
 
-function ranking(req, res) {
+async function ranking(req, res) {
   var sortField = req.query.sort || 'artist_popularity';
   var limit = parseInt(req.query.limit) || 1000;
   var offset = parseInt(req.query.offset) || 0;
@@ -30,58 +22,53 @@ function ranking(req, res) {
     return res.status(400).send("Sort invalido. Use: artist_popularity, views ou likes");
   }
 
-  artistaModel
-    .getRanking(sortField, limit, offset, order)
-    .then(function (resultado) {
-      console.log(`\nRanking retornado: ${resultado.length} artistas`);
-      res.status(200).json(resultado);
-    })
-    .catch(function (erro) {
-      console.log(erro);
-      console.log(
-        "\nHouve um erro ao buscar ranking! Erro: ",
-        erro.sqlMessage,
-      );
-      res.status(500).json(erro.sqlMessage);
-    });
+  try {
+    var resultado = await artistaModel.getRanking(sortField, limit, offset, order);
+    res.status(200).json(resultado);
+  } catch (erro) {
+    console.log(erro);
+    console.log("\nHouve um erro ao buscar ranking! Erro: ", erro.sqlMessage);
+    res.status(500).json(erro.sqlMessage);
+  }
 }
 
-function detalhar(req, res) {
+async function detalhar(req, res) {
   var id = parseInt(req.params.id);
   if (isNaN(id)) {
     return res.status(400).json('ID inválido');
   }
 
-  artistaModel.getById(id)
-    .then(function (resultado) {
-      if (resultado.length === 0) {
-        return res.status(404).json('Artista não encontrado');
-      }
-      res.status(200).json(resultado[0]);
-    })
-    .catch(function (erro) {
-      console.log(erro);
-      res.status(500).json(erro.sqlMessage);
-    });
+  try {
+    var resultado = await artistaModel.getById(id);
+    if (resultado.length === 0) {
+      return res.status(404).json('Artista não encontrado');
+    }
+    res.status(200).json(resultado[0]);
+  } catch (erro) {
+    console.log(erro);
+    res.status(500).json(erro.sqlMessage);
+  }
 }
 
-function audioMedia(req, res) {
+async function audioMedia(req, res) {
   var id = parseInt(req.params.id);
   if (isNaN(id)) {
     return res.status(400).json('ID inválido');
   }
 
-  artistaModel.getAudioMedia(id)
-    .then(function (resultado) {
-      res.status(200).json(resultado[0]);
-    })
-    .catch(function (erro) {
-      console.log(erro);
-      res.status(500).json(erro.sqlMessage);
-    });
+  try {
+    var resultado = await artistaModel.getAudioMedia(id);
+    if (!resultado || resultado.length === 0) {
+      return res.status(404).json('Artista não encontrado');
+    }
+    res.status(200).json(resultado[0]);
+  } catch (erro) {
+    console.log(erro);
+    res.status(500).json(erro.sqlMessage);
+  }
 }
 
-function search(req, res) {
+async function search(req, res) {
   var query = req.query.q;
   var limit = parseInt(req.query.limit) || 10;
 
@@ -91,41 +78,37 @@ function search(req, res) {
 
   if (limit > 50) limit = 50;
 
-  artistaModel.search(query.trim(), limit)
-    .then(function (resultado) {
-      console.log(`\nResultados de busca: ${resultado.length} artistas`);
-      res.status(200).json(resultado);
-    })
-    .catch(function (erro) {
-      console.log(erro);
-      console.log("\nHouve um erro na busca! Erro: ", erro.sqlMessage);
-      res.status(500).json(erro.sqlMessage);
-    });
+  try {
+    var resultado = await artistaModel.search(query.trim(), limit);
+    res.status(200).json(resultado);
+  } catch (erro) {
+    console.log(erro);
+    console.log("\nHouve um erro na busca! Erro: ", erro.sqlMessage);
+    res.status(500).json(erro.sqlMessage);
+  }
 }
 
-function perfil(req, res) {
+async function perfil(req, res) {
   var id = parseInt(req.params.id);
 
   if (isNaN(id) || id < 1) {
     return res.status(400).send("ID invalido");
   }
 
-  artistaModel.getPerfil(id)
-    .then(function (resultado) {
-      if (!resultado || resultado.length === 0) {
-        return res.status(404).send("Artista nao encontrado");
-      }
-      console.log(`\nPerfil do artista ${id} encontrado`);
-      res.status(200).json(resultado[0]);
-    })
-    .catch(function (erro) {
-      console.log(erro);
-      console.log("\nHouve um erro ao buscar perfil! Erro: ", erro.sqlMessage);
-      res.status(500).json(erro.sqlMessage);
-    });
+  try {
+    var resultado = await artistaModel.getPerfil(id);
+    if (!resultado || resultado.length === 0) {
+      return res.status(404).send("Artista nao encontrado");
+    }
+    res.status(200).json(resultado[0]);
+  } catch (erro) {
+    console.log(erro);
+    console.log("\nHouve um erro ao buscar perfil! Erro: ", erro.sqlMessage);
+    res.status(500).json(erro.sqlMessage);
+  }
 }
 
-function musicas(req, res) {
+async function musicas(req, res) {
   var id = parseInt(req.params.id);
 
   if (isNaN(id) || id < 1) {
@@ -143,38 +126,34 @@ function musicas(req, res) {
 
   if (limit > 500) limit = 500;
 
-  artistaModel.getMusicas(id, sort, limit, offset)
-    .then(function (resultado) {
-      console.log(`\nMusicas do artista ${id} retornadas: ${resultado.length}`);
-      res.status(200).json(resultado);
-    })
-    .catch(function (erro) {
-      console.log(erro);
-      console.log("\nHouve um erro ao buscar musicas! Erro: ", erro.sqlMessage);
-      res.status(500).json(erro.sqlMessage);
-    });
+  try {
+    var resultado = await artistaModel.getMusicas(id, sort, limit, offset);
+    res.status(200).json(resultado);
+  } catch (erro) {
+    console.log(erro);
+    console.log("\nHouve um erro ao buscar musicas! Erro: ", erro.sqlMessage);
+    res.status(500).json(erro.sqlMessage);
+  }
 }
 
-function features(req, res) {
+async function features(req, res) {
   var id = parseInt(req.params.id);
 
   if (isNaN(id) || id < 1) {
     return res.status(400).send("ID invalido");
   }
 
-  artistaModel.getAudioFeatures(id)
-    .then(function (resultado) {
-      if (!resultado || resultado.length === 0) {
-        return res.status(404).send("Artista nao encontrado");
-      }
-      console.log(`\nFeatures do artista ${id} encontradas`);
-      res.status(200).json(resultado[0]);
-    })
-    .catch(function (erro) {
-      console.log(erro);
-      console.log("\nHouve um erro ao buscar features! Erro: ", erro.sqlMessage);
-      res.status(500).json(erro.sqlMessage);
-    });
+  try {
+    var resultado = await artistaModel.getAudioFeatures(id);
+    if (!resultado || resultado.length === 0) {
+      return res.status(404).send("Artista nao encontrado");
+    }
+    res.status(200).json(resultado[0]);
+  } catch (erro) {
+    console.log(erro);
+    console.log("\nHouve um erro ao buscar features! Erro: ", erro.sqlMessage);
+    res.status(500).json(erro.sqlMessage);
+  }
 }
 
 module.exports = {

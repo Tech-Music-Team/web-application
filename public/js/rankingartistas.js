@@ -80,11 +80,11 @@ function renderCards() {
           </li>
           <li>
             <span class="artist-atribute">Views</span>
-            <span class="atribute-value">${formatNumber(artista.views)}</span>
+            <span class="atribute-value">${formatarNumero(artista.views)}</span>
           </li>
           <li>
             <span class="artist-atribute">Likes</span>
-            <span class="atribute-value">${formatNumber(artista.likes)}</span>
+            <span class="atribute-value">${formatarNumero(artista.likes)}</span>
           </li>
         </ul>
         <div class="right-content-group">
@@ -103,10 +103,15 @@ function renderCards() {
 }
 
 function carregarImagensArtistas() {
+  if (currentPage !== 1) return;
   var elementos = document.querySelectorAll('.spotify-artist-img');
-  elementos.forEach(function (el) {
+  elementos.forEach(function (el, index) {
     var nome = el.getAttribute('data-artist-name');
-    if (nome) carregarImagemSpotify(nome, el);
+    if (nome) {
+      setTimeout(function () {
+        carregarImagemSpotify(nome, el);
+      }, index * 150);
+    }
   });
 }
 
@@ -200,38 +205,9 @@ function attachEventListeners() {
   });
 }
 
-function formatNumber(value) {
-  if (value >= 1e9) return (value / 1e9).toFixed(1) + 'B';
-  if (value >= 1e6) return (value / 1e6).toFixed(1) + 'M';
-  if (value >= 1e3) return (value / 1e3).toFixed(1) + 'K';
-  return value.toString();
-}
-
-function getPlaceholderColor(artistId) {
-  var cores = [
-    '#A855F7', '#D421BF', '#EC4899', '#06B6D4',
-    '#3B82F6', '#8B5CF6', '#10B981', '#F59E0B'
-  ];
-  return cores[artistId % cores.length];
-}
-
 function getFirstGenre(genreString) {
   if (!genreString) return 'Desconhecido';
   return genreString.split(',')[0].trim();
-}
-
-function colorRankingNumbers() {
-  var rankings = document.querySelectorAll('.ranking-number');
-  var cores = {
-    '1o': '#D4AF37',
-    '2o': '#A8A9AD',
-    '3o': '#CD7F32',
-  };
-
-  rankings.forEach(function (el) {
-    var cor = cores[el.textContent.trim()];
-    el.style.color = cor || '#000000';
-  });
 }
 
 function filterArtistas(searchTerm) {

@@ -5,7 +5,7 @@ function validarSessao() {
 
     var b_usuario = document.getElementById("b_usuario");
 
-    if (email != null && nome != null) {
+    if (email !== null && email.trim().length > 0 && nome !== null && nome.trim().length > 0) {
         b_usuario.innerHTML = nome;
     } else {
         window.location = "../login.html";

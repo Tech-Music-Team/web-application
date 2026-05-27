@@ -2,25 +2,11 @@ var playlists = [];
 var playlistsFiltrados = [];
 var playlistEditandoId = null;
 
-var CORES_POSICAO = ['#D4AF37', '#A8A9AD', '#CD7F32'];
-
 document.addEventListener('DOMContentLoaded', function () {
     validarSessao();
     fetchPlaylists();
     attachEventListeners();
 });
-
-function getUsuarioId() {
-    var id = sessionStorage.ID_USUARIO;
-    return id ? parseInt(id) : 0;
-}
-
-function hojeFormatado() {
-    var d = new Date();
-    var mes = String(d.getMonth() + 1).padStart(2, '0');
-    var dia = String(d.getDate()).padStart(2, '0');
-    return d.getFullYear() + '-' + mes + '-' + dia;
-}
 
 async function fetchPlaylists() {
     var usuarioId = getUsuarioId();
@@ -101,17 +87,6 @@ function renderCards() {
     colorirPosicoes();
 }
 
-function colorirPosicoes() {
-    var rankings = document.querySelectorAll('.ranking-number');
-    rankings.forEach(function (el) {
-        var texto = el.textContent.trim();
-        var cor = CORES_POSICAO[parseInt(texto) - 1] || getPlaceholderColor(parseInt(texto));
-        if (!CORES_POSICAO[parseInt(texto) - 1]) {
-            el.style.color = '#1A0A2E';
-        }
-    });
-}
-
 function filtrar() {
     var termo = document.getElementById('input-busca').value.toLowerCase();
     playlistsFiltrados = playlists.filter(function (p) {
@@ -123,7 +98,14 @@ function filtrar() {
 function abrirModalCriar() {
     document.getElementById('modal-criar-playlist').style.display = 'flex';
     document.getElementById('input-nome-playlist').value = '';
-    document.getElementById('input-data-playlist').value = hojeFormatado();
+    document.getElementById('input-data-playlist').value = dataHojeISO();
+    document.getElementById('input-data-playlist').min = dataHojeISO();
+    document.getElementById('input-notificacao-playlist').checked = true;
+    document.getElementById('input-email-secundario-playlist').value = '';
+    document.getElementById('input-email-grupo-playlist').style.display = 'flex';
+    var msg = document.getElementById('msg-criar-playlist');
+    msg.textContent = '';
+    msg.className = 'msg-feedback';
     document.getElementById('input-nome-playlist').focus();
 }
 
@@ -134,39 +116,46 @@ function fecharModalCriar() {
 async function criarPlaylist() {
     var nome = document.getElementById('input-nome-playlist').value.trim();
     var dataEvento = document.getElementById('input-data-playlist').value;
+    var msg = document.getElementById('msg-criar-playlist');
 
-    if (!nome) {
-        alert('Informe um nome para a playlist.');
-        return;
+    function mostrarErro(texto) {
+        msg.textContent = texto;
+        msg.className = 'msg-feedback erro';
     }
-    if (!dataEvento) {
-        alert('Informe a data do evento.');
-        return;
-    }
+
+    msg.textContent = '';
+    msg.className = 'msg-feedback';
+
+    if (!nome) { mostrarErro('Informe um nome para a playlist.'); return; }
+    if (!dataEvento) { mostrarErro('Informe a data do evento.'); return; }
 
     var usuarioId = getUsuarioId();
-    if (!usuarioId) {
-        alert('Usuário não autenticado.');
-        return;
-    }
+    if (!usuarioId) { mostrarErro('Usuário não autenticado.'); return; }
 
+    var notificacao = document.getElementById('input-notificacao-playlist').checked ? 1 : 0;
+    var emailSecundario = notificacao ? (document.getElementById('input-email-secundario-playlist').value.trim() || null) : null;
+
+    var btn = document.querySelector('#modal-criar-playlist .btn-confirmar');
+    btn.disabled = true;
     try {
         var response = await fetch('http://localhost:3333/setlists', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ nome: nome, usuario: usuarioId, dataEvento: dataEvento })
+            body: JSON.stringify({ nome: nome, usuario: usuarioId, dataEvento: dataEvento, notificacao: notificacao, emailSecundario: emailSecundario })
         });
 
         if (!response.ok) {
-            var msg = await response.text();
-            throw new Error(msg || 'Erro ' + response.status);
+            var errText = await response.text();
+            throw new Error(errText || 'Erro ' + response.status);
         }
 
         fecharModalCriar();
         await fetchPlaylists();
     } catch (e) {
         console.error('Erro ao criar playlist:', e);
-        alert(e.message || 'Erro ao criar playlist. Tente novamente.');
+        mostrarErro(e.message || 'Erro ao criar playlist. Tente novamente.');
+    } finally {
+        btn.disabled = false;
     }
 }
 
@@ -177,12 +166,18 @@ function abrirModalEditar(id) {
 
     document.getElementById('edit-nome-playlist').value = playlist.nome;
     var dataInput = document.getElementById('edit-data-playlist');
+    dataInput.min = dataHojeISO();
     if (playlist.data_evento) {
-        var partes = playlist.data_evento.split('/');
-        dataInput.value = partes[2] + '-' + partes[1] + '-' + partes[0];
+        dataInput.value = dataBRparaISO(playlist.data_evento);
     } else {
-        dataInput.value = hojeFormatado();
+        dataInput.value = dataHojeISO();
     }
+    document.getElementById('edit-notificacao-playlist').checked = !!playlist.notificacao;
+    document.getElementById('edit-email-secundario-playlist').value = playlist.email_secundario || '';
+    document.getElementById('edit-email-grupo-playlist').style.display = playlist.notificacao ? 'flex' : 'none';
+    var msg = document.getElementById('msg-editar-playlist');
+    msg.textContent = '';
+    msg.className = 'msg-feedback';
     document.getElementById('modal-editar-playlist').style.display = 'flex';
     document.getElementById('edit-nome-playlist').focus();
 }
@@ -197,27 +192,43 @@ async function editarPlaylist() {
 
     var nome = document.getElementById('edit-nome-playlist').value.trim();
     var dataEvento = document.getElementById('edit-data-playlist').value;
+    var msg = document.getElementById('msg-editar-playlist');
 
-    if (!nome) { alert('Informe um nome para a playlist.'); return; }
-    if (!dataEvento) { alert('Informe a data do evento.'); return; }
+    function mostrarErro(texto) {
+        msg.textContent = texto;
+        msg.className = 'msg-feedback erro';
+    }
 
+    msg.textContent = '';
+    msg.className = 'msg-feedback';
+
+    if (!nome) { mostrarErro('Informe um nome para a playlist.'); return; }
+    if (!dataEvento) { mostrarErro('Informe a data do evento.'); return; }
+
+    var notificacao = document.getElementById('edit-notificacao-playlist').checked ? 1 : 0;
+    var emailSecundario = notificacao ? (document.getElementById('edit-email-secundario-playlist').value.trim() || null) : null;
+
+    var btn = document.querySelector('#modal-editar-playlist .btn-confirmar');
+    btn.disabled = true;
     try {
         var response = await fetch('http://localhost:3333/setlists/' + playlistEditandoId, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ nome: nome, dataEvento: dataEvento })
+            body: JSON.stringify({ nome: nome, dataEvento: dataEvento, notificacao: notificacao, emailSecundario: emailSecundario })
         });
 
         if (!response.ok) {
-            var msg = await response.text();
-            throw new Error(msg || 'Erro ' + response.status);
+            var errText = await response.text();
+            throw new Error(errText || 'Erro ' + response.status);
         }
 
         fecharModalEditar();
         await fetchPlaylists();
     } catch (e) {
         console.error('Erro ao editar playlist:', e);
-        alert(e.message || 'Erro ao editar playlist. Tente novamente.');
+        mostrarErro(e.message || 'Erro ao editar playlist. Tente novamente.');
+    } finally {
+        btn.disabled = false;
     }
 }
 
@@ -239,6 +250,13 @@ async function deletarPlaylist(id) {
 }
 
 function attachEventListeners() {
+    document.getElementById('input-notificacao-playlist').addEventListener('change', function () {
+        document.getElementById('input-email-grupo-playlist').style.display = this.checked ? 'flex' : 'none';
+    });
+    document.getElementById('edit-notificacao-playlist').addEventListener('change', function () {
+        document.getElementById('edit-email-grupo-playlist').style.display = this.checked ? 'flex' : 'none';
+    });
+
     var searchInput = document.getElementById('input-busca');
     if (searchInput) {
         searchInput.addEventListener('input', filtrar);
@@ -285,10 +303,3 @@ function attachEventListeners() {
     });
 }
 
-function getPlaceholderColor(id) {
-    var cores = [
-        '#A855F7', '#D421BF', '#EC4899', '#06B6D4',
-        '#3B82F6', '#8B5CF6', '#10B981', '#F59E0B'
-    ];
-    return cores[id % cores.length];
-}

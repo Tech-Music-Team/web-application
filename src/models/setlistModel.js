@@ -7,17 +7,18 @@ function listar(usuarioId) {
             s.nome,
             DATE_FORMAT(s.data_evento, '%d/%m/%Y') AS data_evento,
             s.situacao AS situacao,
+            s.notificacao,
+            s.email_secundario,
             COUNT(ms.fk_musica) AS qtd_musicas,
             COALESCE(ROUND(AVG(m.track_popularity), 0), 0) AS avg_popularidade
         FROM setlist s
         LEFT JOIN musica_setlist ms ON ms.fk_setlist = s.id_setlist
         LEFT JOIN musica m ON m.id_musica = ms.fk_musica
-        WHERE s.fk_usuario = ${usuarioId}
-        GROUP BY s.id_setlist, s.nome, s.data_evento, s.situacao
+        WHERE s.fk_usuario = ?
+        GROUP BY s.id_setlist, s.nome, s.data_evento, s.situacao, s.notificacao, s.email_secundario
         ORDER BY s.data_evento DESC
     `;
-    console.log("Executando a instrução SQL: \n" + instrucao);
-    return database.executar(instrucao);
+    return database.executar(instrucao, [usuarioId]);
 }
 
 function listarPorId(id) {
@@ -45,55 +46,42 @@ function listarPorId(id) {
         LEFT JOIN musica_setlist ms ON ms.fk_setlist = s.id_setlist
         LEFT JOIN musica m ON m.id_musica = ms.fk_musica
         LEFT JOIN artista a ON a.id_artista = m.fk_artista
-        WHERE s.id_setlist = ${id}
+        WHERE s.id_setlist = ?
     `;
-    console.log("Executando a instrução SQL: \n" + instrucao);
-    return database.executar(instrucao);
+    return database.executar(instrucao, [id]);
 }
 
-function criar(nome, usuarioId, dataEvento) {
-    var instrucao = `
-        INSERT INTO setlist (nome, fk_usuario, data_evento, situacao)
-        VALUES ('${nome}', ${usuarioId}, '${dataEvento}', 'pendente')
-    `;
-    console.log("Executando a instrução SQL: \n" + instrucao);
-    return database.executar(instrucao);
+function criar(nome, usuarioId, dataEvento, notificacao, emailSecundario) {
+    var instrucao = `INSERT INTO setlist (nome, fk_usuario, data_evento, situacao, notificacao, email_secundario) VALUES (?, ?, ?, 'pendente', ?, ?)`;
+    return database.executar(instrucao, [nome, usuarioId, dataEvento, notificacao, emailSecundario]);
 }
 
-function atualizar(id, nome, dataEvento) {
-    var instrucao = `
-        UPDATE setlist
-        SET nome = '${nome}', data_evento = '${dataEvento}'
-        WHERE id_setlist = ${id}
-    `;
-    console.log("Executando a instrução SQL: \n" + instrucao);
-    return database.executar(instrucao);
+function atualizar(id, nome, dataEvento, notificacao, emailSecundario) {
+    var instrucao = `UPDATE setlist SET nome = ?, data_evento = ?, notificacao = ?, email_secundario = ? WHERE id_setlist = ?`;
+    return database.executar(instrucao, [nome, dataEvento, notificacao, emailSecundario, id]);
 }
 
 function deletar(id) {
     var instrucao = `
-        DELETE FROM setlist WHERE id_setlist = ${id}
+        DELETE FROM setlist WHERE id_setlist = ?
     `;
-    console.log("Executando a instrução SQL: \n" + instrucao);
-    return database.executar(instrucao);
+    return database.executar(instrucao, [id]);
 }
 
 function adicionarMusica(setlistId, musicaId) {
     var instrucao = `
         INSERT INTO musica_setlist (fk_musica, fk_setlist)
-        VALUES (${musicaId}, ${setlistId})
+        VALUES (?, ?)
     `;
-    console.log("Executando a instrução SQL: \n" + instrucao);
-    return database.executar(instrucao);
+    return database.executar(instrucao, [musicaId, setlistId]);
 }
 
 function removerMusica(setlistId, musicaId) {
     var instrucao = `
         DELETE FROM musica_setlist
-        WHERE fk_musica = ${musicaId} AND fk_setlist = ${setlistId}
+        WHERE fk_musica = ? AND fk_setlist = ?
     `;
-    console.log("Executando a instrução SQL: \n" + instrucao);
-    return database.executar(instrucao);
+    return database.executar(instrucao, [musicaId, setlistId]);
 }
 
 function atualizarSituacaoPorData() {
@@ -102,7 +90,6 @@ function atualizarSituacaoPorData() {
         SET situacao = 'realizado'
         WHERE data_evento < CURDATE() AND situacao = 'pendente'
     `;
-    console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
 }
 

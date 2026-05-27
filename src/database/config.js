@@ -27,8 +27,8 @@ function executar(instrucao, valores) {
       conexao.end();
       if (erro) {
         reject(erro);
+        return;
       }
-      console.log(resultados);
       resolve(resultados);
     };
     if (valores) {
@@ -37,7 +37,7 @@ function executar(instrucao, valores) {
       conexao.query(instrucao, callback);
     }
     conexao.on("error", function (erro) {
-      return ("ERRO NO MySQL SERVER: ", erro.sqlMessage);
+      reject(new Error("ERRO NO MySQL SERVER: " + erro.sqlMessage));
     });
   });
 }

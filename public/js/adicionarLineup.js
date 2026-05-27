@@ -1,8 +1,3 @@
-function getUsuarioId() {
-    var id = sessionStorage.ID_USUARIO;
-    return id ? parseInt(id) : 0;
-}
-
 function adicionarALineup(artistaId, artistaNome) {
     var usuarioId = getUsuarioId();
     if (!usuarioId) {

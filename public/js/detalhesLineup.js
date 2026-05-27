@@ -4,8 +4,6 @@ var artistas = [];
 var artistasFiltrados = [];
 var radarChart = null;
 
-var CORES_POSICAO = ['#D4AF37', '#A8A9AD', '#CD7F32'];
-
 document.addEventListener('DOMContentLoaded', function () {
     validarSessao();
     lineupId = obterIdDaURL();
@@ -15,12 +13,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     carregarLineup();
 });
-
-function obterIdDaURL() {
-    var params = new URLSearchParams(window.location.search);
-    var id = params.get('id');
-    return id ? parseInt(id) : null;
-}
 
 async function carregarLineup() {
     try {
@@ -116,18 +108,6 @@ function carregarImagensArtistas() {
     elementos.forEach(function (el) {
         var nome = el.getAttribute('data-artist-name');
         if (nome) carregarImagemSpotify(nome, el);
-    });
-}
-
-function colorirPosicoes() {
-    var rankings = document.querySelectorAll('.ranking-number');
-    rankings.forEach(function (el, idx) {
-        var cor = CORES_POSICAO[idx] || '#A855F7';
-        if (idx >= 3) {
-            el.style.color = '#1A0A2E';
-        } else {
-            el.style.color = cor;
-        }
     });
 }
 

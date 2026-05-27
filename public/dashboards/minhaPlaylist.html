@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Minhas Playlists - Tech Music</title>
 
+    <link rel="stylesheet" href="../css/shared.css" />
     <link rel="stylesheet" href="../css/minhaPlaylist.css" />
 
     <link
@@ -79,6 +80,12 @@
               <a href="minhaPlaylist.html">
                 <span class="material-symbols-outlined">featured_play_list</span>
                 Minhas playlists
+              </a>
+            </li>
+            <li>
+              <a href="perfilUsuario.html">
+                <span class="material-symbols-outlined">manage_accounts</span>
+                Meu perfil
               </a>
             </li>
           </ul>
@@ -158,6 +165,15 @@
           <input id="edit-nome-playlist" class="modal-input" type="text" placeholder="Ex: Minhas favoritas" />
           <label class="modal-label" style="margin-top:12px;">Data do evento</label>
           <input id="edit-data-playlist" class="modal-input" type="date" />
+          <div class="modal-notificacao">
+            <input type="checkbox" id="edit-notificacao-playlist" checked />
+            <span>Receber email 1 dia antes do evento</span>
+          </div>
+          <div id="edit-email-grupo-playlist" class="modal-email-grupo">
+            <label class="modal-label">Email secundário <span class="modal-label-opt">(opcional)</span></label>
+            <input id="edit-email-secundario-playlist" class="modal-input" type="email" placeholder="outro@email.com" />
+          </div>
+          <div id="msg-editar-playlist" class="msg-feedback"></div>
           <div class="modal-acoes">
             <button class="btn-cancelar" onclick="fecharModalEditar()">Cancelar</button>
             <button class="btn-confirmar" onclick="editarPlaylist()">Salvar</button>
@@ -177,6 +193,15 @@
           <input id="input-nome-playlist" class="modal-input" type="text" placeholder="Ex: Minhas favoritas" />
           <label class="modal-label" style="margin-top:12px;">Data do evento</label>
           <input id="input-data-playlist" class="modal-input" type="date" />
+          <div class="modal-notificacao">
+            <input type="checkbox" id="input-notificacao-playlist" checked />
+            <span>Receber email 1 dia antes do evento</span>
+          </div>
+          <div id="input-email-grupo-playlist" class="modal-email-grupo">
+            <label class="modal-label">Email secundário <span class="modal-label-opt">(opcional)</span></label>
+            <input id="input-email-secundario-playlist" class="modal-input" type="email" placeholder="outro@email.com" />
+          </div>
+          <div id="msg-criar-playlist" class="msg-feedback"></div>
           <div class="modal-acoes">
             <button class="btn-cancelar" onclick="fecharModalCriar()">Cancelar</button>
             <button class="btn-confirmar" onclick="criarPlaylist()">Criar</button>
@@ -186,6 +211,7 @@
     </div>
 
     <script src="../js/sessao.js"></script>
+    <script src="../js/utils.js"></script>
     <script src="../js/spotify.js"></script>
     <script src="../js/minhaPlaylist.js"></script>
   </body>

@@ -1,20 +1,19 @@
 var database = require("../database/config");
 
-function listar() {
-    console.log("ACESSEI O MUSICA MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listar():");
+var CAMPOS_MUSICA_TOP_VALIDOS = ['m.track_popularity', 'm.streams', 'm.views', 'm.likes'];
 
+function listar() {
     var instrucaoSql = `
         SELECT * FROM musica;
     `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
 
 function getTop(sortField, limit, offset) {
-    console.log("ACESSEI O MUSICA MODEL - getTop():");
+    var campo = CAMPOS_MUSICA_TOP_VALIDOS.includes(sortField) ? sortField : 'm.track_popularity';
 
     var instrucao = `
-        SELECT 
+        SELECT
             m.id_musica as id,
             m.track,
             a.nome as artist,
@@ -26,18 +25,15 @@ function getTop(sortField, limit, offset) {
             m.likes
         FROM musica m
         JOIN artista a ON m.fk_artista = a.id_artista
-        ORDER BY ${sortField} DESC
-        LIMIT ${limit} OFFSET ${offset}
+        ORDER BY ${campo} DESC
+        LIMIT ? OFFSET ?
     `;
-    console.log("Executando a instrução SQL: \n" + instrucao);
-    return database.executar(instrucao);
+    return database.executar(instrucao, [parseInt(limit), parseInt(offset)]);
 }
 
 function getDetalhes(musicaId) {
-    console.log("ACESSEI O MUSICA MODEL - getDetalhes():");
-
     var instrucao = `
-        SELECT 
+        SELECT
             m.id_musica as id,
             m.track,
             a.nome as artist,
@@ -56,17 +52,14 @@ function getDetalhes(musicaId) {
             m.instrumentalness
         FROM musica m
         JOIN artista a ON m.fk_artista = a.id_artista
-        WHERE m.id_musica = ${musicaId}
+        WHERE m.id_musica = ?
     `;
-    console.log("Executando a instrução SQL: \n" + instrucao);
-    return database.executar(instrucao);
+    return database.executar(instrucao, [musicaId]);
 }
 
 function search(searchTerm, limit) {
-    console.log("ACESSEI O MUSICA MODEL - search():");
-
     var instrucao = `
-        SELECT 
+        SELECT
             m.id_musica as id,
             m.track,
             a.nome as artist,
@@ -78,12 +71,11 @@ function search(searchTerm, limit) {
             m.likes
         FROM musica m
         JOIN artista a ON m.fk_artista = a.id_artista
-        WHERE m.track LIKE '%${searchTerm}%' OR a.nome LIKE '%${searchTerm}%'
+        WHERE m.track LIKE ? OR a.nome LIKE ?
         ORDER BY m.track_popularity DESC
-        LIMIT ${limit}
+        LIMIT ?
     `;
-    console.log("Executando a instrução SQL: \n" + instrucao);
-    return database.executar(instrucao);
+    return database.executar(instrucao, ['%' + searchTerm + '%', '%' + searchTerm + '%', parseInt(limit)]);
 }
 
 module.exports = {
