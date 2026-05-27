@@ -46,7 +46,7 @@ function getArtistIdFromURL() {
 
 async function fetchArtistPerfil(artistId) {
   try {
-    const response = await fetch('http://localhost:3333/artistas/' + artistId + '/perfil');
+    const response = await fetch('/artistas/' + artistId + '/perfil');
     if (!response.ok) {
       if (response.status === 404) return null;
       throw new Error('Erro na API: ' + response.status);
@@ -60,7 +60,7 @@ async function fetchArtistPerfil(artistId) {
 
 async function fetchArtistMusics(artistId) {
   try {
-    const response = await fetch('http://localhost:3333/artistas/' + artistId + '/musicas?limit=500');
+    const response = await fetch('/artistas/' + artistId + '/musicas?limit=500');
     if (!response.ok) {
       throw new Error('Erro na API: ' + response.status);
     }
@@ -73,7 +73,7 @@ async function fetchArtistMusics(artistId) {
 
 async function fetchArtistFeatures(artistId) {
   try {
-    const response = await fetch('http://localhost:3333/artistas/' + artistId + '/features');
+    const response = await fetch('/artistas/' + artistId + '/features');
     if (!response.ok) {
       throw new Error('Erro na API: ' + response.status);
     }

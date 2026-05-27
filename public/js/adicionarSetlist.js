@@ -16,7 +16,7 @@ function adicionarASetlist(musicaId, musicaNome) {
     document.getElementById('lista-setlists').innerHTML = '<p style="color:#999;font-size:13px;">Carregando playlists...</p>';
     modal.style.display = 'flex';
 
-    fetch('http://localhost:3333/setlists?usuario=' + usuarioId)
+    fetch('/setlists?usuario=' + usuarioId)
         .then(function (r) { return r.json(); })
         .then(function (setlists) {
             var container = document.getElementById('lista-setlists');
@@ -87,7 +87,7 @@ function fecharModalSetlist() {
 
 async function adicionarNaSetlist(setlistId, musicaId) {
     try {
-        var response = await fetch('http://localhost:3333/setlists/' + setlistId + '/musicas', {
+        var response = await fetch('/setlists/' + setlistId + '/musicas', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ musicaId: musicaId })

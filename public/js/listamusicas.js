@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 async function fetchTopMusics() {
   try {
-    var url = 'http://localhost:3333/musicas/top?sort=' + currentSortField + '&limit=10000';
+    var url = '/musicas/top?sort=' + currentSortField + '&limit=10000';
     var response = await fetch(url);
     if (!response.ok) {
       throw new Error('Erro na API: ' + response.status);
@@ -221,7 +221,7 @@ async function filterMusics(searchTerm) {
   }
 
   try {
-    var response = await fetch('http://localhost:3333/musicas/search?q=' + encodeURIComponent(term) + '&limit=10000');
+    var response = await fetch('/musicas/search?q=' + encodeURIComponent(term) + '&limit=10000');
     if (!response.ok) throw new Error('Erro na busca: ' + response.status);
     filteredMusics = await response.json();
     isFiltering = true;

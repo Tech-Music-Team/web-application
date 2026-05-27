@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 async function carregarPlaylist() {
     try {
-        var response = await fetch('http://localhost:3333/setlists/' + playlistId);
+        var response = await fetch('/setlists/' + playlistId);
         if (!response.ok) throw new Error('Erro ' + response.status);
         playlistData = await response.json();
         musicas = playlistData.musicas || [];
@@ -122,7 +122,7 @@ function abrirModalAdicionarMusica() {
     document.getElementById('resultado-busca-musica').innerHTML = '<p style="color:#999;font-size:13px;padding:8px;">Carregando músicas...</p>';
     document.getElementById('input-busca-musica-modal').focus();
 
-    fetch('http://localhost:3333/musicas/top?limit=10000')
+    fetch('/musicas/top?limit=10000')
         .then(function (r) { return r.json(); })
         .then(function (dados) {
             todasMusicas = dados || [];
@@ -187,7 +187,7 @@ function buscarMusicaModal() {
 
 async function adicionarMusicaNaPlaylist(musicaId) {
     try {
-        var response = await fetch('http://localhost:3333/setlists/' + playlistId + '/musicas', {
+        var response = await fetch('/setlists/' + playlistId + '/musicas', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ musicaId: musicaId })
@@ -215,7 +215,7 @@ async function removerMusicaDaPlaylist(musicaId) {
     if (!confirm('Remover esta música da playlist?')) return;
 
     try {
-        var response = await fetch('http://localhost:3333/setlists/' + playlistId + '/musicas/' + musicaId, {
+        var response = await fetch('/setlists/' + playlistId + '/musicas/' + musicaId, {
             method: 'DELETE'
         });
 

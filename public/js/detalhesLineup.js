@@ -16,14 +16,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
 async function carregarLineup() {
     try {
-        var response = await fetch('http://localhost:3333/lineups/' + lineupId);
+        var response = await fetch('/lineups/' + lineupId);
         if (!response.ok) throw new Error('Erro ' + response.status);
         lineupData = await response.json();
         artistas = lineupData.artistas || [];
         artistasFiltrados = artistas.slice();
 
         await Promise.all(artistas.map(function (a) {
-            return fetch('http://localhost:3333/artistas/' + a.id + '/features')
+            return fetch('/artistas/' + a.id + '/features')
                 .then(function (r) { return r.json(); })
                 .then(function (f) { a.audioFeatures = f; })
                 .catch(function () { a.audioFeatures = null; });
@@ -131,7 +131,7 @@ function fecharModalAdicionarArtista() {
 }
 
 function carregarRankingModal() {
-    fetch('http://localhost:3333/artistas/ranking')
+    fetch('/artistas/ranking')
         .then(function (r) { return r.json(); })
         .then(function (resultados) {
             renderizarListaModal(resultados);
@@ -152,7 +152,7 @@ function buscarArtistaModal() {
     }
 
     timeoutBusca = setTimeout(function () {
-        fetch('http://localhost:3333/artistas/search?q=' + encodeURIComponent(termo))
+        fetch('/artistas/search?q=' + encodeURIComponent(termo))
             .then(function (r) { return r.json(); })
             .then(function (resultados) {
                 renderizarListaModal(resultados);
@@ -190,7 +190,7 @@ function renderizarListaModal(resultados) {
 
 async function adicionarArtistaNaLineup(artistaId) {
     try {
-        var response = await fetch('http://localhost:3333/lineups/' + lineupId + '/artistas', {
+        var response = await fetch('/lineups/' + lineupId + '/artistas', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ artistaId: artistaId })
@@ -218,7 +218,7 @@ async function removerArtistaDaLineup(artistaId) {
     if (!confirm('Remover este artista da lineup?')) return;
 
     try {
-        var response = await fetch('http://localhost:3333/lineups/' + lineupId + '/artistas/' + artistaId, {
+        var response = await fetch('/lineups/' + lineupId + '/artistas/' + artistaId, {
             method: 'DELETE'
         });
 

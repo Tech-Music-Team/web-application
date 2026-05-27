@@ -57,7 +57,7 @@ function getMusicIdFromURL() {
 
 async function fetchMusicDetails(musicId) {
   try {
-    var response = await fetch('http://localhost:3333/musicas/' + musicId + '/detalhes');
+    var response = await fetch('/musicas/' + musicId + '/detalhes');
     if (!response.ok) {
       if (response.status === 404) {
         return null;

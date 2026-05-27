@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 async function fetchRanking() {
   try {
-    var url = 'http://localhost:3333/artistas/ranking?sort=' + currentSortField + '&limit=1000&order=' + currentSortOrder;
+    var url = '/artistas/ranking?sort=' + currentSortField + '&limit=1000&order=' + currentSortOrder;
     var response = await fetch(url);
     if (!response.ok) {
       throw new Error('Erro na API: ' + response.status);

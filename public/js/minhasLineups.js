@@ -17,7 +17,7 @@ async function fetchLineups() {
     }
 
     try {
-        var response = await fetch('http://localhost:3333/lineups?usuario=' + usuarioId);
+        var response = await fetch('/lineups?usuario=' + usuarioId);
         if (!response.ok) throw new Error('Erro ' + response.status);
         lineups = await response.json();
         lineupsFiltrados = lineups.slice();
@@ -135,7 +135,7 @@ async function criarLineup() {
     var btn = document.querySelector('#modal-criar-lineup .btn-confirmar');
     btn.disabled = true;
     try {
-        var response = await fetch('http://localhost:3333/lineups', {
+        var response = await fetch('/lineups', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ nome: nome, usuario: usuarioId, dataEvento: dataEvento, notificacao: notificacao, emailSecundario: emailSecundario })
@@ -200,7 +200,7 @@ async function editarLineup() {
     var btn = document.querySelector('#modal-editar-lineup .btn-confirmar');
     btn.disabled = true;
     try {
-        var response = await fetch('http://localhost:3333/lineups/' + lineupEditandoId, {
+        var response = await fetch('/lineups/' + lineupEditandoId, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ nome: nome, dataEvento: dataEvento, notificacao: notificacao, emailSecundario: emailSecundario })
@@ -222,7 +222,7 @@ async function deletarLineup(id) {
     if (!confirm('Tem certeza que deseja excluir esta lineup?')) return;
 
     try {
-        var response = await fetch('http://localhost:3333/lineups/' + id, {
+        var response = await fetch('/lineups/' + id, {
             method: 'DELETE'
         });
 

@@ -1,4 +1,4 @@
-var URL_API = 'http://localhost:3333';
+var URL_API = '';
 var SEM_IMAGEM = '__SEM_IMAGEM__';
 
 async function carregarImagemSpotify(nomeArtista, elemento) {

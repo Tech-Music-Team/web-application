@@ -33,7 +33,7 @@ function carregarDaURL() {
 
 async function selecionarMusicaPorId(slot, musicaId) {
     try {
-        var response = await fetch('http://localhost:3333/musicas/' + musicaId + '/detalhes');
+        var response = await fetch('/musicas/' + musicaId + '/detalhes');
 
         if (!response.ok) {
             showErrorSlot(slot, 'Musica nao encontrada');
@@ -130,7 +130,7 @@ async function abrirSeletor(slot) {
 
     if (listaMusicas.length === 0) {
         try {
-            var response = await fetch('http://localhost:3333/musicas/top?limit=10000');
+            var response = await fetch('/musicas/top?limit=10000');
             if (!response.ok) throw new Error('Erro ' + response.status);
             listaMusicas = await response.json();
         } catch (e) {
@@ -188,7 +188,7 @@ async function selecionarMusica(musicaBasica) {
     var slot = slotAtivo;
 
     try {
-        var response = await fetch('http://localhost:3333/musicas/' + musicaBasica.id + '/detalhes');
+        var response = await fetch('/musicas/' + musicaBasica.id + '/detalhes');
 
         if (!response.ok) {
             showError('Erro ao carregar dados da musica. Tente novamente.');

@@ -30,8 +30,8 @@ function carregarDaURL() {
 
 async function selecionarArtistaPorId(slot, artistaId) {
     try {
-        var resDetalhe = fetch('http://localhost:3333/artistas/' + artistaId);
-        var resAudio = fetch('http://localhost:3333/artistas/' + artistaId + '/audio');
+        var resDetalhe = fetch('/artistas/' + artistaId);
+        var resAudio = fetch('/artistas/' + artistaId + '/audio');
 
         var responses = await Promise.all([resDetalhe, resAudio]);
 
@@ -132,7 +132,7 @@ async function abrirSeletor(slot) {
 
     if (listaArtistas.length === 0) {
         try {
-            var response = await fetch('http://localhost:3333/artistas/ranking?limit=1000');
+            var response = await fetch('/artistas/ranking?limit=1000');
             if (!response.ok) throw new Error('Erro ' + response.status);
             listaArtistas = await response.json();
         } catch (e) {
@@ -189,8 +189,8 @@ async function selecionarArtista(artistaBasico) {
     var slot = slotAtivo;
 
     try {
-        var resDetalhe = fetch('http://localhost:3333/artistas/' + artistaBasico.id);
-        var resAudio = fetch('http://localhost:3333/artistas/' + artistaBasico.id + '/audio');
+        var resDetalhe = fetch('/artistas/' + artistaBasico.id);
+        var resAudio = fetch('/artistas/' + artistaBasico.id + '/audio');
 
         var responses = await Promise.all([resDetalhe, resAudio]);
 

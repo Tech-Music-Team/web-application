@@ -17,7 +17,7 @@ async function fetchPlaylists() {
     }
 
     try {
-        var response = await fetch('http://localhost:3333/setlists?usuario=' + usuarioId);
+        var response = await fetch('/setlists?usuario=' + usuarioId);
         if (!response.ok) throw new Error('Erro ' + response.status);
         playlists = await response.json();
         playlistsFiltrados = playlists.slice();
@@ -138,7 +138,7 @@ async function criarPlaylist() {
     var btn = document.querySelector('#modal-criar-playlist .btn-confirmar');
     btn.disabled = true;
     try {
-        var response = await fetch('http://localhost:3333/setlists', {
+        var response = await fetch('/setlists', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ nome: nome, usuario: usuarioId, dataEvento: dataEvento, notificacao: notificacao, emailSecundario: emailSecundario })
@@ -211,7 +211,7 @@ async function editarPlaylist() {
     var btn = document.querySelector('#modal-editar-playlist .btn-confirmar');
     btn.disabled = true;
     try {
-        var response = await fetch('http://localhost:3333/setlists/' + playlistEditandoId, {
+        var response = await fetch('/setlists/' + playlistEditandoId, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ nome: nome, dataEvento: dataEvento, notificacao: notificacao, emailSecundario: emailSecundario })
@@ -236,7 +236,7 @@ async function deletarPlaylist(id) {
     if (!confirm('Tem certeza que deseja excluir esta playlist?')) return;
 
     try {
-        var response = await fetch('http://localhost:3333/setlists/' + id, {
+        var response = await fetch('/setlists/' + id, {
             method: 'DELETE'
         });
 

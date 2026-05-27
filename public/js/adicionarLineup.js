@@ -16,7 +16,7 @@ function adicionarALineup(artistaId, artistaNome) {
     document.getElementById('lista-lineups').innerHTML = '<p style="color:#999;font-size:13px;">Carregando lineups...</p>';
     modal.style.display = 'flex';
 
-    fetch('http://localhost:3333/lineups?usuario=' + usuarioId)
+    fetch('/lineups?usuario=' + usuarioId)
         .then(function (r) { return r.json(); })
         .then(function (lineups) {
             var container = document.getElementById('lista-lineups');
@@ -87,7 +87,7 @@ function fecharModalLineup() {
 
 async function adicionarNaLineup(lineupId, artistaId) {
     try {
-        var response = await fetch('http://localhost:3333/lineups/' + lineupId + '/artistas', {
+        var response = await fetch('/lineups/' + lineupId + '/artistas', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ artistaId: artistaId })

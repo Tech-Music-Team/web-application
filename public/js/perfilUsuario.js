@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 async function carregarPerfil() {
     try {
-        var response = await fetch('http://localhost:3333/usuarios/' + usuarioId);
+        var response = await fetch('/usuarios/' + usuarioId);
         if (!response.ok) throw new Error('Erro ' + response.status);
         var dados = await response.json();
 
@@ -32,7 +32,7 @@ async function salvarNome() {
     }
 
     try {
-        var response = await fetch('http://localhost:3333/usuarios/' + usuarioId, {
+        var response = await fetch('/usuarios/' + usuarioId, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ nome: nome })
@@ -75,7 +75,7 @@ async function salvarSenha() {
     }
 
     try {
-        var response = await fetch('http://localhost:3333/usuarios/' + usuarioId, {
+        var response = await fetch('/usuarios/' + usuarioId, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -122,7 +122,7 @@ async function confirmarExcluirConta() {
     }
 
     try {
-        var response = await fetch('http://localhost:3333/usuarios/' + usuarioId, {
+        var response = await fetch('/usuarios/' + usuarioId, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ senha: senha })
