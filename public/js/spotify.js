@@ -1,4 +1,5 @@
 var URL_API = 'http://localhost:3333';
+var SEM_IMAGEM = '__SEM_IMAGEM__';
 
 async function carregarImagemSpotify(nomeArtista, elemento) {
   var cacheKey = 'simg_' + nomeArtista;
@@ -14,17 +15,22 @@ async function carregarImagemSpotify(nomeArtista, elemento) {
   }
 
   if (urlSalva) {
-    aplicarImagem(urlSalva);
+    if (urlSalva !== SEM_IMAGEM) aplicarImagem(urlSalva);
     return;
   }
 
   try {
     var response = await fetch(URL_API + '/artistas/spotify/buscar-imagem?nome=' + encodeURIComponent(nomeArtista));
-    if (!response.ok) return;
+    if (!response.ok) {
+      sessionStorage.setItem(cacheKey, SEM_IMAGEM);
+      return;
+    }
     var data = await response.json();
     if (data.imagem && data.imagem.url) {
       aplicarImagem(data.imagem.url);
       sessionStorage.setItem(cacheKey, data.imagem.url);
+    } else {
+      sessionStorage.setItem(cacheKey, SEM_IMAGEM);
     }
   } catch (e) {
     console.error('Erro ao carregar imagem do Spotify:', e);

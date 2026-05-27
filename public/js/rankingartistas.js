@@ -103,7 +103,6 @@ function renderCards() {
 }
 
 function carregarImagensArtistas() {
-  if (currentPage !== 1) return;
   var elementos = document.querySelectorAll('.spotify-artist-img');
   elementos.forEach(function (el, index) {
     var nome = el.getAttribute('data-artist-name');

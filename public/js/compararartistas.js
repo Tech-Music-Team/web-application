@@ -327,14 +327,16 @@ function atualizarEngCards(a1, a2) {
     var likes1 = Number(a1.likes), likes2 = Number(a2.likes);
     var followers1 = Number(a1.followers), followers2 = Number(a2.followers);
     var pop1 = Number(a1.popularity), pop2 = Number(a2.popularity);
+    var totalMusicas1 = Number(a1.totalMusicas) || 0;
+    var totalMusicas2 = Number(a2.totalMusicas) || 0;
 
     var tc1 = views1 > 0 ? (likes1 / views1 * 100).toFixed(2) : '0.00';
     var tc2 = views2 > 0 ? (likes2 / views2 * 100).toFixed(2) : '0.00';
     atualizarEngCard('taxa-curtidas', a1.nome, a2.nome, tc1 + '%', tc2 + '%', parseFloat(tc1), parseFloat(tc2));
 
-    var leal1 = followers1 > 0 ? (likes1 / followers1 * 100).toFixed(2) : '0.00';
-    var leal2 = followers2 > 0 ? (likes2 / followers2 * 100).toFixed(2) : '0.00';
-    atualizarEngCard('lealdade', a1.nome, a2.nome, leal1 + '%', leal2 + '%', parseFloat(leal1), parseFloat(leal2));
+    var vpm1 = totalMusicas1 > 0 ? Math.round(views1 / totalMusicas1) : 0;
+    var vpm2 = totalMusicas2 > 0 ? Math.round(views2 / totalMusicas2) : 0;
+    atualizarEngCard('views-musica', a1.nome, a2.nome, formatarNumero(vpm1), formatarNumero(vpm2), vpm1, vpm2);
 
     atualizarEngCard('score', a1.nome, a2.nome, pop1, pop2, pop1, pop2);
 
@@ -387,17 +389,17 @@ function renderAudio(aud1, aud2) {
 
     metricas.forEach(function (m) {
         var nv1 = parseFloat(m.v1), nv2 = parseFloat(m.v2);
-        var badge = calcularBadge(nv1, nv2);
+        var badge = calcularBadgeNeutro(nv1, nv2);
 
         document.getElementById('aud-' + m.id + '-val-1').textContent = m.fmt(m.v1);
         document.getElementById('aud-' + m.id + '-val-2').textContent = m.fmt(m.v2);
 
         var b1 = document.getElementById('aud-' + m.id + '-badge-1');
         var b2 = document.getElementById('aud-' + m.id + '-badge-2');
-        b1.className = 'badge ' + (badge.melhor === 1 ? 'up' : 'down');
-        b1.innerHTML = '<span class="arrow">' + (badge.melhor === 1 ? '↑' : '↓') + '</span>' + badge.pct1;
-        b2.className = 'badge ' + (badge.melhor === 2 ? 'up' : 'down');
-        b2.innerHTML = '<span class="arrow">' + (badge.melhor === 2 ? '↑' : '↓') + '</span>' + badge.pct2;
+        b1.className = 'badge neutro';
+        b1.innerHTML = '<span class="arrow">▶</span>' + badge.pct1;
+        b2.className = 'badge neutro';
+        b2.innerHTML = '<span class="arrow">▶</span>' + badge.pct2;
 
         document.getElementById('aud-' + m.id + '-delta').textContent = '△ ' + badge.delta;
     });

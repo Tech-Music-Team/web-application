@@ -56,18 +56,38 @@ function dataHojeISO() {
     return d.getFullYear() + '-' + mes + '-' + dia;
 }
 
+function formatarDelta(deltaNum) {
+    if (Math.abs(deltaNum) >= 1e9) return (deltaNum >= 0 ? '+' : '') + (deltaNum / 1e9).toFixed(1) + 'B';
+    if (Math.abs(deltaNum) >= 1e6) return (deltaNum >= 0 ? '+' : '') + (deltaNum / 1e6).toFixed(1) + 'M';
+    if (Math.abs(deltaNum) >= 1e3) return (deltaNum >= 0 ? '+' : '') + (deltaNum / 1e3).toFixed(1) + 'K';
+    return (deltaNum >= 0 ? '+' : '') + deltaNum.toFixed(2);
+}
+
 function calcularBadge(v1, v2) {
-    var media = (Math.abs(v1) + Math.abs(v2)) / 2;
-    if (media === 0) return { melhor: 0, pct1: '0%', pct2: '0%', delta: '0' };
+    if (v1 === 0 && v2 === 0) return { melhor: 0, pct1: '0%', pct2: '0%', delta: '0' };
+
     var melhor = v1 >= v2 ? 1 : 2;
-    var pctDiff = Math.abs((v1 - v2) / media * 100).toFixed(1);
+    var menor = Math.min(Math.abs(v1), Math.abs(v2));
+    var maior = Math.max(Math.abs(v1), Math.abs(v2));
+
+    var pctDiff = menor === 0 ? '∞' : ((maior - menor) / menor * 100).toFixed(1);
+
     var pct1 = v1 >= v2 ? ('+' + pctDiff + '%') : ('-' + pctDiff + '%');
     var pct2 = v2 >= v1 ? ('+' + pctDiff + '%') : ('-' + pctDiff + '%');
-    var deltaNum = v1 - v2;
-    var delta;
-    if (Math.abs(deltaNum) >= 1e9)      delta = (deltaNum >= 0 ? '+' : '') + (deltaNum / 1e9).toFixed(1) + 'B';
-    else if (Math.abs(deltaNum) >= 1e6) delta = (deltaNum >= 0 ? '+' : '') + (deltaNum / 1e6).toFixed(1) + 'M';
-    else if (Math.abs(deltaNum) >= 1e3) delta = (deltaNum >= 0 ? '+' : '') + (deltaNum / 1e3).toFixed(1) + 'K';
-    else                                delta = (deltaNum >= 0 ? '+' : '') + deltaNum.toFixed(2);
-    return { melhor: melhor, pct1: pct1, pct2: pct2, delta: delta };
+
+    return { melhor: melhor, pct1: pct1, pct2: pct2, delta: formatarDelta(v1 - v2) };
+}
+
+function calcularBadgeNeutro(v1, v2) {
+    if (v1 === 0 && v2 === 0) return { pct1: '0%', pct2: '0%', delta: '0' };
+
+    var menor = Math.min(Math.abs(v1), Math.abs(v2));
+    var maior = Math.max(Math.abs(v1), Math.abs(v2));
+
+    var pctDiff = menor === 0 ? '∞' : ((maior - menor) / menor * 100).toFixed(1);
+
+    var pct1 = v1 >= v2 ? ('+' + pctDiff + '%') : ('-' + pctDiff + '%');
+    var pct2 = v2 >= v1 ? ('+' + pctDiff + '%') : ('-' + pctDiff + '%');
+
+    return { pct1: pct1, pct2: pct2, delta: formatarDelta(v1 - v2) };
 }

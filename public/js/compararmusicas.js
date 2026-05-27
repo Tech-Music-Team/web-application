@@ -331,16 +331,18 @@ function atualizarEngCards(m1, m2) {
     var engReal2 = views2 > 0 ? ((likes2 + comments2) / views2 * 100).toFixed(2) : '0.00';
     atualizarEngCard('engajamento-real', m1.track, m2.track, engReal1 + '%', engReal2 + '%', parseFloat(engReal1), parseFloat(engReal2));
 
-    var conversao1 = streams1 > 0 ? (likes1 / streams1 * 100).toFixed(2) : '0.00';
-    var conversao2 = streams2 > 0 ? (likes2 / streams2 * 100).toFixed(2) : '0.00';
-    atualizarEngCard('conversao', m1.track, m2.track, conversao1 + '%', conversao2 + '%', parseFloat(conversao1), parseFloat(conversao2));
+    var total1 = streams1 + views1;
+    var total2 = streams2 + views2;
+    var pref1 = total1 > 0 ? (streams1 / total1 * 100).toFixed(2) : '0.00';
+    var pref2 = total2 > 0 ? (streams2 / total2 * 100).toFixed(2) : '0.00';
+    atualizarEngCard('conversao', m1.track, m2.track, pref1 + '%', pref2 + '%', parseFloat(pref1), parseFloat(pref2));
 
-    var retencao1 = views1 > 0 ? (streams1 / views1).toFixed(2) : '0';
-    var retencao2 = views2 > 0 ? (streams2 / views2).toFixed(2) : '0';
-    atualizarEngCard('retencao', m1.track, m2.track, retencao1 + 'x', retencao2 + 'x', parseFloat(retencao1), parseFloat(retencao2));
+    var razao1 = views1 > 0 ? (streams1 / views1).toFixed(2) : '0';
+    var razao2 = views2 > 0 ? (streams2 / views2).toFixed(2) : '0';
+    atualizarEngCard('retencao', m1.track, m2.track, razao1 + 'x', razao2 + 'x', parseFloat(razao1), parseFloat(razao2));
 
-    var discussao1 = streams1 > 0 ? (comments1 / streams1 * 100).toFixed(3) : '0.000';
-    var discussao2 = streams2 > 0 ? (comments2 / streams2 * 100).toFixed(3) : '0.000';
+    var discussao1 = views1 > 0 ? (comments1 / views1 * 100).toFixed(3) : '0.000';
+    var discussao2 = views2 > 0 ? (comments2 / views2 * 100).toFixed(3) : '0.000';
     atualizarEngCard('discussao', m1.track, m2.track, discussao1 + '%', discussao2 + '%', parseFloat(discussao1), parseFloat(discussao2));
 }
 
@@ -388,7 +390,7 @@ function renderAudio(m1, m2) {
 
     metricas.forEach(function (m) {
         var nv1 = parseFloat(m.v1), nv2 = parseFloat(m.v2);
-        var badge = calcularBadge(nv1, nv2);
+        var badge = calcularBadgeNeutro(nv1, nv2);
 
         document.getElementById('aud-' + m.id + '-val-1').textContent = m.fmt(m.v1);
         document.getElementById('aud-' + m.id + '-val-2').textContent = m.fmt(m.v2);
@@ -396,12 +398,12 @@ function renderAudio(m1, m2) {
         var b1 = document.getElementById('aud-' + m.id + '-badge-1');
         var b2 = document.getElementById('aud-' + m.id + '-badge-2');
         if (b1) {
-            b1.className = 'badge ' + (badge.melhor === 1 ? 'up' : 'down');
-            b1.innerHTML = '<span class="arrow">' + (badge.melhor === 1 ? '↑' : '↓') + '</span>' + badge.pct1;
+            b1.className = 'badge neutro';
+            b1.innerHTML = '<span class="arrow">▶</span>' + badge.pct1;
         }
         if (b2) {
-            b2.className = 'badge ' + (badge.melhor === 2 ? 'up' : 'down');
-            b2.innerHTML = '<span class="arrow">' + (badge.melhor === 2 ? '↑' : '↓') + '</span>' + badge.pct2;
+            b2.className = 'badge neutro';
+            b2.innerHTML = '<span class="arrow">▶</span>' + badge.pct2;
         }
 
         var deltaEl = document.getElementById('aud-' + m.id + '-delta');

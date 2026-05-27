@@ -310,6 +310,11 @@
   color: #e05252;
 }
 
+.badge.neutro {
+  background: #f0f0f5;
+  color: #666;
+}
+
 .badge .arrow {
   font-size: 10px;
 }

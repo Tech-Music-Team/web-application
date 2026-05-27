@@ -32,10 +32,11 @@ function getRanking(sortField, limit, offset, order) {
 function getById(id) {
     var instrucaoSql = `
         SELECT id_artista as id, nome, artist_genre as genre,
-               artist_popularity as popularity, views, likes, artist_followers as followers
+               artist_popularity as popularity, views, likes, artist_followers as followers,
+               (SELECT COUNT(*) FROM musica WHERE fk_artista = ?) as totalMusicas
         FROM artista WHERE id_artista = ?;
     `;
-    return database.executar(instrucaoSql, [id]);
+    return database.executar(instrucaoSql, [id, id]);
 }
 
 function getAudioMedia(id) {
