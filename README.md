@@ -7,7 +7,7 @@
 
 A plataforma permite que usuários explorem dados de artistas e músicas, analisem métricas de popularidade, comparem perfis musicais (incluindo features de áudio do Spotify como *danceability*, *energy*, *valence* etc.) e organizem suas próprias **lineups de eventos** e **playlists pessoais**.
 
-A aplicação foi construída do utilizando como base a api WEB-DATA-VIZ (https://github.com/BandTec/web-data-viz), seguindo o padrão arquitetural **MVC** (Model-View-Controller), com backend em **Node.js + Express** e banco de dados **MySQL**, integrando-se à **API do Spotify** para enriquecer os dados com imagens dos artistas.
+A aplicação foi construída utilizando como base a api WEB-DATA-VIZ (https://github.com/BandTec/web-data-viz), seguindo o padrão arquitetural **MVC** (Model-View-Controller), com backend em **Node.js + Express** e banco de dados **MySQL**, integrando-se à **API do Spotify** para enriquecer os dados com imagens dos artistas.
 
 ## Funcionalidades principais
 
