@@ -1,4 +1,3 @@
-var URL_API = '';
 var SEM_IMAGEM = '__SEM_IMAGEM__';
 
 async function carregarImagemSpotify(nomeArtista, elemento) {
@@ -20,7 +19,7 @@ async function carregarImagemSpotify(nomeArtista, elemento) {
   }
 
   try {
-    var response = await fetch(URL_API + '/artistas/spotify/buscar-imagem?nome=' + encodeURIComponent(nomeArtista));
+    var response = await fetch('/artistas/spotify/buscar-imagem?nome=' + encodeURIComponent(nomeArtista));
     if (!response.ok) {
       sessionStorage.setItem(cacheKey, SEM_IMAGEM);
       return;
