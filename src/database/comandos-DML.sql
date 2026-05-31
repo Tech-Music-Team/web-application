@@ -5,8 +5,6 @@ INSERT INTO roles (nome) VALUES
 ('USER'),
 ('JAVALOG');
 
-INSERT INTO usuario (email, nome, senha, fk_role) VALUES
-('java@email.com', 'Java', 'ADMINJAVA', 3);
 
 INSERT INTO usuario (email, nome, senha, fk_role) VALUES
 ('alexandre@email.com', 'Alexandre Donisete', '12345', 1);

@@ -76,26 +76,23 @@ CREATE TABLE log (
 
 -- TABELA SETLIST (lista de musicas do usuario)
 CREATE TABLE setlist (
-    id_setlist INT AUTO_INCREMENT,
+    id_setlist INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     data_evento DATE NOT NULL,
     situacao VARCHAR(20) DEFAULT 'pendente',
-	notificacao BOOLEAN DEFAULT TRUE,
-    email_secundario VARCHAR(100) DEFAULT NULL,
+    notificacao BOOLEAN DEFAULT TRUE,
+    email_secundario VARCHAR(100),
     fk_usuario INT NOT NULL,
-    
+
     CONSTRAINT fk_setlist_usuario
         FOREIGN KEY (fk_usuario)
         REFERENCES usuario(id_usuario)
-        ON DELETE CASCADE,
-        
-	CONSTRAINT pkComposta_setlist 
-		PRIMARY KEY (id_setlist, fk_usuario)
+        ON DELETE CASCADE
 );
 
 -- TABELA LINEUP (lista de artistas do usuario)
 CREATE TABLE lineup (
-    id_lineup INT AUTO_INCREMENT,
+    id_lineup INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     data_evento DATE NOT NULL,
 	notificacao BOOLEAN DEFAULT TRUE,
@@ -106,16 +103,14 @@ CREATE TABLE lineup (
     CONSTRAINT fk_lineup_usuario
 		FOREIGN KEY (fk_usuario)
         REFERENCES usuario (id_usuario)
-        ON DELETE CASCADE,
-        
-    CONSTRAINT pkComposta_lineup 
-		PRIMARY KEY (id_lineup , fk_usuario)
+        ON DELETE CASCADE
 );
 
 -- TABELA ASSOCIATIVA: musica → setlist
 CREATE TABLE musica_setlist (
 	fk_musica INT NOT NULL,
     fk_setlist INT NOT NULL,
+    
     
     CONSTRAINT pkComposta_ms PRIMARY KEY (fk_musica, fk_setlist),
     
