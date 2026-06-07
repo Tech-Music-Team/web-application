@@ -29,6 +29,8 @@ async function carregarLineup() {
                 .catch(function () { a.audioFeatures = null; });
         }));
 
+        detectarDisparidadesAudio(artistas, function (a) { return a.audioFeatures; });
+
         renderizarCabecalho();
         renderizarArtistas();
         renderizarGraficoRadar();
@@ -85,6 +87,7 @@ function renderizarArtistas() {
                     '<div class="spotify-artist-img" data-artist-name="' + nomeEscaped + '" style="width:52px;height:52px;background:' + cor + ';border-radius:8px;flex-shrink:0;"></div>' +
                     '<div class="artist-info-header">' +
                         '<span class="artist-name">' + artista.nome + '</span>' +
+                        (artista.disparidades && artista.disparidades.length ? montarEtiquetaDisparidade(artista.disparidades) : '') +
                         '<span class="genre">' + (artista.genre || 'Gênero: --') + '</span>' +
                     '</div>' +
                 '</div>' +
@@ -250,7 +253,7 @@ function renderizarGraficoRadar() {
             Math.round((f.energy || 0) * 100),
             Math.round((f.danceability || 0) * 100),
             Math.round((f.valence || 0) * 100),
-            Math.min(100, Math.max(0, Math.round((f.loudness || -60) + 60))),
+            Math.min(100, Math.max(0, Math.round((parseFloat(f.loudness) || -60) + 60))),
             Math.round((f.speechiness || 0) * 100),
             Math.round((f.instrumentalness || 0) * 100),
         ];

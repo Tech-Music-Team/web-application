@@ -91,3 +91,82 @@ function calcularBadgeNeutro(v1, v2) {
 
     return { pct1: pct1, pct2: pct2, delta: formatarDelta(v1 - v2) };
 }
+
+var DISPARIDADE_LIMIAR_PCT = 0.5;
+var DISPARIDADE_PISO_ABS = 0.10;
+var DISPARIDADE_MIN_ITENS = 3;
+
+var FEATURES_AUDIO = [
+    { chave: 'energy', label: 'Energia' },
+    { chave: 'danceability', label: 'Dançabilidade' },
+    { chave: 'valence', label: 'Valência' },
+    { chave: 'loudness', label: 'Volume', volume: true },
+    { chave: 'speechiness', label: 'Fala' },
+    { chave: 'instrumentalness', label: 'Instrumentalidade' }
+];
+
+function normalizarFeature(valor, ehVolume) {
+    var n = parseFloat(valor);
+    if (valor === null || valor === undefined || isNaN(n)) return null;
+    if (ehVolume) {
+        n = (n + 60) / 100;
+    }
+    return Math.min(1, Math.max(0, n));
+}
+
+function detectarDisparidadesAudio(itens, getFeatures) {
+    if (!itens) return;
+    if (!getFeatures) {
+        getFeatures = function (item) { return item; };
+    }
+
+    itens.forEach(function (item) { item.disparidades = []; });
+
+    FEATURES_AUDIO.forEach(function (feature) {
+        var validos = [];
+        itens.forEach(function (item) {
+            var origem = getFeatures(item);
+            if (!origem) return;
+            var norm = normalizarFeature(origem[feature.chave], feature.volume);
+            if (norm === null) return;
+            validos.push({ item: item, norm: norm });
+        });
+
+        if (validos.length < DISPARIDADE_MIN_ITENS) return;
+
+        var soma = validos.reduce(function (s, v) { return s + v.norm; }, 0);
+        var media = soma / validos.length;
+        if (media <= 0) return;
+
+        validos.forEach(function (v) {
+            var desvio = Math.abs(v.norm - media);
+            if (desvio / media >= DISPARIDADE_LIMIAR_PCT && desvio >= DISPARIDADE_PISO_ABS) {
+                v.item.disparidades.push({
+                    label: feature.label,
+                    valorPct: Math.round(v.norm * 100),
+                    mediaPct: Math.round(media * 100),
+                    direcao: v.norm > media ? 'muito acima' : 'muito abaixo'
+                });
+            }
+        });
+    });
+}
+
+function montarEtiquetaDisparidade(disparidades) {
+    if (!disparidades || disparidades.length === 0) return '';
+
+    var linhas = disparidades.map(function (d) {
+        return '<strong>' + d.label + ':</strong> ' + d.valorPct + '% vs. média ' +
+            d.mediaPct + '% (' + d.direcao + ')';
+    }).join('<br>');
+
+    return '' +
+        '<span class="tooltip-wrapper">' +
+            '<span class="etiqueta-disparidade">' +
+                '<span class="material-symbols-outlined">warning</span> Destoa' +
+            '</span>' +
+            '<span class="tooltip-box tooltip-box--left">' +
+                '<strong>Destoa da lista:</strong><br>' + linhas +
+            '</span>' +
+        '</span>';
+}

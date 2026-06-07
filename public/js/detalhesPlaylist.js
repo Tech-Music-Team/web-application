@@ -22,6 +22,7 @@ async function carregarPlaylist() {
         if (!response.ok) throw new Error('Erro ' + response.status);
         playlistData = await response.json();
         musicas = playlistData.musicas || [];
+        detectarDisparidadesAudio(musicas);
         musicasFiltrados = musicas.slice();
         renderizarCabecalho();
         renderizarMusicas();
@@ -76,6 +77,7 @@ function renderizarMusicas() {
                     '<div class="spotify-artist-img" data-artist-name="' + nomeArtistaEscaped + '" style="width:52px;height:52px;background:' + cor + ';border-radius:8px;flex-shrink:0;"></div>' +
                     '<div class="artist-info-header">' +
                         '<span class="artist-name">' + (musica.track || 'Desconhecida') + '</span>' +
+                        (musica.disparidades && musica.disparidades.length ? montarEtiquetaDisparidade(musica.disparidades) : '') +
                         '<span class="genre">' + (musica.artista_nome || 'Artista desconhecido') + ' · ' + genero + '</span>' +
                     '</div>' +
                 '</div>' +

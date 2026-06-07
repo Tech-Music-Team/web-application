@@ -135,7 +135,7 @@ function renderRadarChart(audioFeatures) {
     window.radarChartInstance.destroy();
   }
 
-  const normalizedLoudness = Math.max(0, Math.min(100, (audioFeatures.loudness || 0) + 60));
+  const normalizedLoudness = Math.max(0, Math.min(100, (parseFloat(audioFeatures.loudness) || 0) + 60));
 
   window.radarChartInstance = new Chart(ctx.getContext('2d'), {
     type: 'radar',

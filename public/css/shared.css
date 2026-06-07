@@ -326,3 +326,31 @@
     color: #dc2626;
     border: 1px solid #fca5a5;
 }
+
+.etiqueta-disparidade {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    margin-left: 6px;
+    padding: 1px 7px;
+    background: #FEF3C7;
+    border: 1px solid #FCD34D;
+    color: #B45309;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: default;
+    white-space: nowrap;
+}
+
+.etiqueta-disparidade .material-symbols-outlined {
+    font-size: 12px;
+}
+
+.etiqueta-disparidade ~ .tooltip-box {
+    width: 190px;
+}
+
+.artist-info-header .tooltip-wrapper {
+    align-self: flex-start;
+}
